@@ -1,0 +1,48 @@
+<include file="Public/header" />
+<body>
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/Error/handleError.css" />
+<load href="__JS__/common/h_f2.js" />
+<script type="text/javascript">
+$(document).ready(function (){
+	var headerNavcontentWidth=30+$('.header .inner_main .searbtnbox').width()+$('.header .navigator').width();	
+	headerResponse(headerNavcontentWidth);
+	searchBarBox();
+	footerTextAnimate();
+	window.onresize=function (){
+		headerResponse(headerNavcontentWidth);
+		searchBarBox();
+	}
+})
+
+</script>
+	<!-- BEGIN 顶部区域 -->
+<include file="Public/bodytop2" />
+<!-- END 顶部区域 -->	
+<div class="wrapper">
+
+<div id="divider"></div>
+<div class="err_content">
+<div id="whoops"></div>
+<p>温馨提醒：<?php echo($error); ?><br/><br/>
+系统将在<b style="color: #009FB3;margin: 0 5px;" id="timer"><?php echo($waitSecond); ?></b>秒后带你离开此页面，如果没有自动跳转，<a href="<?php echo($jumpUrl); ?>" id="href">请点击这里跳转</a>
+</p>
+</div>
+</div>
+<!--BEGIN 页脚部分 -->
+<include file="Public:footer2" />
+<!--END 页脚部分 -->
+</body>
+</html>
+<script type="text/javascript">
+(function(){
+var wait = document.getElementById('timer'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>

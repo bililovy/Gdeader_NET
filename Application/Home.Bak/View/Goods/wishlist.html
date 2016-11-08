@@ -1,0 +1,145 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/goods/wishlist.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+	<div class="shopping_cart">
+		<div class="container">
+			<div class="title">shopping wishlist</div>
+			<div class="wishlist">
+				<div class="listtable">
+					<if condition="$wishlists and is_array($wishlists)">
+					<div class="th_item">
+						<span class="th img">thumb image</span>
+						<span class="th pname bg">product name</span>
+						<span class="th price">unit price</span>
+						<span class="th op bg">operation</span>
+					</div>					
+					<foreach name="wishlists" item="wish">
+					<div class="items">
+						<span class="th img"><a href="{:U('Goods/detail', array('gid'=>$wish['id'],'justfrom'=>'cartlist'))}" title="{$wish.goodsname}" target="_blank"><img src="{$wish.goodsimg}" alt="{$wish.goodsname}" /></a></span>
+						<span class="th pname bg goodsname"><a href="{:U('Goods/detail', array('gid'=>$wish['id'],'justfrom'=>'cartlist'))}" title="{$wish.goodsname}" target="_blank">{$wish.goodsname}</a></span>
+						<span class="th price gprice">${$wish.price}</span>
+						<span class="th op bg operate" id="{$wish.id}">
+							<a href="<empty name='wish.goodslink'>{:U('Goods/detail', array('gid'=>$wish['id'],'justfrom'=>'cartlist'))}<else />{$wish.goodslink}</empty>" title="buy now" class="opbtn buy" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+							<a href="javascript:;" title="remove" class="opbtn remove"><i class="fa fa-close"></i></a>
+						</span>
+					</div>
+					</foreach>
+					<elseif condition="$wishlists and 'unlogin'==$wishlists " />
+						<div class="no_data">
+						<p class="info" style="padding: 65px 0; text-align: center;font-size: 2em;color: #A7A7A7;	"><i style="margin-right: 15px;font-size: 4em;"class="fa fa-shopping-basket"></i>Please Login to Get Your Wishlist,<a style="color: #666;font-size: 14px;margin-left: 5px;" href="{:U('Member/login')}">click here to login</a></p>
+					</div>
+					<else />
+					<div class="no_data">
+						<p class="info" style="padding: 65px 0; text-align: center;font-size: 2em;color: #A7A7A7;	"><i style="margin-right: 15px;font-size: 4em;"class="fa fa-shopping-basket"></i>Your Wishlist is Empty Yet ! </p>
+					</div>
+					</if>
+				</div>	
+				<div class="tool">
+					<a href="{:U('Index/index')}" class="optool fl"><i class="fa fa-angle-left"></i>continue shopping</a>
+					<a href="javascript:window.location.reload();" class="optool fr"><i class="fa fa-refresh"></i>update shopping wishlist</a>
+				</div>			
+			</div>
+			<div class="recommend">
+				<!-- 热销产品 -->
+					<div class="hot_product">
+						<div class="hot_container">
+							<div class="tag_title">
+								<h1>products recommendation</h1>
+								<div class="controller">
+									<a href="javascript:" title="prev" class="btn prev"><i class="fa fa-caret-left"></i></a>				
+									<a href="javascript:" title="next" class="btn next"><i class="fa fa-caret-right"></i></a>
+								</div>				
+							</div>
+							<div class="product_scroller">				
+								<ul class="prolist">
+									<foreach name="recommends" item="recgoods"> 
+									<li class="item">
+									<a href="{:U('Goods/detail', array('gid'=>$recgoods['id'],'justfrom'=>'cartlist'))}" title="{$recgoods.goodsname}" class="pro_link">
+										<img src="{$recgoods.goodsimg}" alt="{$recgoods.goodsname}" />
+										<p class="gname">{$recgoods.goodsname}</p>
+										<p class="price">${$recgoods.price}</p>
+									</a>
+									<div class="opbtn" id="{$recgoods.id}">
+										<a href="javascript:;" class="add_wish"><i class="fa fa-shopping-basket"></i>Wishlist</a>
+										<a href="<empty name='wish.goodslink'>{:U('Goods/detail', array('gid'=>$recgoods['id'],'justfrom'=>'cartlist'))}<else />{$recgoods.goodslink}</empty>" class="buy"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+									</div>
+									</li>
+								</foreach>
+									</ul>			
+							</div>
+						</div>
+					</div>
+					<script type="text/javascript">
+					var postUrl="{:U('Goods/wishlist')}";
+					$(".hot_container").slide({ mainCell:"ul.prolist",autoPlay:true,effect:"leftLoop", vis:4, scroll:2, autoPage:true, pnLoop:false });
+					$('.product_scroller ul.prolist li').hover(function (){
+						$(this).addClass('on');
+					},function(){
+						$(this).removeClass('on');		
+					})
+					$('.wishlist .operate a.remove').click(function (){
+						var $id=parseInt($(this).parent().attr('id'));
+						var $this=$(this);
+						if ($id>0){
+							var callback=function (){
+								$.post(postUrl,{gid: $id},function (back){
+									if (back.status==1){										
+										if($('.wishlist .listtable div.items').length==1){
+											window.location.reload();
+										}else{	
+											$this.parent().parent().slideUp(150,function (){																			
+													$(this).remove();
+											})
+										}
+									}else{
+										easyDialog.open({
+											  container : {
+												header: 'System Notice',
+											    content : back.data
+											  },
+											  autoClose : 3000
+											});
+									}
+									easyDialog.close();
+								},'json')
+								return false;
+							}
+							easyDialog.open({
+								  container : {
+								    header : 'System Notice',
+								    content : 'Make Sure to Remove this item, It can not be restored.<br />Sure to remove ?',
+								    yesFn : callback,
+								    noFn : true
+								  },
+								  follow : $this[0],
+								  followX : -285,
+								  followY : 28
+								});
+						}else {
+							easyDialog.open({
+								  container : {
+									header: 'System Notice',
+								    content : 'Fail to remove this goods, please refresh the page and try agin.'
+								  },
+								  autoClose : 2000
+								});
+						}
+					})
+					</script>
+				<!-- //热销产品 -->
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+</script>
+<!-- //登录表单 页面 -->
+<include file="Public/footer" />
+
+</body>
+</html>

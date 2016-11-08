@@ -1,0 +1,179 @@
+
+.search_head{
+    position: relative;
+    width: 100%;
+}
+.search_head .container{
+    width:1100px;
+    margin: 0 auto;
+    padding: 15px 0;
+}
+.search_head .container .search_result .no_data{
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    width: 520px;
+    padding:120px 0;
+}
+.search_head .container .search_result .no_data span{
+    display: inline-block;
+    float: left;
+}
+.search_head .container .search_result .no_data span.mood{
+    width: 60px;
+    height: 46px;
+    background: url(../../../images/icons/mood_jy.png) no-repeat 0 0;
+}
+.search_head .container .search_result .no_data span.desc{
+    font-size: 2em;
+    color: #898989;
+    line-height: 46px;
+    margin-left: 25px;
+    text-transform: capitalize;
+}
+.search_head .container .search_result .search_list{
+    width: 100%;
+}
+.search_head .container .search_result .search_list li{
+    width: 255px;
+    margin: 15px 10px;
+    padding: 5px 0;
+    float: left;
+}
+.search_head .container .search_result .search_list li div.imgb{
+    padding: 5px;
+    background: #E9E9E9;
+    overflow: hidden;
+    width: 245px;
+    height: 260px;
+}
+.search_head .container .search_result .search_list li div.imgb img{
+    width: 100%;
+    height: 100%;
+}
+.search_head .container .search_result .search_list li .info{
+    padding: 0 5px;
+    padding-top: 10px;
+    position: relative;
+}
+.search_head .container .search_result .search_list li .info h1{
+    height: 40px;
+    font-size: 1.2em;
+    color: #666;
+}
+.search_head .container .search_result .search_list li .info .more{
+    font-size: 1.2em;
+    padding: 5px 0;
+    margin-top: 5px;
+}
+.search_head .container .search_result .search_list li .info .more span.price{
+    float: left;
+    font-size: 1.6em;
+    color: #F08300;
+}
+.search_head .container .search_result .search_list li .info .more span.view{
+    float: right;
+    color: #1A767E;
+}
+.search_head .container .search_result .search_list li .info .opbtn{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    height: 92px;
+    background: #FFF;
+    display: none;
+}
+.search_head .container .search_result .search_list li .info .opbtn a{
+    width: 49.5%;
+    display: inline-block;
+    float: left;
+    height: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    line-height: 92px;
+    color: #FFF;
+    background: #BFBFBF;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.search_head .container .search_result .search_list li .info .opbtn a.wish{
+    margin-left: 1%;
+}
+.search_head .container .search_result .search_list li .info .opbtn a:hover{
+    font-size: 3em;
+    background: #1A767E;
+}
+/***** BEGIN 列表分页样式*******/
+.pagination {
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: 25px;
+    width: 1100px;
+    text-align: center;
+}
+
+.pagination ul {
+    font-size: 0;
+    *word-spacing: -1px /*IE6、7*/;
+}
+
+.pagination ul li {
+    vertical-align: top;
+    letter-spacing: normal;
+    word-spacing: normal;
+    display: inline-block;
+    margin: 0 0 0 -1px;
+}
+
+.pagination ul li {
+    *display: inline /*IE6、7*/;
+    *zoom: 1;
+}
+
+.pagination li span {
+    font: normal 14px/20px "microsoft yahei";
+    color: #AAA;
+    background-color: #FAFAFA;
+    text-align: center;
+    display: block;
+    min-width: 20px;
+    padding: 8px;
+    border: 1px solid #E6E6E6;
+    position: relative;
+    z-index: 1;
+}
+
+.pagination li a span,.pagination li a:visited span {
+    color: #005AA0;
+    text-decoration: none;
+    background-color: #FFF;
+    position: relative;
+    z-index: 1;
+}
+
+.pagination li a:hover span,.pagination li a:active span {
+    color: #FFF;
+    text-decoration: none !important;
+    background-color: #1A7983;
+    position: relative;
+    z-index: 9;
+    cursor: pointer;
+}
+
+.pagination li a:hover {
+    text-decoration: none;
+}
+
+.pagination li span.currentpage {
+    color: #AAA;
+    font-weight: bold;
+    background-color: #FAFAFA;
+    border-color: #E6E6E6;
+    position: relative;
+    z-index: 2;
+}

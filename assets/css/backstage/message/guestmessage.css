@@ -1,0 +1,213 @@
+@charset "utf-8"; 
+
+div.tool {
+	overflow: hidden
+}
+
+div.tool div.selector {
+	float: left;
+	padding-left: 30px;
+	font-size: 13px
+}
+
+div.tool div.selector .tips {
+	background: #1290A0;
+	color: #FFF;
+	float: left;
+	margin-left: 10px;
+	margin-top: 5px;
+	line-height: 30px;
+	padding: 0 5px;
+	font-family: "Microsoft Yahei";
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	display: none
+}
+
+div.tool div.selector span.st {
+	float: left;
+	line-height: 40px;
+	margin-right: 15px
+}
+
+div.content {
+	overflow: hidden;
+	min-width: 1000px;
+	margin-top: 15px
+}
+
+div.content h3 {
+	line-height: 35px;
+	font-size: 18px;
+	text-align: center;
+	color: #009FB3
+}
+
+div.content span.tips {
+	line-height: 25px;
+	padding: 3px 10px;
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	color: #898989
+}
+
+div.content .msg_list {
+	padding: 10px 15px;
+	clear: both;
+	overflow: hidden
+}
+
+div.content .no_data {
+	line-height: 180px;
+	text-align: center;
+	font-size: 18px;
+	font-family: "Microsoft Yahei";
+	color: #898989
+}
+div.content .no_data a{
+	font-size: 13px;
+	background: #009FB3;
+	padding: 5px 8px;
+	color: #FFF;
+	margin: 0 5px;
+}
+div.content .msg_list dl {
+	overflow: hidden;
+	border-bottom: 2px dashed #D1E0E3;
+	padding: 15px 0;
+	margin: 5px 0
+}
+
+div.content .msg_list dl dt div.msginfo {
+	overflow: hidden;
+	font-size: 14px;
+	line-height: 40px;
+	color: #0391E5
+}
+
+div.msg_list dt .msginfo span.fa {
+	float: left;
+	line-height: 40px;
+	font-size: 35px
+}
+
+div.content .msg_list dl dt div.msginfo span {
+	margin-left: 30px
+}
+
+div.content .msg_list dl dt div.msginfo .kh,div.content .msg_list dl dt div.msginfo .phone,div.content .msg_list dl dt div.msginfo .qq
+	{
+	float: left
+}
+
+div.content .msg_list dl dt div.msginfo .qq a.qqicon {
+	float: right;
+	margin-left: 10px;
+	margin-top: 12px
+}
+
+div.content .msg_list dl dt div.msginfo .adtime {
+	float: right;
+	margin-right: 5%
+}
+
+div.content .msg_list dl .msg_con {
+	font-size: 13px;
+	line-height: 28px;
+	color: #444;
+	text-indent: 28px;
+	padding: 10px 15px;
+	background: #FAFAFA
+}
+
+div.content .msg_list dl dd {
+	overflow: hidden
+}
+
+div.content .msg_list dl dd p.opbtn {
+	overflow: hidden;
+	line-height: 28px;
+	float: right;
+	margin-right: 2%
+}
+
+div.content .msg_list dl dd p.opbtn em {
+	padding: 0 10px;
+	display: block;
+	float: left;
+	margin-left: 15px;
+	font-style: normal;
+	color: #FFF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	cursor: pointer
+}
+
+div.content .msg_list dl dd p.opbtn em.delmsg {
+	background: #0391E5
+}
+
+div.content .msg_list dl dd p.opbtn em.signdone.able {
+	background: #0391E5
+}
+
+div.content .msg_list dl dd p.opbtn em.signdone.unable {
+	background: #6C98B2;
+	cursor: default
+}
+
+div.content .msg_list dl dd p.opbtn em.telmsgback {
+	background: #0391E5
+}
+
+.cssSelect {
+	width: 150px;
+	margin-top: 5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px
+}
+
+.cssSelect .selectBox {
+	width: 148px;
+	margin: 0;
+	padding: 0
+}
+
+.cssSelect .selected {
+	background: #fff none repeat scroll 0 0;
+	color: #666
+}
+
+.cssSelect .selectBox .selectLt {
+	width: 120px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	text-indent: 22px
+}
+
+.cssSelect .selectBox .selectRt {
+	width: 28px;
+	line-height: 30px;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	border: 0
+}
+
+.cssSelect .optionsBox {
+	width: 144px
+}
+
+.cssSelect .optionsBox .optionBox.selected {
+	background: #FFF
+}
+
+.cssSelect .optionsBox .optionBox.oHover {
+	background: #55A2E5;
+	color: #FFF
+}

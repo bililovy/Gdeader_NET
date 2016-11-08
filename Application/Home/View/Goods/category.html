@@ -1,0 +1,141 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<include file="public/breadcrumb" />
+
+<!-- pr-bn -->
+<div class="pr-bn row">
+    <!--添加超链接-->
+    <!--判断是否为空-->
+    <notempty name="cat_cover">
+    <img src="{$cat_cover}" class="img-responsive"/>
+    </notempty>
+</div>
+<!-- end pr-bn -->
+
+<!-- product info -->
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <!-- title -->
+        <div class="pr-title">
+            <span>{$catename}</span>
+        </div>
+        <!-- end title -->
+        <!-- pr-menu -->
+        <div class="pr-menu">
+            <if condition ="$categories">
+                <ul class="list-inline text-center">
+                    <foreach name="categories" item ="cat" key="cid">
+                        <li><a class="ui-radius" href="#cat_{$cid}">{$cat}</a></li>
+                    </foreach>
+                </ul>
+            </if>
+        </div>
+        <!-- end pr-menu -->
+        <!--category item product-->
+
+        <foreach name="goods" item="good" key="catid">
+            <div><a id="cat_{$catid}" class="cat-locate"></a></div>
+            <!-- submenu -->
+            <div class="pr-submenu text-center">
+                <h2>{$good.catename}</h2>
+                <P></P>
+            </div>
+            <!-- submenu -->
+
+            <div class="row cat rav-pr">
+                <if condition="$good.goods_list and is_array($good['goods_list'])">
+                    <ul class="list-unstyled">
+                <foreach name="good.goods_list" item="g">
+                        <li>
+                            <a href="{:U('Goods/detail',array('gid'=>$g['id']))}" target="_blank">
+                                <img alt="{$g.goodsname}" class="img-responsive center-block" src="{$g.goodsimg}">
+                                <h4>{$g.goodsname}</h4>
+                            </a>
+                            <div class="price">
+                                <div class="price-left">
+                                    <div class="info">
+                                        <gt name="g.sell_price" value="0">
+                                            <span class="font24 bule-size">${$g.sell_price}</span>
+                                            <span class="text-del">${$g.price}</span>
+                                         <else />
+                                            <span class="font24 bule-size">${$g.price}</span>
+                                        </gt>
+                                    </div>
+                                </div>
+
+                                <div class="price-right">
+                                    <div class="score fl" data-score="{$g.score}">
+                                        <img src="/assets/images/icons/star-off-big.png" />
+                                        <img src="/assets/images/icons/star-off-big.png" />
+                                        <img src="/assets/images/icons/star-off-big.png" />
+                                        <img src="/assets/images/icons/star-off-big.png" />
+                                        <img src="/assets/images/icons/star-off-big.png" />
+                                    </div>
+                                    <div class="fav fr" id="gf_{$g.id}">❤(<span class="fav-num"><gt name="g.favnum" value="999">999+<else />{$g.favnum}</gt></span>)</div>
+                                    <a id="ga-dailyDeals" class="btn bg-blue clear-b" href="<empty name='g.goodslink'>{:U('Goods/detail',array('gid'=>$g['id']))}<else />{$g.goodslink}</empty>" target="_blank">Buy at Amazon</a>
+                                </div>
+                            </div>
+                        </li>
+                </foreach>
+
+                    </ul>
+                </if>
+            </div>
+        </foreach>
+
+    </div>
+</div>
+<script type="text/javascript">
+    // set the stars number
+    $('.rav-pr.cat .price-right .score').each (function (){
+        var $score= (isNaN(parseFloat($(this).attr('data-score'))) || parseFloat($(this).attr('data-score')) <0) ? 0 : parseFloat($(this).attr('data-score'));
+        var star_on="/assets/images/icons/star-on-big.png";
+        var star_half="/assets/images/icons/star-half-big.png";
+        var imgs =$(this).find('img').length;
+        var reg=/\./g;
+        var $int_score=null;
+        var $float_score=null;
+        if (reg.test($score)){
+            var $score=$score.toString().split('.');
+            $int_score = $score[0];
+            $float_score = $score[1];
+        }else{
+            $int_score = $score;
+        }
+        for(var i=0; i< imgs; i++){
+            if (i<$int_score){
+                $(this).find('img').eq(i).attr('src', star_on);
+            }
+            if(null != $float_score && $float_score >=3){
+                $(this).find('img').eq($int_score).attr('src', star_half);
+            }
+        }
+    })
+    // 锚点滚动调用
+</script>
+
+
+<script type="text/javascript">
+    $('.fav').click(function (){
+        addFavorite($(this));
+    })
+    $(".pr-menu .list-inline a").click(function(){
+        var $id=$(this).attr('href');  <!--根据索引匹配找到导航到应的内容-->
+        $("html,body").finish().animate({"scrollTop":$($id).offset().top},400);
+    });
+</script>
+
+
+
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<!--/script-->
+</body>
+</html>

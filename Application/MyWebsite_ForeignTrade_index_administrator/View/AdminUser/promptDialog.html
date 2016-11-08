@@ -1,0 +1,87 @@
+<load href="__ADMIN_CSS__/adminuser/promptDialog.css" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<div class="dialog_main">
+		<div class="head">
+			<if condition="$handway eq 'getinfo' ">				
+			<h3>你将修改<b style="color: #DE4E43;margin: 0 5px">{$user['truename']}</b>的基本信息</h3>
+			<elseif condition="$handway eq 'getpwd'" />
+			<h3>你将修改<b style="color: #DE4E43;margin: 0 5px">{$user['truename']}</b>的密码</h3>
+			</if>
+			<button class="close_dialog"><span class="none">╳</span></button>
+		</div>
+		<div class="dialog_content">
+		<if condition="$handway eq 'getinfo' ">
+		<div class="form changeinfo">	
+			<span class="formtips"></span>
+			<input type="hidden" value="{$user.adminid}" name="userid" />
+			<!-- BEGIN 修改信息-->
+			<div class="form_item">
+				<label>用户名</label>
+				<input type="text" value="{$user.username}" maxlength="20" name="username" class="form_input" />
+				<i class="tips defcolor" placeholder="昵称为英文或数字组合，20位之内">昵称为英文或数字组合，20位之内</i>
+			</div>
+			<div class="form_item">
+				<label>真实姓名</label>
+				<input type="text" value="{$user.truename}" maxlength="12" name="truename" class="form_input" />
+				<i class="tips defcolor" placeholder="姓名正确"></i>
+				</div>
+			<div class="form_item">
+				<label>电子邮箱</label>
+				<input type="text" value="{$user.email}" maxlength="60" name="email" class="form_input" />
+				<i class="tips defcolor" placeholder="邮箱正确"></i>
+			</div>
+			<div class="form_item">
+				<label>是否锁定</label>
+				<if condition="$user.canbedelete eq 0">
+				<input type="hidden" value="0" maxlenth="1" name="canbedelete"/>
+				<elseif condition="$user.canbedelete eq 1 " />
+				<input type="hidden" value="1" maxlenth="1" name="canbedelete"/>
+				</if>
+				<if condition="$user.canbedelete eq 0">
+				<a href="javascript:void(0)" class="radio" data-lock="candel" ><i class="fa fa-circle-o"></i>不锁定</a>
+				<a href="javascript:void(0)" class="radio" data-lock="ncandel" ><i class="fa fa-dot-circle-o"></i>锁定</a>
+				<elseif condition="$user.canbedelete eq 1 " />
+				<a href="javascript:void(0)" class="radio" data-lock="candel" ><i class="fa fa-dot-circle-o"></i>不锁定</a>
+				<a href="javascript:void(0)" class="radio" data-lock="ncandel" ><i class="fa fa-circle-o"></i>锁定</a>
+				</if>
+				<i class="tips defcolor">锁定后，无法直接删除，需解锁后方可删除</i>
+			</div>			
+			<!-- END 修改信息-->			
+			<div class="form_item">
+				<input type="hidden" value="{$user.adminid}" name="doadminid" />
+				<button class="sure" _dataid="{$user.adminid}">确认</button>
+				<button class="cancel">取消</button>
+			</div>			
+		</div>	
+	<elseif condition="$handway eq 'getpwd'" />
+		<div class="form changepwd">
+			<span class="formtips"></span>
+			<input type="hidden" value="{$user.adminid}" name="userid" />
+			<div class="form_item">
+				<label>原来密码</label>
+				<input type="password" value="" maxlength="20" name="oripwd" class="form_input" />
+				<i class="tips defcolor">请输入当前管理员的旧密码</i>
+			</div>
+			<div class="form_item">
+				<label>新的密码</label>
+				<input type="password" value="" maxlength="20" name="password" class="form_input" />
+				<i class="tips defcolor">密码要求6-20位，英文/数字</i>
+			</div>
+			<div class="form_item">
+				<label>确认密码</label>
+				<input type="password" value="" maxlength="20" name="confirmpwd" class="form_input" />
+				<i class="tips defcolor"></i>
+			</div>
+			<div class="form_item">	
+			<input type="hidden" value="{$user.adminid}" name="doadminid" />
+				<button class="sure" _dataid="{$user.adminid}">确认</button>
+				<button class="cancel">取消</button>
+			</div>			
+		</div>
+	</if>
+	</div>
+	</div>
+<script type="text/javascript">
+var $adminUpdateUrl="{:U('AdminUser/update')}";
+</script>
+<load href="__ADMIN_JS__/adminuser/promptDialog.js" />

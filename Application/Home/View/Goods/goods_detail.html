@@ -1,0 +1,685 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<include file="public/breadcrumb" />
+
+<link rel="stylesheet" href="/assets/plugins/pagination/pagination.css" type="text/css" />
+<script type="text/javascript" src="/assets/plugins/pagination/jquery.pagination.js"></script>
+<script type="text/javascript">
+    function readMore(id){
+        var o = document.getElementById(id);
+        var s = o.innerHTML;
+        var p = document.createElement("p");
+        var n = document.createElement("a");
+        p.innerHTML = s.substring(0,300);
+        n.innerHTML = s.length > 300 ? "read more" : "";
+        n.className = "org-size";
+        n.href = "###";
+        n.onclick = function(){
+            if(n.innerHTML == "read more"){
+                n.innerHTML = "up";
+                p.innerHTML = s;
+            }else{
+                n.innerHTML = "read more";
+                p.innerHTML = s.substring(0,300);
+            }
+        }
+        o.innerHTML = "";
+        o.appendChild(p);
+        o.appendChild(n);
+    }
+</script>
+<!-- list -->
+<style type="text/css">
+    .etalage_magnifier:hover{
+        cursor: crosshair;
+    }
+</style>
+<div class="container margin">
+    <div class="row list">
+        <div class="col-md-5 text-center list-left">
+
+            <load href="__PLUGINS__/img_zoom/zoom.css" />
+            <load href="__PLUGINS__/img_zoom/jquery.zoom.min.js" />
+            <!-- Include the Etalage files -->
+            <script>
+                jQuery(document).ready(function($){
+
+                    $('#etalage').etalage({
+                        thumb_image_width: 300,
+                        thumb_image_height: 400,
+                        source_image_width: 700,
+                        source_image_height: 800,
+                        show_hint: true,
+                        click_callback: function(image_anchor, instance_id){
+
+                        }
+                    });
+                    // This is for the dropdown list example:
+                    $('.dropdownlist').change(function(){
+                        etalage_show( $(this).find('option:selected').attr('class') );
+                    });
+
+                });
+            </script>
+
+
+            <!--//details-product-slider-->
+            <div class="details-left-slider">
+               <if condition ="$goodsalbums and count($goodsalbums) gt 0" >
+                <ul id="etalage">
+                    <foreach name="goodsalbums" item ="album">
+
+                    <li>
+                        <a href="optionallink.html">
+                            <img class="etalage_thumb_image" src="{$album.imgpath}" />
+                            <img class="etalage_source_image" src="{$album.imgpath}" />
+                        </a>
+                    </li>
+
+                    </foreach>
+
+                    <div class="clearfix"></div>
+                </ul>
+                </if>
+            </div>
+        </div>
+
+        <style type="text/css">
+            .goods_info .list-inline.score li > img {
+                width: 15px;
+                height: 14px;
+            }
+        </style>
+        <div class="col-md-7 list-r goods_info">
+            <!-- title -->
+            <div class="row">
+                <h3>{$goods.goodsname}</h3>
+                <ul class="list-inline score spi"  style="display:block;"  data-score ="{$goods.score}">
+                    <li>
+                        <img src="__IMG__/icons/star-off-big.png" title="star" alt="star"/>
+                        <img src="__IMG__/icons/star-off-big.png" title="star" alt="star"/>
+                        <img src="__IMG__/icons/star-off-big.png" title="star" alt="star"/>
+                        <img src="__IMG__/icons/star-off-big.png" title="star" alt="star"/>
+                        <img src="__IMG__/icons/star-off-big.png" title="star" alt="star"/>
+                    </li>
+                    <li>Score :<span>{$goods.score}</span> ( <a class="org-size rw" href="#rw">
+                        0
+                        Customer Reviews
+                    </a> )
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="fav fr" id="gf_{$goods.id}">❤(<span class="fav-num"><gt name="goods.favnum" value="999">999+<else />{$goods.favnum}</gt></span>)</div>
+                    </li>
+                </ul>
+            </div>
+            <!--end title -->
+            <script type="text/javascript">
+                // set the stars number
+                $('.goods_info .list-inline.score').each (function (){
+                    var $score= (isNaN(parseFloat($(this).attr('data-score'))) || parseFloat($(this).attr('data-score')) <0) ? 0 : parseFloat($(this).attr('data-score'));
+                    var star_on="__IMG__/icons/star-on-big.png";
+                    var star_half="__IMG__/icons/star-half-big.png";
+                    var imgs =$(this).find('img').length;
+                    var reg=/\./g;
+                    var $int_score=null;
+                    var $float_score=null;
+                    if (reg.test($score)){
+                        var $score=$score.toString().split('.');
+                        $int_score = $score[0];
+                        $float_score = $score[1];
+                    }else{
+                        $int_score = $score;
+                    }
+                    for(var i=0; i< imgs; i++){
+                        if (i<$int_score){
+                            $(this).find('img').eq(i).attr('src', star_on);
+                        }
+                        if(null != $float_score && $float_score >=3){
+                            $(this).find('img').eq($int_score).attr('src', star_half);
+                        }
+                    }
+                })
+                // 锚点滚动调用
+            </script>
+
+            <!-- cart -->
+            <div class="row cart-tab">
+                <div class="tab-content">
+
+                    <div class="tab-pane fade in active" id="country-1">
+                        <div class="cart">
+                            <if condition="$goods.sell_price && $goods.sell_price gt 0" >
+                                <span>Price:</span>
+                                <span class="through-line ">{$goods.price}</span>
+                               <br />
+                                <span>Special Price:</span>
+                                <strong class="red-size"><span class="unitPrice" style ="font-size: 1.6em;">${$goods.sell_price}</span></strong>
+                            <else />
+                                <span>Price:</span>
+                                <strong class="red-size"><span class="unitPrice" style ="font-size: 1.6em;">${$goods.price}</span></strong>
+                            </if>
+                            <a href="{$goods.goodslink}" class="btn bg-org addcar"  onclick="buyAtPlatform_11();"><i class="icn-cart"></i>Buy from Amazon</a>
+                            <a id="productCodeBtn" href="javascript:void(0);" class="code-icn" data-toggle="modal" data-target="#getCodeModel" style="display:none;"></a>
+                            <a id="productCodeDetails" href="http://www.taotronics.com/promotion" style="display:none;margin-left:2px;color:#06C">Details</a>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end cart -->
+
+            <foreach name="goodsattr" item ="attr">
+            <!-- attr -->
+                <div class="row">
+                    <h4><strong>{$attr.attrname}:</strong></h4>
+                    <div class="pr-color margin-b10">
+                       <foreach name="attr.attrvalue" item="value">
+                           <a href="javascript:;" class="color-bg attrlist" title="{$value.scale}" attr-price ="{$value.price|default =''}">{$value.scale}</a>
+                           &nbsp;
+                       </foreach>
+                        <!--checked-->
+                        <!--<div class="color-icon"></div>-->
+                        <!--<a href="http://www.taotronics.com/taotronics-tt-sk05-02.html" class="color-bg" style="background:#FFFFFF" title="White"></a>-->
+                        <!--unchecked-->
+                        <!--<a href="http://www.taotronics.com/taotronics-tt-sk05.html" class="color-bg" style="background:#000000" title="Black"></a>-->
+                    </div>
+                </div>
+                <!-- end attr -->
+
+            </foreach>
+<script type="text/javascript">
+    $('.fav').click(function (){
+        addFavorite($(this));
+    })
+    $('.pr-color a.attrlist').click(function (){
+//        $('#unitPrice').text('$'+$(this).attr('attr-price'))
+        $(this).siblings('a').css({
+            'background' : 'none',
+            'color' : 'rgb(153, 153, 153)'
+        })
+        var $price =$(this).attr('attr-price');
+        $price = Number($price).toFixed(2);
+        if ($price >0){
+            $('.unitPrice').text('$' + $price);
+        }
+        $(this).css({
+            'background': '#E56100',
+            'color' : '#FFF',
+        });
+    })
+</script>
+            <!-- list info -->
+            <div class="row">
+            <h4 style="margin-left: 0;">Features:</h4>
+                {$goods.description}
+            </div>
+            <!-- end list info -->
+        </div>
+    </div>
+</div>
+<!-- end list -->
+
+<!-- right menu -->
+<div class="list-r-menu border-radius ui-shadow">
+    <div class="nav-box">
+        <!--
+        <a href="#"><div><i class="r-cart"></i>Add to Amazon Cart</div></a>
+        -->
+        <a href="#pd" class="show"><div><i class="r-info"></i>Product Info</div></a>
+        <a href="#rw" class="rw"><div><i class="r-review"></i>Customer Reviews</div></a>
+        <a href="#faq" class="nav-faq"><div><i class="r-faq"></i>FAQ</div></a>
+        <a href="#" data-toggle="modal" data-target="#sharemodel"><div><i class="r-share"></i>Share this product</div></a>
+        <a href="javascript:void(0)" class="r-top"></a>
+    </div>
+</div>
+<!-- end right menu -->
+
+<!-- share model -->
+<div class="share">
+    <div class="modal fade" id="sharemodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong>Share products for:</strong>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="addthis_sharing_toolbox_01k1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end share model -->
+
+<!-- list-info -->
+<div class="row margin list-info">
+    <div class="list-tab">
+        <div class="tab-menu" id="menu">
+            <ul class="col-xs-12 list-unstyled">
+                <li class="current">Product Info</li>
+                <li>FAQ</li>
+            </ul>
+        </div>
+
+        <!-- list-content -->
+        <div class="tab-box col-md-offset-1 col-md-10">
+            <!-- Pr Description -->
+            <div class="box" id="pd">
+                <div class="row">
+                    {$goods.goodsdetail}
+                </div>
+                <!-- reviews -->
+                <a name="rw" id="rw" ></a>
+                <div class="row reviews border-top col-sm-12">
+                    <div class="row padding-t-b">
+                        <!-- left reviews -->
+                        <div class="col-md-6 col-sm-6 dashed-right">
+                            <h3 class="org-size"><i class="icn-reviews"></i>You may also like</h3>
+                            <!-- 3rd reviews -->
+                            <!-- end 3rd reviews -->
+                            <!-- vedio -->
+                            <foreach name="recommends" item="recg">
+
+                            <div class="row margin-b10">
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <a href="{:U('Goods/detail', array('gid' =>$recg['id']))}" title="{$recg.goodsname}">
+                                        <img src="{$recg.goodsimg}" class="img-responsive" alt="{$recg.goodsname}"/>
+                                    </a>
+                                </div>
+                                <div class="col-md-8 col-sm-6 col-xs-6">
+                                    <a href="{:U('Goods/detail', array('gid' =>$recg['id']))}">{$recg.goodsname}</a>
+                                    <p style="margin-top: 10px;text-indent: 1.2em;font-size: 1em;color: #898989;">{$recg.description|default='Click for more information !'|mb_substr=0,100}...</p>
+                                </div>
+                            </div>
+
+                            </foreach>
+
+                        </div>
+
+
+                        <!-- end left reviews -->
+                        <!-- right reviews -->
+                        <div class="col-md-6 col-sm-6 r-rewiews">
+                            <h3 class="bule-size">Customer Reviews</h3>
+                            <script type="text/javascript">
+                                var pageIndex = 0; //index
+                                var pageSize = 3; //page size
+                                var totalSize = 6;
+                                $(function () {
+                                    //initTable(0); //Load first page
+                                    //totalSize is must.
+                                    $('#pagination').pagination(totalSize, {
+                                        callback: pageCallback, //pageCallback()
+                                        link_to:'#reviews',
+                                        prev_text: 'Prev',
+                                        next_text: 'Next',
+                                        items_per_page:pageSize,
+                                        num_edge_entries: 2, //
+                                        num_display_entries: 10, //
+                                        current_page: pageIndex, //
+                                    });
+                                    //
+                                    function pageCallback(index, jq) {
+                                        initTable(index);
+                                    }
+                                    //
+                                    function initTable(pageIndex) {
+                                        $.ajax({
+                                            type: 'POST',
+                                            dataType: 'text',
+                                            url: 'http://www.taotronics.com/catalog/product/reviews/117', //
+                                            data: 'pageIndex=' + (pageIndex) + '&pageSize=' + pageSize, //
+                                            success: function(data) {
+                                                $('#prReview').children().remove();
+                                                $('#prReview').append(data); //
+                                            }
+                                        });
+                                    }
+                                });
+                            </script>
+
+                            <!-- 评论列表-->
+                            <div class="row" id="rw">
+                                <div class="col-md-12 margin-b">
+        <span>
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif"></span>
+                                    <strong>Well built buetooth speakers</strong>
+                                    <p>By
+                                        <span class="org-size">Debora E Reynolds</span> on November 30, 2015</p>
+                                    <div id="reviewContent0">
+                                        <p>
+                                        <p>I highly recommend this small well built Bluetooth speaker. It easily paired with my Apple MacBook Pro and a current HP laptop. I ran comparison sound tests with a Jam Classic for sound. I placed both speakers about 10 ft from the laptop in a large 800 sq ft room and played them loud and listened</p>
+                                        <script>readMore('reviewContent0')</script>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-b">
+        <span>
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif"></span>
+                                    <strong>What a gem!!!!</strong>
+                                    <p>By
+                                        <span class="org-size">Noahsdad13</span> on February 16, 2016</p>
+                                    <div id="reviewContent1">
+                                        <p>
+                                        <p>I needed a replacement after my wife commandeered my jambox, but wasn't looking forward to the $150 price tag. I stumbled upon this little gem and boy am I glad I did! Upon opening my Amazon box, I was taken back by how small this thing really is, it's tiny so my hopes weren't very high, but agai
+                                            <br />I needed a replacement after my wife commandeered my jambox, but wasn't looking forward to the $150 price tag. I stumbled upon this little gem and boy am I glad I did! Upon opening my Amazon box, I was taken back by how small this thing really is, it's tiny so my hopes weren't very high, but again!
+                                        </p>
+                                        <script>readMore('reviewContent1')</script>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-b">
+        <span>
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif">
+            <img src="http://www.taotronics.com/images/star-on.gif"></span>
+                                    <strong>Great sound for a little speaker</strong>
+                                    <p>By
+                                        <span class="org-size">M Zarc</span> on May 8, 2016</p>
+                                    <div id="reviewContent2">
+                                        <p>
+                                        <p>Pleasantly surprised by the sound this small speaker produces. I charged it up and paired it with my iPad and watched a movie. Music is clear and crisp as are voice and sound effects. The video I attached speaks for itself. I recommend this Bluetooth speaker for it's quality and portability.
+                                            <br>
+                                            <br>I recorded the video with my iPhone 6. So ofcourse the quality of the video itself is dependent upon that. It actually sounds even better in person.
+                                        </p>
+                                        <script>readMore('reviewContent2')</script>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ 评论列表-->
+
+                            <!-- 如果没有评论-->
+                            <div class="text-center">
+                                <a <empty name="goods.commentlink">href="javascript:;"<else />href="{$goods.commentlink}" target="_blank"</empty> class="org-size more" >
+                                    <b class="caret"></b>see more reviews
+                                </a>
+                            </div>
+                            <!--/ 如果没有评论-->
+                            <div class="row">
+                                <ul id="pagination" class="pagination" style="float:right"></ul>
+                            </div>
+                        </div>
+                        <!-- end right reviews -->
+                    </div>
+                </div>
+            </div>
+            <!-- end Pr Description -->
+
+            <style type="text/css">
+
+
+            </style>
+
+
+            <!-- faq -->
+            <div class="hide box" id="faq">
+                <h3 class="bule-size"><i class="icn-faq"></i>FAQ</h3>
+                <div class="row faq">
+                    <!-- faq left -->
+                    <input type="hidden" id="goodsid" value="{$goods.id}" />
+                    <div class="col-md-5 col-sm-5">
+                        <div class="feedback-index">
+                            <div class="head">FAQ For the Product</div>
+                            <form>
+                                <div class="fb-rows"><input id="txtname" class="fb-ipt" placeholder="Your Name" type="text" name="msgerName"></div>
+                               <div class="fb-rows"><textarea id="txtContent" class="fb-txa" name="" placeholder="Please descripe your questions" cols="30" rows="10" name="msgText"></textarea></div>
+                                <div class="fb-rows btn">
+                                    <input class="fb-btn" type="button" onclick="check()" value="Submit">
+                                    <div class="msg-err"></div>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    <script type="text/javascript">
+                        var leaveMessageUrl ="{:U('Goods/faqSet')}";
+
+                       function check() {
+
+                            var emailReg = /^[_a-z0-9.]+@([_a-z0-9]+\.)+[a-z0-9]{2,3}/;
+
+                            var name = $("#txtname").val();
+
+                            var Content = $("#txtContent").val();
+                            var gid = $("#goodsid").val();
+
+                           if (gid <= 0){
+                                $('.feedback-index .msg-err').html('Network Error for the moment, try again later!');
+
+                                $('.feedback-index .msg-err').stop().animate({opacity: 1, bottom:'-30px'},250);
+
+                                setTimeout(function (){
+
+                                    $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                        $('.feedback-index .msg-err').html('');
+
+                                    });
+
+                                },4000);
+
+                               return false;
+                           }
+
+                            if (name == "") {
+
+                                $('.feedback-index .msg-err').html('Please enter your name or nickname');
+
+                                $('.feedback-index .msg-err').stop().animate({opacity: 1, bottom:'-30px'},250);
+
+                                setTimeout(function (){
+
+                                    $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                        $('.feedback-index .msg-err').html('');
+
+                                    });
+
+                                },4000);
+
+                                $("#txtname").focus();
+
+                                return false;
+
+                            }
+
+
+                            if (Content == "" ) {
+
+                                $('.feedback-index .msg-err').html('Please type the question !');
+
+                                $('.feedback-index .msg-err').stop().animate({opacity: 1,bottom:'-30px'},250);
+
+                                setTimeout(function (){
+
+                                    $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                        $('.feedback-index .msg-err').html('');
+
+                                    });
+
+                                },4000);
+
+                                $("#txtContent").focus();
+
+                                return false;
+
+                            }else{
+
+                                if (Content.length>200 || Content.length<10){
+
+                                    $('.feedback-index .msg-err').html('Your question should be between10 - 200 words !');
+
+                                    $('.feedback-index .msg-err').stop().animate({opacity: 1,bottom:'-30px'},250);
+
+                                    setTimeout(function (){
+
+                                        $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                            $('.feedback-index .msg-err').html('');
+
+                                        });
+
+                                    },4000);
+
+                                    $("#txtContent").focus();
+
+                                    return false;
+
+                                }
+
+                            }
+
+                            $.ajax({
+
+                                type: "POST",
+
+                                url: leaveMessageUrl,
+
+                                data: { reviewer: name,  content:Content, gid : gid },
+
+                                cache: false,
+
+                                success: function (back) {
+
+                                    if (back.status == 1) {
+
+                                        $('.feedback-index .msg-err').html(back.data);
+
+                                        $('.feedback-index .msg-err').stop().animate({opacity: 1,bottom:'-30px'},250);
+
+                                        setTimeout(function (){
+
+                                            $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                                $('.feedback-index .msg-err').html('');
+
+                                            });
+
+                                        },6000);
+
+                                        $("#txtname").val("");
+
+                                        $("#txtContent").val("");
+
+                                    }else{
+
+                                        $('.feedback-index .msg-err').html(back.data);
+
+                                        $('.feedback-index .msg-err').stop().animate({opacity: 1,bottom:'-30px'},250);
+
+                                        setTimeout(function (){
+
+                                            $('.feedback-index .msg-err').stop().animate({opacity: 0, bottom:'-135px'},250,function (){
+
+                                                $('.feedback-index .msg-err').html('');
+
+                                            });
+
+                                        },3000);
+
+                                    }
+
+                                }
+
+                            })
+
+                        }
+                </script>
+                    <!-- end faq left -->
+
+                    <!-- faq right -->
+                    <div class="col-md-7 col-sm-7">
+                        <div  class="head">The Latest 5 FAQs here </div>
+                        <if condition ="$faqs and count(faqs) gt 0">
+                            <foreach name="faqs" item="faq">
+                            <div class="row r-box">
+
+                                <div class="col-md-20 col-sm-20">
+                                    <span class="bule-size"><strong>{$faq.content}</strong></span>
+                                    <div class="a">
+                                        <span class="big-size">A:</span>
+                                        <span class="font12">{$faq.replycontent|default='No reply yet !'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            </foreach>
+                        <else />
+                            <div class="row r-box" style="float:right; text-align: center;font-size: 2em;color: #d5d5d5">
+                                No available FAQ for the product !
+                            </div>
+                        </if>
+
+                    </div>
+                    <!-- end faq right -->
+                </div>
+            </div>
+            <!-- end faq -->
+        </div>
+        <!-- end list-content -->
+    </div>
+</div>
+<!-- end list-info -->
+
+<script>
+    $(function(){
+        //listing tab
+        $('.list-tab').Tabs({
+            event:'click',
+            switchBtn : true
+        });
+
+        $(".rw").bind("click",function(){
+            $("#menu li").removeClass("current");
+            $("#menu li").eq(0).addClass("current");
+            $(".tab-box .box").addClass("hide")
+            $(".tab-box div").first().removeClass("hide")
+        });
+
+        $(".nav-faq").bind("click",function(){
+            $("#menu li").removeClass("current");
+            $("#menu li").eq(2).addClass("current");
+            $(".tab-box .box").addClass("hide")
+            $("#faq").removeClass("hide")
+        });
+
+        $(".dw").bind("click",function(){
+            $("#menu li").removeClass("current");
+            $("#menu li").eq(1).addClass("current");
+            $(".tab-box .box").addClass("hide")
+            $("#dw").removeClass("hide")
+        });
+        $('.show').scroller();
+        $('.nav-faq').scroller();
+        $('.rw').scroller();
+
+        $('.nav-box a.r-top').click(function (){
+            $('body,html').animate({scrollTop: 0}, 400);
+            return false;
+        })
+    });
+</script>
+
+
+
+
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<!--/script-->
+</body>
+</html>

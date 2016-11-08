@@ -1,0 +1,57 @@
+<div class="subscribe">
+    <div class="container">
+        <div class="subscribe1">
+            <h4>Book Latest News</h4>
+            <span style="color:#a5a5a5;">To leave your email, you can recieve our latest news for the first time.</span>
+        </div>
+        <div class="subscribe2">
+            <form action="" method="post">
+                <input type="text" class="text" name="email" value="Email" onfocus="if (this.value == 'Email'){this.value=''};"
+                       onblur="if (this.value == '') { this.value = 'Email';}">
+                <a href="javascript:;" class="submit" onclick="checkEmail(this)">Subscribe</a>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var bookingUrl = "{:U('News/BookingNews')}";
+    function checkEmail(obj) {
+        var $this = $(obj).siblings('input[name="email"]');
+        var value = $this.val();
+        var myreg = /^(?:\w+\.?)*\w+@(?:\w+\.)*\w+$/ig;
+
+        if (!myreg.test(value)) {
+
+            layer.tips('Please input the correct email !', obj, {
+                tips: [1, '#E56C00'],
+                time: 3000
+            });
+            $this.focus();
+            return false;
+        } else {
+            //提交
+            var $data = {'email': value}
+            $.post(bookingUrl, $data, function (back) {
+                if (back.status == 1) {
+                    layer.msg(back.data, {
+                        time: 0 //不自动关闭
+                        , btn: ['I\'ve got it !']
+                        , yes: function (index) {
+                            layer.close(index);
+                        }
+                    });
+                } else {
+                    layer.msg(back.data, {
+                        time: 0 //不自动关闭
+                        , btn: ['I\'ve got it !']
+                        , yes: function (index) {
+                            layer.close(index);
+                        }
+                    })
+                }
+            }, 'json');
+    }
+    return false;
+    }
+</script>

@@ -1,0 +1,779 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>产品添加</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/goods/goods_add.css" />
+
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/js/tools/ajaxFileUpload.js" />
+<load href="__COMMON__/tools/htmlEditor/kingeditor/kindeditor-all-min.js" />
+<!-- END 当前页面的css 和js -->
+<script type="text/javascript" >
+var uploadurla="{:U('Goods/GoodsDetailUpload')}"; //后台上传地址
+var cssurl="";
+var $sessionid ="{$sessionid}";//后台传输出来 用php生成sessionid
+</script>
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">首页</a></li>
+    <li><a href="javascript:void(0)">产品添加</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+<style>
+ul.forminfo select{
+	min-width: 120px;
+	height: 30px;
+}
+.no_data{
+	margin-top: 15px;
+	line-height: 80px;
+	max-width: 600px;
+}
+.no_data p{
+	font-size: 16px;
+	color: #898989;	
+	text-align: center;
+}
+.no_data p a{
+	padding: 5px 8px;
+	background: #009FB3;
+	color: #FFF;
+}
+.goodsalbum{
+	border: 1px dotted #898989;
+	float: left;
+	max-width: 510px;
+	padding: 8px;
+	padding-bottom: 0;
+}  
+.goodsalbum #uploadCoverBtn{
+	width: 80px;
+	height: 110px;
+	background: #009FB3;
+	float: left;
+	margin-bottom: 8px;
+	position: relative;
+} 
+
+.goodsalbum #uploadCoverBtn .ke-upload-file{
+	width: 80px;
+	height: 110px;  
+	filter:alpha(opacity=0); 
+  -moz-opacity:0;
+  -khtml-opacity:0; 
+  opacity: 0;
+	cursor: pointer;
+}
+
+.goodsalbum #uploadCoverBtn input#uploadButton{
+	position: absolute;
+	left: 0px;
+	top: 0;	
+	height: 100%;
+	width: 100%;
+	filter:alpha(opacity=0); 
+  -moz-opacity:0;
+  -khtml-opacity:0; 
+  opacity: 0;
+  cursor:pointer;
+}
+.goodsalbum #uploadCoverBtn i.ico{
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	font-size:  2em;
+	line-height: 110px;
+	text-align: center;
+	color: #FFF;
+}
+li.cover i{
+	clear: both;
+}
+.goodsalbum .imgcontain{
+	width: 80px;
+	height: 110px;
+	float: left;
+	margin-right: 5px;
+	position: relative;
+	margin-bottom: 10px;
+}
+.goodsalbum .imgcontain p.btn{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: rgba(11,11,11,0.6);
+	filter:alpha(opacity=0); 
+  -moz-opacity:0;
+  -khtml-opacity:0; 
+  opacity: 0;
+}
+.goodsalbum .imgcontain p.btn a{
+	padding: 5px 7px;
+	margin: 0;	
+}
+.goodsalbum .imgcontain p.btn a:first-child{
+	margin-right: 25px;
+}
+.goodsalbum .imgcontain p.btn a i{
+	color: #FFF;
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+}
+</style>
+    <div class="formbody">
+    <div class="formtitle">
+    	<span>产品信息添加</span>
+		<a href="{:U('Goods/index')}"><i class="fa fa-reply"></i>返回产品列表</a>
+		</div>    
+<if condition="$isAddUsed">
+    <ul class="forminfo">
+    <li class="divide">商品附加项设置</li>
+     <li><label><b>*</b>产品类型</label>
+     <if condition="$cats">
+     	<select name="cateid">
+     		<option value="0">--选择产品分类--</option>
+     		<foreach name="cats" item="cat">
+     		<option value="{$cat.id}">{$cat.separatechar}{$cat.catename}</option>
+     		</foreach>
+      	</select>
+     	<i placeholder="选择当前产品的分类">选择当前产品的分类</i>
+     <else />
+     <div style="float: left;line-height: 35px;">当前无可用分类，请<a href="{:U('Goods/category')}">点此添加分类</a></div>
+     </if>
+     </li>
+     <li ><label><b>*</b>产品属性</label></li>
+     <li id="attributes">
+     <div class="container" style="padding-left: 85px; " placeholder="<p style='line-height: 35px;color: #666;'>请先选择产品类型，属性设置项将自动增加到此处</p>"><p style="line-height: 35px;color: #666;">请先选择产品类型，属性设置项将自动增加到此处</p></div>
+     </li>
+    <li><label><b>*</b>产品标题</label><input name="goodsname" type="text" class="dfinput" maxlength="70" /><i placeholder="名称不小于5个字符且不能超过70个字符" >名称不小于5个字符且不能超过70个字符</i></li>
+    <li><label><b></b>购买链接</label><input name="goodslink" type="text" class="dfinput" /><i placeholder="如果不填写，将使用系统链接" >如果不填写，将使用系统链接</i></li>
+    <li class="cover"><label><b>*</b>产品相册</label>
+    <div class="goodsalbum"> 
+       	<if condition="$goodsalbums">
+    		<foreach name="goodsalbums"  key="index" item="coverimg">
+    		<div class="imgcontain <eq name="coverimg.iscover" value="1">covered</eq>"><eq name="coverimg.iscover" value="1"><b style="position: absolute;right: 0; top:0;padding: 2px 4px; background: #009FB3; color: #FFF;" class="tag">封面</b></eq><img src="{$coverimg.imgpath}" width="80" height="110"/><p class="btn"><a href="javascript:void(0)" class="set cover" title="设为封面"><i class="fa fa-photo"></i></a><a href="javascript:void(0)" title="删除" class="set del"><i class="fa fa-trash"></i></a><input type="hidden" value="{$coverimg.id}" name="imgindex"/></p></div>
+    		</foreach>
+    	</if>	
+    	<div id="uploadCoverBtn"><i class="ico fa fa-plus"></i><input type="file" name="uploadButton" id=uploadButton class="file" title="选择图片" accept="image/*" value="" onchange="ajaxFileUpload(this)" /></div>
+    </div>
+    <i class="cover-tip" placeholder="最多10张，图片尺寸建议宽度1000×750像素或等比尺寸，请先做好产品图，否则可能影响前端显示效果" >最多10张，图片尺寸建议宽度1000×750像素或等比尺寸，请先做好产品图，否则可能影响前端显示效果</i>
+    </li>
+    <li><label><b>&nbsp;</b>关键字</label><input name="keywords" type="text" class="dfinput" /><i placeholder="多个关键字用逗号“,”隔开，建议填写" >多个关键字用逗号“,”隔开，建议填写，利于搜索引擎收录网站</i></li>
+    <li  class="lab-desc"><label><b>&nbsp;</b>产品简介</label><cite><textarea name="description" value="" class="description"></textarea><div class="count-text">还可输入<span class="text-num">1500</span>个字符</div><i>不超过1500字符，建议填写，利于搜索引擎收录网站</i></cite></li>
+    <li><label><b>&nbsp;</b>是否显示</label>
+	<input name="isshow" type="hidden" value="1" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>立即显示</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>暂不显示</a>
+	</cite>
+	<i>选择“显示”则前端才可查看到此产品，“不显示”则不能查看</i>
+	</li>    
+    <li><label><b>&nbsp;</b>热销产品</label>
+	<input name="isrecommend" type="hidden" value="0" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-square-o"></i>是</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-check-square"></i>否</a>
+	</cite>
+	<i>选择“是”则前端首页best seller区可查看到此产品，“否”则不会显示在best seller 区</i>
+	</li>    
+    <li><label><b>&nbsp;</b>设为新品</label>
+	<input name="isnew" type="hidden" value="1" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>是</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>否</a>
+	</cite>
+	<i>选择“是”则前端新品展示区可查看到此产品，“否”则可能无法显示到该区域</i>
+	</li>    
+	  <li>
+    <div class="left-i">
+    <label><b>&nbsp;</b>排序设置</label>
+    <input name="sortorder" type="text" class="dfinput sort" value="50" />
+    <i placeholder="请输入整数">请输入整数</i>
+    </div>
+     <div class="right-i">
+    <label><b>&nbsp;</b>浏览次数</label>
+    <input name="click" type="text" class="dfinput click" value="0" />
+    <i placeholder="请输入整数">请输入整数</i>
+    </div>
+    </li>
+    <li>
+        <div class="left-i">
+            <label><b>&nbsp;</b>产品价格</label>
+            <input name="price" type="text" class="dfinput click" value="" maxlength="10" />
+            <i placeholder="展示价格">展示价格(美元)</i>
+        </div>
+        <div class="right-i">
+            <label><b>&nbsp;</b>特价价格</label>
+            <input name="sell_price" type="text" class="dfinput click" value="" />
+            <i placeholder="如果有特价，则以特价价格为主要显示，0表示无特价">如果有特价，则以特价价格为主要显示，0表示无特价</i>
+        </div>
+    </li>
+    <li>
+        <div class="left-i">
+            <label><b>&nbsp;</b>产品评分</label>
+            <input name="score" type="text" class="dfinput click" value="4"  />
+            <i placeholder="评分影响星星数量，满分5分">评分影响星星数量，满分5分</i>
+        </div>
+        <div class="right-i">
+            <label><b>&nbsp;</b>收藏数量</label>
+            <input name="favnum" type="text" class="dfinput click" value="0" />
+            <i placeholder="系统会根据用户收藏情况自动刷新此数据，在此也可人为更改">系统会根据用户收藏情况自动刷新此数据，在此也可人为更改</i>
+        </div>
+    </li>
+     <li><label><b>&nbsp;</b>产品详情描述</label></li>
+     <li class="editor"><textarea id="content" name="goodsdetail" style="width:100%;height:700px;"></textarea></li>
+    <li><label>&nbsp;</label><input name="submit" type="button" class="submit submitable" value="添加产品" />
+	<i placeholder=""></i>
+	</li>
+    </ul>
+<else />
+<div class="no_data">
+<p>暂无法添加产品，添加产品前，需要在“产品分类管理”中添加分类后方可添加产品信息。</p>
+<p><a href="{:U('Goods/category')}">点击进入产品分类管理</a></p>
+</div>
+</if>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var $coverUploadUrl="{:U('Goods/goodsAlbum')}";
+var $deleteCoverUrl="{:U('Goods/albumTrash')}";
+var $getAttrs="{:U('Goods/getAttrlistByCate')}";
+var $postUrl="{:U('Goods/goodsAdd')}";
+
+/********************* BEGIN 数据提取区************************/
+var $goodsname=$('input[name="goodsname"]'),
+	  $goodslink=$('input[name="goodslink"]'),
+	  $cateid=$('select[name="cateid"]'),
+	  $click=$('input[name="click"]'),
+	  $price=$('input[name="price"]'),
+	  $keywords=$('input[name="keywords"]'),
+	  $description=$('textarea[name="description"]'),
+	  $goodsimg='',
+	  $goodsdetail='',
+	  $isnew=$('input[name="isnew"]'),
+	  $isrecommend=$('input[name="isrecommend"]'),
+	  $isshow=$('input[name="isshow"]'),
+        $score=$('input[name="score"]'),
+        $sell_price=$('input[name="sell_price"]'),
+        $favnum=$('input[name="favnum"]'),
+	  $sortorder=$('input[name="sortorder"]');
+/********************* END 数据提取区************************/
+
+/********************* BEGIN 效果展现区************************/
+$('.goodsalbum ').delegate('.imgcontain', 'mouseenter', function(){
+	$(this).find('p.btn').stop().animate({opacity: 1},200);
+})
+$('.goodsalbum ').delegate('.imgcontain', 'mouseleave', function(){
+	$(this).find('p.btn').stop().animate({opacity: 0},200);	
+})
+
+//根据分类显示属性
+$cateid.change(function (){
+	var $container=$('li#attributes').find('div.container');
+	var $this=$(this);
+	if($this.val()<=0 ||isNaN(parseInt($this.val()))){
+		$container.html($container.attr('placeholder'));
+		return false;
+	}
+	$cateidval=parseInt($this.val());
+	var $data={cid: $cateidval};
+	$container.html('<p style="line-height: 50px;">正在获取信息……</p>');
+	$.post($getAttrs, $data, function (back){
+			$container.html(back.data);
+	},'json');
+	
+})
+
+//单选按钮模拟
+$(".checkshow").find("a").click(function() {
+		$(this).find("i.fa").removeClass("fa-square-o").addClass("fa-check-square");
+		$(this).siblings("a").find("i.fa").removeClass("fa-check-square").addClass("fa-square-o");
+		if ($(this).hasClass("show")) {
+			$show = 1;
+		} else {
+			if ($(this).hasClass("not_show")) {
+				$show = 0;
+			} else {
+				$show = 1;
+			}
+		}
+		$(this).parent().siblings('input[type="hidden"]').val($show);
+});
+//禁止表单回车提交$('form.goodsattr')
+$('body').keypress(function(e) {
+  if (e.which == 13) {
+    return false;
+  }
+});
+/********************* END 效果展现区************************/
+
+/********************* BEGIN 数据处理区************************/
+var totalNum = $description.siblings("div").find("span").text();
+wordCount($description);
+$description.keyup(function() {
+wordCount($(this));
+});
+ $cateid.change(function (){
+	 if($(this).val()<=0){
+		 setTips($(this), '请选择一个商品分类');
+	 }else{
+		 setTips($(this), '',true);		 
+	 }
+ })
+ $goodsname.blur(function (){
+	 func_goodsname($(this));
+ })
+ $goodslink.blur(function (){
+	 func_goodslink($(this));
+ })
+ $keywords.blur(function (){
+	 func_keywords($(this));
+ })
+ $description.blur(function (){
+	 func_description($(this));
+ })
+ $sortorder.blur(function (){
+	getNumber($(this));
+})
+$click.blur(function (){
+	getNumber($(this),0);
+})
+$price.blur(function (){
+	formatPrice($(this));
+})
+ //上传产品相册图片
+ function ajaxFileUpload(e) {
+	$.ajaxFileUpload({
+		url : $coverUploadUrl,
+		secureuri : false,
+		fileElementId : "uploadButton",
+		dataType : "json",
+		success : function(data, status) {
+			if (data.status == 1) {
+				var url = data.data;
+				$html='<div class="imgcontain"><img src="###" width="80" height="110"/><p class="btn"><a href="javascript:void(0)" class="set cover" title="设为封面"><i class="fa fa-photo"></i></a><a href="javascript:void(0)" title="删除" class="set del"><i class="fa fa-trash"></i></a><input type="hidden" value="'+data.keyid+'" name="imgindex"/></p></div>';
+				$html= $html.replace('###', url);
+				$('ul.forminfo .goodsalbum').prepend($html);
+			} else {
+				$('ul.forminfo .goodsalbum').siblings('i.cover-tip').html('<b style="color: #D64E42">'+data.data+'</b>')
+				setTimeout(function (){
+					$('ul.forminfo .goodsalbum').siblings('i.cover-tip').text($('ul.forminfo .goodsalbum').siblings('i.cover-tip').attr('placeholder'));
+				}, 2500)
+			}
+		},
+		error : function(data, status, e) {
+			showMsg(e, "");
+		}
+	});
+	return false;
+}
+//删除图片
+$('.goodsalbum').delegate('.imgcontain p.btn a.set', 'click', function (){
+	var index=parseInt($(this).siblings('input[name="imgindex"]').val());
+	var $this=$(this);
+	if(index>0){
+		var $data={imgid: index};
+		if($(this).hasClass('del')){
+			$.post($deleteCoverUrl, $data, function (back){
+				if (back.status==1){
+					$this.parent().parent().slideUp(200,function (){
+						$(this).remove();
+					})
+				}else{
+					$('ul.forminfo li.cover').siblings('i.cover-tip').html('<b style="color: #D64E42">'+back.data+'</b>');
+					setTimeout(function (){
+						$('ul.forminfo  li.cover').siblings('i.cover-tip').text($('ul.forminfo  li.cover').siblings('i.cover-tip').attr('placeholder'));
+					}, 3000)
+				}
+			}, 'json')
+		}else if($(this).hasClass('cover')){		
+			if($this.parent().parent().hasClass('covered')) return false;			
+					$html='<b style="position: absolute;right: 0; top:0;padding: 2px 4px; background: #009FB3; color: #FFF;" class="tag">封面</b>';
+					$this.parent().parent().prepend($html);
+					$this.parent().parent().siblings('.imgcontain').find('b.tag').remove();
+					$this.parent().parent().addClass('covered');
+					$this.parent().parent().siblings('.imgcontain').removeClass('covered');				
+		}		
+	}else{
+		easyDialog.open({
+			  container : {
+			    header : '消息提醒窗口',
+			    content : '系统未检测到操作的必须参数，请刷新页面重新尝试！'
+			  }
+			});
+	}
+})
+
+//html编辑器
+ KindEditor.ready(function(K) {	 	
+		var editor = K.create('textarea[name="goodsdetail"]', {
+			cssPath : cssurl,
+			uploadJson : uploadurla,
+			allowFileManager : true,
+			extraFileUploadParams : {
+				PHPSESSID : $sessionid
+			},
+			width : "100%",
+			height : "700px",
+			resizeType : 0,
+			skinType : "tinymce",
+			items : [ "fullscreen", "source", "|", "undo", "redo", "|",
+					"preview", "print", "template", "code", "cut", "copy",
+					"paste", "plainpaste", "wordpaste", "|", "justifyleft",
+					"justifycenter", "justifyright", "justifyfull",
+					"insertorderedlist", "insertunorderedlist", "indent",
+					"outdent", "subscript", "superscript", "clearhtml",
+					"quickformat", "selectall", "|", "formatblock",
+					"fontname", "fontsize", "|", "forecolor",
+					"hilitecolor", "bold", "italic", "underline",
+					"strikethrough", "lineheight", "removeformat", "|",
+					"image", "multiimage", "flash", "media", "insertfile",
+					"table", "hr", "emoticons", "baidumap", "pagebreak",
+					"anchor", "link", "unlink" ]
+		});
+//表单submit
+$('input[name="submit"]').click(function (){
+	var $this=$(this);
+	if($this.hasClass("submit-disable")) return false;
+	var isSubmit=false;
+	if($('form.goodsattr').length<=0){
+		easyDialog.open({
+			  container : {
+			    header : '消息提醒窗口',
+			    content : '你还没有选择此产品的属性，若现在不设置产品属性，可在以后编辑商品时重新添加属性，确定不给产品添加属性吗？',
+			    yesFn : function (){	
+			    	submitForm($this);
+			    },
+			    noFn : true
+			  },
+			  follow : $this[0],
+			  followX : -107,
+			  followY : -200
+			});
+	}else{
+		submitForm($this);
+	}	
+});
+/**
+ *提交表单
+ */
+ function submitForm(o){
+	var $this=o;
+	  if($cateid.val()<=0){
+			 setTips($cateid, '请选择一个商品分类');
+		   	 var bool_cateid= false;
+		}else{
+			 setTips($cateid, '', true);
+		   	 var bool_cateid= true;
+		}
+		var bool_goodsname=func_goodsname($goodsname),
+		       bool_goodslink=func_goodslink($goodslink),
+			   bool_cover=func_cover(),
+			   bool_keywords=func_keywords($keywords),
+			   bool_description=func_description($description),
+			   bool_price=formatPrice($price),
+			   bool_goodsdetail=content_func(editor.html());
+		if($('.forminfo .goodsalbum').find('.imgcontain.covered').length>0){		
+			var $goodsimgid=parseInt($('.forminfo .goodsalbum').find('.imgcontain.covered').find('input[name="imgindex"]').val());
+		}else{
+			var $goodsimgid=parseInt($('.forminfo .goodsalbum').find('.imgcontain:first').find('input[name="imgindex"]').val());		
+		}	
+			if(bool_cateid && bool_goodsname && bool_goodslink && bool_cover && bool_keywords && bool_description && bool_goodsdetail && bool_price){
+				if($goodsimgid<=0 || isNaN($goodsimgid)){			
+					easyDialog.open({
+						container : {
+							header: '消息提醒窗口',
+							content : '缺少操作参数，请刷新页面重新尝试！'
+						},
+						autoClose : 2000
+					});		
+					return false;
+				}
+				var $data={
+					goodsname: $goodsname.val(),
+					goodslink: $goodslink.val(),
+					cateid: $cateid.val(),
+					click: $click.val(),
+					price: $price.val(),
+					keywords: $keywords.val(),
+					description: $description.val(),
+					goodsimg: $goodsimgid,
+					goodsdetail: editor.html(),
+					isnew: $isnew.val(),
+					isrecommend: $isrecommend.val(),
+					isshow: $isshow.val(),
+					sortorder: $sortorder.val(),
+                    favnum : $favnum.val(),
+                    score : $score.val(),
+                    sell_price: $sell_price.val(),
+				};
+				$this.siblings("i").html('<span class="doing">正在提交，请稍后……</span>');
+				$this.removeClass("submitable").addClass("submit-disable");
+				$.post($postUrl, $data, function (back){
+					if(back.status==1){
+						if($('form.goodsattr').length>0){							
+							$('form.goodsattr').submit();
+						}else{
+							easyDialog.open({
+								container : {
+									header : "消息提醒窗口",
+									content : "成功增加一个产品，你可以：<br />前往查看产品列表，或者继续添加产品！",
+									yesFn : function() {
+										window.location.href = window.location.href;
+									},
+									noFn : function() {
+										window.location.href = back.redirecturl;
+									}
+								}
+							});
+							$("#easyDialogYesBtn").text("继续添加");
+							$("#easyDialogNoBtn").text("查看列表");
+						}					
+					}else{
+						easyDialog.open({
+							container : {
+								header: '消息提醒窗口',
+								content : back.data
+							},
+							autoClose : 5000
+						});		
+						$this.siblings("i").html('');
+						$this.removeClass("submit-disable").addClass("submitable");
+					}
+				}, 'json');
+			}else{
+				setTips($this, "表单数据还有错误，请检查！");
+				return false;
+			}
+}
+
+});
+
+/********************* END 数据处理区************************
+
+/******************* BEGIN 函数集成**************************/ 
+ function func_goodsname(o){
+	var value=o.val();
+	if (is_empty(value)) {
+		setTips(o, "产品名称不能为空！");
+		return false;
+	} else {
+		if (has_length_error(value, 5, 70)) {
+			setTips(o, "名称长度为5-70个字符，请检查！");
+			return false;
+		} else {
+			setTips(o, "", true);
+			return true;
+		}
+	}
+}
+ function func_goodslink(o){
+		var value=o.val();
+		if (is_empty(value)) {
+			setTips(o, "",true);
+			return true;
+		} else {
+			var strRegex =/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			if (!strRegex.test(value)) {
+				setTips(o, "请输入正确的地址");
+				return false;
+			} else {
+				setTips(o, "", true);
+				return true;
+			}
+		}
+}
+function func_cover(){
+	if ($('.forminfo .goodsalbum').find('.imgcontain').length>0){
+		setTips($('.forminfo .goodsalbum'), "",true);
+		return true;
+	}else{
+		setTips($('.forminfo .goodsalbum'), "请上传至少一张产品图片！");
+		return false;
+	}
+}
+
+function func_keywords(o){
+	var value=o.val();	
+		if (has_length_error(value, 0, 100)) {
+			setTips(o, "关键词长度为0-100个字符，请检查！");
+			return false;
+		} else {
+			setTips(o, "", true);
+			return true;
+		}
+}
+function func_description(o){
+	var value=o.val();
+		if (has_length_error(value, 0, 1500)) {
+			setTips(o, "产品描述长度为0-1500个字符，请检查！");
+			return false;
+		} else {
+			setTips(o, "", true);
+			return true;
+		}	
+}
+
+function content_func(val) {
+	if (is_empty(val)) {
+		prompTip("请输入产品描述后再提交！", 2000);
+		return false;
+	} else {
+		if (has_minlength_error(val, 30)) {
+			prompTip("描述内容必须在30个字以上（含图片），请再写点吧！", 2500);
+			return false;
+		} else {
+			return true;
+		}
+	}
+}
+
+function wordCount(o) {
+	var nowLen = o.val().length;
+	var thislen = totalNum - nowLen;
+	if (thislen < 0) {
+		thislen = " 已超出" + thislen;
+	}
+	o.siblings("div").find("span").text(thislen);
+}
+function getNumber(o,defNum){
+	defNum=(defNum==null || isNaN(parseInt(defNum))) ? 10: defNum;
+	var value=trimValue(o.val());
+	value = value.replace(/[^0-9]/ig,"");
+	var reg=/\d/g;
+	if(reg.test(value))
+	o.val(value);
+	else
+	o.val(defNum);
+}
+function formatPrice(o){
+	var value=trimValue(o.val());
+	var reg=/^[1-9]{1}\d*(\.\d{1,2})?$/;
+	if(is_empty(value)){
+		setTips(o, "请输入正确的产品价格");
+		return false;
+	}else{
+		if(reg.test(value)){
+			setTips(o, "", true);
+			return true;
+		}else{		
+			setTips(o, "请输入正确的价格金额");
+			return false;
+		}
+	}	
+}
+
+function setValue(obj){
+    var attrvalue=$(obj).attr("data-value");
+    var $input=$(obj).siblings("input.multivalue");
+    if($input.val().indexOf(attrvalue)>=0){
+        if ($input.val().indexOf(attrvalue+'@')>=0){
+            var reg = new RegExp(attrvalue + '@\\d+\\|');
+            $input.val($input.val().replace(reg,""));
+        }else{
+            $input.val($input.val().replace(attrvalue+'|',""));
+        }
+        $(obj).css({'background':'none', 'color': '#666'});
+        $(obj).attr('picked',0);
+    }else{
+        var newstr=$input.val()+attrvalue+"|";
+        $input.val(newstr);
+        $(obj).css({'background':'#009FB3','color': '#FFF'});
+        $(obj).attr('picked',1);
+    }
+    setAttrPrice(obj);
+}
+
+function setAttrPrice(obj){
+    var status = parseInt($(obj).attr('picked'));
+    var attrvalue=$(obj).attr("data-value");
+    var $input=$(obj).siblings("input.multivalue");
+    var input_val = $input.val();
+    if (status==1){
+        $('.price_temp').remove();
+        var reg = new RegExp(attrvalue +'@(\\d+)');
+        var price = input_val.match(reg);
+        if ( null != price){
+            var price = price[1];
+        }
+        var offsetL= $(obj).offset().left;
+        var box= '<div style="position: absolute; left:'+(offsetL-126)+'px; top: -21px; z-index:99; background: #FFF; width:150px; height:18px;border:1px solid #009FB3;padding:2px;" class="price_temp"><input type="text" id="attr_price" value="'+(price ==null ? '' : price)+'" style="width:60%;height:90%;line-height: 18px;border:none;" placeholder="录入价格"/><a href="javascript:;" id="price-temp-submit" style="display: inline-block; text-align: center; width:40%;border:none; background: #009FB3; color: #FFF;line-height: 18px;">submit</a></div>'
+        // mouseoverobj
+        $(obj).before(box);
+        $('a#price-temp-submit').click(function (){
+            var price_set =isNaN(parseFloat($(this).siblings('input#attr_price').val())) ? '' : '@'+parseFloat($(this).siblings('input#attr_price').val()) ;
+
+            if (input_val.indexOf(attrvalue+'@')>=0){
+                var reg = new RegExp(attrvalue + '@\\d+');
+                $input.val(input_val.replace(reg, attrvalue+price_set));
+            }else{
+                $input.val(input_val.replace(attrvalue, attrvalue+price_set));
+            }
+            $('.price_temp').remove();
+        })
+    }else{
+        if ($('.price_temp').length>0) $('.price_temp').remove();
+    }
+}
+
+
+ function setTips(o, tips, isDef) {
+		isDef = (isDef == null) ? false : true;
+		o.siblings("i").html("");
+		if (isDef) {
+			if ("" !== tips) {
+				var defTips = tips;
+			} else {
+				var defTips = o.siblings("i").attr("placeholder");
+			}
+			if (typeof defTips == "undefined") {
+				defTips = "通过校验";
+			}
+			o.siblings("i").text(defTips);
+		} else {
+			o.siblings("i").html('<i style="color: #DD2D28;font-size:15px;padding-right: 5px;" class="fa fa-exclamation-circle"></i><span style="color: #D31B26;">'+ tips + "</span>");
+		}
+	}
+ function prompTip(tips, autoClose) {
+		autoClose = autoClose == null ? false : true;
+		var html = '<span id="temp-tip" style="padding: 6px 10px;color: #FFF; border-radius: 5px; font-size:13px; background: #3672A6;position: absolute; left: 400px;bottom: 0px;z-index: 2000;">'
+				+ tips + "</span>";
+		if ($("#temp-tip").length > 0) {
+			$("#temp-tip").remove();
+		}
+		$("li.editor").append(html);
+		if (autoClose) {
+			setTimeout(function() {
+				$("#temp-tip").fadeOut(600, function() {
+					$(this).remove();
+				});
+			}, 2100);
+		}
+	}
+/******************* END 函数集成**************************/
+
+</script>
+

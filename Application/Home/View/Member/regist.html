@@ -1,0 +1,238 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<include file="public/breadcrumb" />
+<style type="text/css">
+    /*--register--*/
+    .register{
+        padding:6em 0;
+    }
+    .register-top-grid h3, .register-bottom-grid h3 {
+        color:#394c53;
+        font-size: 1.2em;
+        padding-bottom: 15px;
+        margin: 0;
+        font-weight: 600;
+    }
+    .register-top-grid div, .register-bottom-grid div {
+        width: 48%;
+        float: left;
+        margin: 10px 0;
+    }
+    .register-top-grid span, .register-bottom-grid span {
+        color:#999;
+        font-size: 0.85em;
+        padding-bottom: 0.2em;
+        display: block;
+        text-transform: uppercase;
+    }
+    .register-top-grid input[type="text"], .register-bottom-grid input[type="text"] ,
+    .register-top-grid input[type="password"], .register-bottom-grid input[type="password"]
+    {
+        border: 1px solid #555;
+        outline-color:#FD9F3E;
+        width: 96%;
+        font-size: 1em;
+        padding: 0.5em;
+    }
+    .checkbox {
+        margin-bottom: 4px;
+        padding-left: 27px;
+        font-size: 1.1em;
+        line-height: 27px;
+        cursor: pointer;
+    }
+    .checkbox {
+        float: left;
+        position: relative;
+        font-size: 0.85em;
+        color:#555;
+    }
+    .checkbox:last-child {
+        margin-bottom: 0;
+    }
+    .news-letter {
+        color: #555;
+        font-weight:600;
+        font-size: 0.85em;
+        margin-bottom: 1em;
+        display: block;
+        text-transform: uppercase;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+        clear: both;
+    }
+    .checkbox i {
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        display: block;
+        width:20px;
+        height:20px;
+        outline: none;
+        border: 2px solid #394c53;
+    }
+    .checkbox input + i:after {
+        content: '';
+        background: url("../images/tick1.png") no-repeat 1px 2px;
+        top: -1px;
+        left: -1px;
+        width: 15px;
+        height: 15px;
+        font: normal 12px/16px FontAwesome;
+        text-align: center;
+    }
+    .checkbox input + i:after {
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.1s;
+        -o-transition: opacity 0.1s;
+        -ms-transition: opacity 0.1s;
+        -moz-transition: opacity 0.1s;
+        -webkit-transition: opacity 0.1s;
+    }
+    .checkbox input {
+        position: absolute;
+        left: -9999px;
+    }
+    .checkbox input:checked + i:after {
+        opacity: 1;
+    }
+    .news-letter:hover {
+        color:#00BFF0;
+    }
+    .register-but{
+        margin-top:1em;
+    }
+    .register-but input[type="submit"] {
+        border: 2px solid #000;
+        color: #000;
+        font-size: 1.2em;
+        padding: 0.6em 2em;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+        display: inline-block;
+        text-transform: uppercase;
+        outline: none;
+        background-color: #fff;
+    }
+    .register-but input[type="submit"]:hover {
+        background:#000;
+        color: #fff;
+    }
+    div.register-bottom-grid {
+        margin-top:3em;
+    }
+    /*--register--*/
+
+</style>
+
+<div class="container">
+    <div class="register">
+        <iframe name="formSubmit" src="" style="display:none;"></iframe>
+        <form action ="{:U('Member/regist')}" target="formSubmit" method="post" onsubmit="return checkForm()">
+            <div class="register-top-grid">
+                <h3>PERSONAL INFORMATION</h3>
+                <div class="wow fadeInLeft" data-wow-delay="0.4s">
+                    <span>Full Name<label>*</label></span>
+                    <input type="text" name="nickname" value="">
+                </div>
+
+                <div class="wow fadeInRight" data-wow-delay="0.4s">
+                    <span>Email Address<label>*</label></span>
+                    <input type="text" name="email" value="">
+                </div>
+                <div class="clearfix"> </div>
+                <a class="news-letter" href="#">
+                </a>
+            </div>
+            <div class="register-bottom-grid">
+                <h3>LOGIN INFORMATION</h3>
+                <div class="wow fadeInLeft" data-wow-delay="0.4s">
+                    <span>Password<label>*</label></span>
+                    <input type="password" name="pwd" value="">
+                </div>
+                <div class="wow fadeInRight" data-wow-delay="0.4s">
+                    <span>Confirm Password<label>*</label></span>
+                    <input type="password" name="repass" value="">
+                </div>
+                <div class="wow fadeInRight" data-wow-delay="0.4s">
+                    <span>Valid Code<label>*</label></span>
+                    <input type="text" name="captcha" value="">
+                </div>
+                <div class="wow fadeInRight" data-wow-delay="0.4s">
+                    <img src="{:U('Member/captcha','','','')}" id="captcha" style="margin-top:1.5em;cursor:pointer;" title="click to refresh" onclick="changeCaptcha(this)" />
+                </div>
+            </div>
+
+        <div class="clearfix"> </div>
+        <div class="register-but">
+                <input type="submit" value="regist now" id="submit">
+                <div class="clearfix"> </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<!--/script-->
+<script type="text/javascript">
+    function changeCaptcha(obj){
+        obj.src=obj.src+'?'+Math.random();
+    }
+    function checkForm(){
+        return true;
+    }
+    function promptTips(message,time, type, isok){
+//        alert(type);
+        type = type =null ? 0 : type;
+        isok= null == isok  ? false : isok;
+        tips_color =[1, '#E5C00'];
+        switch (type){
+            case 1:
+                var obj = $('input[name="nickname"]');
+                break;
+            case 2:
+                var obj = $('input[name="email"]');
+                break;
+            case 3:
+                var obj = $('input[name="pwd"]');
+                break;
+            case 4:
+                var obj = $('input[name="repass"]');
+                break;
+            case 5:
+                var obj = $('input[name="captcha"]');
+                break;
+            default :
+                var obj = $('input#submit');
+                if (isok){
+                    tips_color= [1, '#056A15'];
+                }
+        }
+
+        layer.tips(message, obj , {
+            tips: tips_color,
+            time: time
+        });
+        changeCaptcha(document.getElementById('captcha'));
+        if (isok){
+            setTimeout(function (){
+                window.location.href='/';
+
+            }, time);
+        }
+    }
+</script>
+</body>
+</html>	

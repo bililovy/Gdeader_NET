@@ -1,0 +1,128 @@
+<!-- Header -->
+<header class="header row header--fixed hide-from-print animated slideDown" id="header">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+                    <span class="sr-only">Switching navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Logo -->
+                <div class="logo"><a href="/" title="{$webname}"><img class="img-responsive" src="{$logo}" alt="{$webname}" title="{$webname}" style="height:45px;"></a></div>
+                <!-- END Logo -->
+            </div>
+
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <div class="nav-triangle-up"></div>
+                <ul class="nav navbar-nav">
+                    <foreach name="navs" item="nav">
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{$nav.navlink|default='javascript:;'}"  title="{$nav.navname}" <eq name="nav.openway" value="1">target="_blank"</eq>>
+                            <i class="menu-icn fa fa-eye"></i>
+                            <span>{$nav.navname}</span>
+                        </a>
+                        <if condition="!empty($nav['childs'])">
+                        <ul class="dropdown-menu menu-pr" role="menu">
+                            <div class="triangle-up"></div>
+                            <foreach name="nav.childs" item="subnav">
+                            <li data-submenu-id="submenu-2">
+                                <a href="{$subnav.navlink}" title="{$subnav.navname}" <eq name="subnav.openway" value="1">target="_blank"</eq>><div class="left">{$subnav.navname}</div>
+                                <if condition="!empty($subnav['childs'])"> <div class="right">&gt;</div></if>
+                                </a>
+                                <!--<div id="submenu-2" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-office.jpg) left bottom no-repeat;">-->
+                                <div id="submenu-2" class="popover">
+                                    <if condition="!empty($subnav['childs'])">
+                                    <ul class="list-unstyled submenu-box">
+                                        <foreach name="subnav.childs" item="thirdnav">
+                                        <li>
+                                            <a href="{$thirdnav.navlink}" title="{$thirdnav.navname}" <eq name="thirdnav.openway" value="1">target="_blank"</eq>>{$thirdnav.navname}</a>
+                                        </li>
+                                            </foreach>
+                                    </ul>
+                                        </if>
+                                </div>
+                            </li>
+                                </foreach>
+                        </ul>
+                       </if>
+                    </li>
+                    </foreach>
+                </ul>
+            </div>
+            <!-- END Menu -->
+
+            <div class="nav-right-box">
+                <!-- search -->
+                <div class="search-icn"><a href="javascript:void(0);"><i class="menu-icn menu-icn-search fa fa-search"></i><span>Search</span></a></div>
+                <!-- END Search -->
+
+                <!--Login -->
+                <if condition="$_SESSION['member'] and $_SESSION['member']['SIGNIN_AUTHKEY']=='ALLOW_IN'">
+                    <div class="top-login logined">
+                        <p class="logon"><a href="javascript:;" title="check details"><b class="uname">{$Think.session.member.username}</b></a></p>
+                        <a href="{:U('Member/exitSign')}" title="logout"><i class="fa fa-sign-out"></i><span id="signout">sign out</span></a>
+                    </div>
+                    <else />
+                <div class="top-login">
+                    <a href="javascript:void(0);"><i class="menu-icn menu-icn-login fa fa-vcard"></i></a>
+
+                    <span><a href="{:U('Member/login')}">Sign In</a> / <a href="{:U('Member/regist')}">Register</a></span>
+
+                </div>
+                    </if>
+                <!--END Login -->
+            </div>
+        </nav>
+    </div>
+
+    <!-- search-box -->
+    <div class="search-box-unit" >
+        <div class="container">
+            <div class="search-box-info">
+                <form role="form" id="searchForm" method="post" onsubmit="return productSearch('txtSearchM');">
+                    <input type="text" class="form-control" id="txtSearchM" name="txtSearchM" placeholder="Search">
+                    <button type="submit" class="btn bg-orange" id="btnSearchM">Search</button>
+                    <button type="button" class="search-close">X</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end search-box -->
+</header>
+<!-- END Header -->
+
+<script type="text/javascript" >
+    $('.nav-right-box .search-icn').click(function (){
+        if ($('.search-box-unit').attr('slide') == 0 || null == $('.search-box-unit').attr('slide')){
+       $('.search-box-unit').slideDown(200).attr('slide', 1);
+        }else{
+       $('.search-box-unit').slideUp(200).attr('slide', 0);
+        }
+    })
+    $('.search-close').click(function (){
+       $('.search-box-unit').slideUp(200).attr('slide', 0);
+    })
+
+//    $(document).ready(function(){
+//        // 设置header一级菜单可以点击
+//        $(document).off('click.bs.dropdown.data-api');
+//    });
+    //search product
+    function productSearch(txtid){
+        var _keywords = document.getElementById(txtid).value;
+var _search_url ="{:U('Search/sq', '')}";
+        if('' != _keywords.replace(/[ ]/gm,'')){
+            _search_url = _search_url+'?q='+ _keywords;
+            $('#searchForm').attr("action", _search_url);
+            $('#searchForm').submit();
+            //window.location.href="http://www.taotronics.com/catalog/product/search/" + _keywords;
+        }else{
+            layer.tips('Please enter the key words', $('#btnSearchM'));
+            return false;
+        }
+    }
+
+</script>

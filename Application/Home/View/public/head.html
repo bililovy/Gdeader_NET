@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title><notempty name="pageinfo.pagetitle">{$pageinfo.pagetitle}-</notempty>{$webname} </title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- 启用 WebApp 全屏模式 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- 隐藏状态栏/设置状态栏颜色 -->
+    <meta name="apple-mobile-web-app-title" content="{$pageinfo.pagetitle}">
+    <!-- 添加到主屏后的标题 -->
+    <meta content="telephone=no" name="format-detection" />
+    <!-- 忽略数字自动识别为电话号码 -->
+    <meta content="email=no" name="format-detection" />
+    <!-- 忽略识别邮箱 -->
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <!-- 转码申明：用百度打开网页可能会对其进行转码，如下meta避免转码 -->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!-- 下面是 禁止浏览器从本地计算机的缓存中访问页面内容：这样设定，访问者将无法脱机浏览。 -->
+    <!-- <meta http-equiv="Pragma" content="no-cache"> -->
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="msapplication-TileColor" content="#000"/>
+    <!-- Windows 8 磁贴颜色 -->
+    <meta name="msapplication-TileImage" content="icon.png"/>
+    <!-- Windows 8 磁贴图标 -->
+    <meta name="keywords" content="<empty name='pageinfo.keywords'>{$keywords}<else />{$pageinfo.keywords}</empty>" />
+    <meta name="description" content="<empty name='pageinfo.description'>{$description}<else />{$pageinfo.description}</empty>" />
+    <meta name="language" content="zh-CN" />
+    <meta name="author" content="<empty name='pageinfo.author'>{$webname}<else />{$pageinfo.author}</empty>" />
+    <link href="/urpower.ico" type="image/x-icon" rel="icon"/>
+    <link href="/urpower.ico" type="image/x-icon" rel="Shortcut Icon"/>
+    <link href="/urpower.ico" type="image/x-icon" rel="Bookmark"/>
+
+    <!-- 公共才css js 部分 -->
+    <load href="__CSS__/bootstrap.min.css" />
+    <load href="__CSS__/font-icons.css" />
+    <load href="__CSS__/styles.css" />
+    <!--[if lt IE 9]>
+    <load href="__JS__/html5shiv.js" />
+    <load href="__JS__/respond.min.js" />
+    <![endif]-->
+    <load href="__JS__/jquery-1.11.1.min.js" />
+    <load href="__JS__/function.js" />
+    <load href="__PLUGINS__/layer/layer.js" />
+
+    <script type="text/javascript">
+        var ctxPath =location.hostname;
+        function addFavorite(obj)
+            {
+                var add_fav_uri = "{:U('Goods/ajaxCart', '', '')}";
+                var $fav_num = obj.find('span.fav-num');
+                var $now = parseInt($fav_num.text()) != null ? parseInt($fav_num.text()) : 0;
+                var reg =/\d+/g;
+                var $gid = (obj.attr('id')).match(reg);
+                if ($gid  > 0){
+                   var $status = addCart($gid[0], add_fav_uri);
+                    if (typeof $status == 'object'){
+                        switch ($status.status){
+                            case 1:
+                                var $data = $status.data;
+                                var $fav_count = $status.count;
+                                $fav_num.text($now+1);
+                                break;
+                            default :
+                                var $data = $status.data;
+                        }
+                        layer.tips($data, obj , {
+                            tips: [1, '#E56C00'],
+                            time: 3000
+                        });
+                        if ($status.status ==3) {
+                            setTimeout(function (){
+                                window.location.href=$status.url;
+                            },3000)
+                        }
+                    }
+                }else{
+                    layer.tips('Operation failed, Please try again ！。', obj , {
+                        tips: [1, '#E56C00'],
+                        time: 3000
+                    });
+                }
+            }
+    </script>
+    <meta name="uyan_auth" content="0db1ec8032" />
+<!-- 公共才css js 部分 -->
+</head>

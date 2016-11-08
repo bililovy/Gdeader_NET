@@ -1,0 +1,1 @@
+<div class="breadcrumb_box">	<ol class="breadcrumb">	  <li><a href="/"><i class="fa fa-home"></i>Home</a></li>	  <foreach name="pageinfo.breadcrumb" item="crumb" key="link">	  <if condition="is_numeric($link) or empty($link)">	  <li>{$crumb}</li>	  <else />	  <li><a href="{$link}">{$crumb}</a></li>	  </if>	  </foreach>	</ol></div>

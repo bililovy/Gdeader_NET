@@ -1,0 +1,79 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/common.style.css" />
+<load href="__CSS__/search/search.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+<div class="search_head">
+	<div class="container">
+		<div class="search_result">
+			<if condition="! $searchs">
+			<div class="no_data">			
+				<span class="mood"></span><span class="desc">sorry! no result for your key words.</span>
+			</div>
+			<else />
+			<ul class="search_list">
+				<foreach  name="searchs" item="search">
+				<li class="item">
+					<div class="imgb">
+						<a href="{:U('Goods/detail', array('gid'=>$search['id'],'from'=>'search'))}" title="{$search.goodsname}" target="_blank"><img src="{$search.goodsimg}" alt="{$search.goodsname}" /></a>
+					</div>
+					<div class="info">
+						<h1>{$search.goodsname}</h1>
+						<div class="more">
+							<span class="price">${$search.price}</span>
+							<span class="view"><i class="fa fa-eye"></i>{$search.click}</span>
+						</div>
+						<div class="opbtn" id="{$search.id}">
+							<a href="<empty name='search.goodslink'>{:U('Goods/detail', array('gid'=>$search['id'],'from'=>'search'))}<else />{$search.goodslink}</empty>" title="buy now" class="buy"><i class="fa fa-shopping-cart"></i></a>
+							<a href="javascript:;" title="add to wishlist" class="wish add_wish"><i class="fa fa-heart"></i></a>
+						</div>
+					</div>
+				</li>
+				</foreach>
+			</ul>
+			</if>
+			<!-- 分页 -->
+						<!-- <div class="pagination">
+							<ul>
+								<li><span>First</span></li>
+								<li><span>Previous</span></li>
+								<li><span class="currentpage">1</span></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-2.html"><span>2</span></a></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-3.html"><span>3</span></a></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-4.html"><span>4</span></a></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-5.html"><span>5</span></a></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-6.html"><span>6</span></a></li>
+								<li><span>...</span></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-2.html"><span>Next</span></a></li>
+								<li><a class="demo"
+									href="http://www.tbrmall.com/cate-3-0-0-0-0-0-0-0-57.html"><span>Last</span></a></li>
+							</ul>
+						</div> -->
+						{$page}
+					<!-- //分页 -->
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+$('.search_head .container .search_result .search_list li .imgb img').zoom_img({width:50,height:56});
+$('.search_head .container .search_result .search_list li').hover(function (){
+	$(this).find('.opbtn').stop().fadeIn(200);
+},function (){
+	$(this).find('.opbtn').stop().fadeOut(200);	
+})
+</script>
+<!-- //登录表单 页面 -->
+<include file="Public/footer" />
+
+</body>
+</html>

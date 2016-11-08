@@ -1,0 +1,24 @@
+<include file="Public/header" />
+<body>
+	<!--BEGIN 本页面所需文件-->
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/common/signal.css" />
+<load href="__JS__/common/h_f2.js" />
+	<!--END 本页面所需文件-->
+
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />
+<!-- END 头部导航 -->
+<!-- BEGIN 中部区域 -->
+	<div class="middle_content">
+		<include file="Tools/breadcrum" />
+		<div class="signalpage_content" id="signalpage_content"  style="margin: 15px auto;">{$signalinfo.content}</div>
+	</div>
+<!-- END 中部区域 -->
+
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/common/signal.js" />

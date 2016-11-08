@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻添加页面</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/news/news_add.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/ajaxFileUpload.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/tools/htmlEditor/kingeditor/kindeditor-all-min.js" />
+<!-- END 当前页面的css 和js -->
+
+<script type="text/javascript" >
+var uploadurla="{:U('News/contentIMGUpload')}"; //后台上传地址
+var cssurl="";
+var $sessionid ="{$sessionid}";//后台传输出来 用php生成sessionid
+</script>
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="{:U('News/index')}">博文列表</a></li>
+    <li><a href="javascript::">博文添加</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+
+    <div class="formbody">    
+    <div class="formtitle"><span>新闻信息</span>
+	<a href="{:U('News/index')}"><i class="fa fa-reply"></i>返回新闻列表</a>
+	</div>    
+    <ul class="forminfo">
+    <li><label><b>*</b>新闻标题</label><input name="title" type="text" class="dfinput" maxlength="55" /><i placeholder="标题不小于5个字且不能超过55个字" >标题不小于5个字且不能超过55个字"</i></li>
+   	<li class="cover"><label><b>&nbsp;</b>新闻封面</label>
+    <input name="cover" id="coverImg" type="text" class="dfinput  cover" readonly="readonly" value="/assets/common/images/icons/news_no_img.jpg"/>
+    <input name="coverImgFile" type="file" style="display:none" id="coverImgFile" onchange="file_change(this.value)">
+    <input type="button" class="select-cover" value="选择封面" onclick="coverImgFile.click();" name="get_file">
+    <input name="uploadBtn" type="button" class="uploadBtn" value="上传" onclick="return ajaxFileUpload();"><br />
+    <i class="cover-tip" placeholder="图片尺寸建议400×414像素，请先做好图片，否则可能影响前端显示效果" >图片尺寸建议400×414像素，请先做好图片，否则可能影响前端显示效果</i>
+    </li>	
+    
+    <li><label><b>&nbsp;</b>关键字</label><input name="keywords" type="text" class="dfinput" /><i placeholder="多个关键字用空格隔开" >多个关键字用中英文逗号（,）隔开，建议填写，利于搜索引擎收录网站</i></li>
+    <li  class="lab-desc"><label><b>&nbsp;</b>新闻导读</label><cite><textarea name="description" value="" class="description"></textarea><div class="count-text">还可输入<span class="text-num">200</span>个字</div><i>描述不超过200字，建议填写，利于搜索引擎收录网站</i></cite></li>
+    <li><label><b>&nbsp;</b>发布后显示</label>
+	<input name="isshow" type="hidden" value="1" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>立即显示</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>暂不显示</a>
+	</cite>
+	</li>
+    <li><label><b>&nbsp;</b>通知订阅者</label>
+	<input name="is_notice" type="hidden" value="0" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="notice_all"><i class="fa fa-square-o"></i>通知所有</a>
+		<a href="javascript:void(0)" class="notice_some"><i class="fa fa-square-o"></i>通知部分人</a>
+		<a href="javascript:void(0)" class="notice_not"><i class="fa fa-check-square"></i>不通知</a>
+	</cite>
+        <i style="color:#F65F36;">功能暂未开通</i>
+	</li>
+    <li>
+    <div class="left-i">
+    <label><b>&nbsp;</b>新闻排序</label>
+    <input name="sortorder" type="text" class="dfinput sort" value="50" />
+    <i placeholder="请输入整数">请输入整数</i>
+    </div>
+     <div class="right-i">
+    <label><b>&nbsp;</b>阅读次数</label>
+    <input name="click" type="text" class="dfinput click" value="0" />
+    <i placeholder="请输入整数">请输入整数</i>
+    </div>
+    </li>
+     <li><label><b>&nbsp;</b>发布者</label><input name="author" type="text" class="dfinput publisher" value=""  maxlength="12"/><i placeholder="发布后，作者将显示此名字">设置发布者后，新闻作者将显示此名字，不填默认为“成都金标装饰公司”</i></li>
+    <li><label><b>&nbsp;</b>新闻内容</label></li>
+    <li class="editor">    
+<textarea id="content" name="content" style="width:100%;height:700px;"></textarea>
+    </li>
+    <li><label>&nbsp;</label><input name="submit" type="button" class="submit submitable" value="确认添加" />
+	<i placeholder=""></i>
+	</li>
+    </ul>
+    <div id="show_cover" class="show_cover">
+    <h2>封面预览</h2>
+    <div class="img"><img src="/assets/common/images/icons/news_no_img.jpg" def_src="/assets/common/images/icons/news_no_img.jpg"  width="170" height="117"></div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var $newsAddurl="{:U('News/add')}";
+var $coverUploadUrl="{:U('News/coverUpload')}";
+</script>
+<load href="__ADMIN_JS__/news/news_add.js" />

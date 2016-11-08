@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品展示</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/goods/goods_list.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">产品分类列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U('Goods/cateAdd')}'"><i class="fa fa-plus"></i>添加分类</li>
+        <li style="padding-left: 15px; color: #DA3D33;">温馨提醒：如果将顶级分类的“导航显示”关闭，则该分类下的子分类也不会显示在导航处</li>
+        </ul> 
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    </div>
+    <style>
+
+  </style>
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th width="5%">序号</th>
+        <th width="35%">分类名称</th>
+        <th width="10%">前端显示</th>
+        <th width="15%">导航显示</th>
+        <th width="15%">排序</th>
+        <th width="20%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="$catelists">
+        <foreach name="catelists" item="catelist">
+       	<tr>
+       		<td class="num"><div class="tdcontent">{++$count}<input type="hidden" value="{$catelist.id}" name="cateid" /></div></td>
+       		<td align="left"><div class="tdcontent" style="text-align: left;">{$catelist.separatechar}{$catelist.catename}</div></td>     
+       		<td class="toggle-show">
+       		<div class="tdcontent">
+       		<if condition="$catelist.isshow eq 1">
+			<span class="isshow"  data-nid="{$catelist.id}" style="background-image:url(__ADMIN_IMG__/icons/big_right.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+			<else />
+			<span class="isshow" data-nid="{$catelist.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+       		</if>
+			</div>
+			</td>
+       		<td class="toggle-show">
+       		<div class="tdcontent">
+			<if condition="$catelist.showinnav eq 1">
+			<span class="shownav" data-nid="{$catelist.id}" style="background-image:url(__ADMIN_IMG__/icons/big_right.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+			<else />
+			<span class="shownav"  data-nid="{$catelist.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+       		</if>
+			</div>
+			</td>
+       		<td><div class="tdcontent">{$catelist.sortorder}</div></td>
+       		<td class="multi-operate">
+       		<div class="tdcontent">
+				<input type="hidden" value="{$catelist.id}" name="cid" />
+				<a href="{:U('Goods/cateEdit', array('cid'=>$catelist['id']))}" title="编辑" class="tab-btn edit">编辑</a>
+				<a href="javascript:void(0)" title="" class="tab-btn recycle">删除</a>
+			</div>       		
+       		</td>
+       	</tr>
+       	</foreach>
+       	<else />
+       	<tr><td colspan="7" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前暂无可用分类，请点击左上角添加分类，添加后方可进行产品其他操作</td></tr>
+       	</if>
+        </tbody>    
+    </table>    
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $cateDeleteUrl="{:U('Goods/cateTrash')}";
+var $cateShowUrl="{:U('Goods/cateShowToggle')}";
+</script>
+<load href="__ADMIN_JS__/goods//cate_list.js" />

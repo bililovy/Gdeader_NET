@@ -1,0 +1,116 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/goods/category.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+<!-- 商品分类 页面 -->
+ 	<div class="category">
+			<div class="container">		
+				<if condition="$relatecates">		
+					<div class="cats_display">
+						<ul>
+							<foreach name="relatecates" item="cate">
+							<li class="cate_one_item"><a href="{:U('Goods/index',array('cid'=>$cate['id'],'justfrom'=>'catelist','do'=>'fsub'))}" class="catelink <eq name='cate.id' value='$curcateid'>active </eq>">{$cate.catename}<span style="margin-left: 3px;color: <eq name='cate.id' value='$curcateid'>#FFF<else />》#00A7E1</eq>;"></span></a></li>
+		 					</foreach>		 					
+						</ul>
+						<a class="prev"><i class="fa fa-angle-left"></i></a> 
+						<a class="next"><i class="fa fa-angle-right"></i></a>
+					</div>					
+				</if>
+				<!-- 产品列表 -->
+					<div class="jumei-xp">
+					<div class="sort-bar" id="main-nav">				       
+				        {$page2}
+				        <div class="nch-sortbar-array"> Sort By：
+				          <ul>
+				            <li <empty name="s">class="selected"</empty>><a href="{:U('Goods/index',array('cid'=>$curcateid,'justfrom'=>'catelist'))}" title="default">default</a></li>
+				            <li <eq name="s" value="2">class="selected"</eq>><a href="{:U('Goods/index',array('cid'=>$curcateid,'s'=>2,'click'=>$sale,'justfrom'=>'catelist'))}" <eq name="sale" value="2">title="click from low to high sort" class="asc"<else />title="click from high to low sort"</eq>>click<i></i></a></li>
+				            <li <eq name="s" value="3">class="selected"</eq>><a href="{:U('Goods/index',array('cid'=>$curcateid,'s'=>3,'pop'=>$pop,'justfrom'=>'catelist'))}" <eq name="pop" value="2">title="popular from low to high sort" class="asc"<else />title="click from high to low sort"</eq>>popular<i></i></a></li>
+				            <li <eq name="s" value="4">class="selected"</eq>><a href="{:U('Goods/index',array('cid'=>$curcateid,'s'=>4,'price'=>$price,'justfrom'=>'catelist'))}" <eq name="price" value="2">title="price from low to high sort" class="asc"<else />title="click from high to low sort"</eq>>price<i></i></a></li>
+				          </ul>
+				        </div>				        
+      				</div>
+      
+			<ul class="jumei-xp-list">
+				<if condition="$goods">
+					<foreach name="goods" item="g" key='idx'>
+					<li <if condition='(($idx+1)%3)==1'>class="noml"<elseif condition='(($idx+1)%3)==0' />class="nomr"</if>>
+						<div class="jumei-img-box" id="{$g.id}">
+								<img class="scrollLoading" data-url="{$g.goodsimg}" src="{$g.goodsimg}" alt="{$g.goodsname}">
+								<a href="<empty name='g.goodslink'>{:U('Goods/detail',array('gid'=>$g['id'], 'justfrom'=>'catelist'))}<else />{$g.goodslink}</empty>" class="op buy"><i class="fa fa-shopping-cart"></i>buy now</a>
+								<a href="javascript:" class="op cart add_wish"><i class="fa fa-shopping-basket"></i>add to cart</a>
+						</div>
+							<a href="{:U('Goods/detail',array('gid'=>$g['id'], 'justfrom'=>'catelist'))}" class="glink" title="{$g.goodsname}">{$g.goodsname|mb_substr=0,40}..</a>
+							<div class="intro_box">
+								<div class="xp-price red-color">
+									<em>$</em><span>{$g.price}</span>
+								</div>
+								<div class="price_icon_wrap fr">
+									<i class="fa fa-eye"></i>{$g.click}
+								</div>
+							</div>
+						</li>
+						</foreach>
+				<else />
+					<li style="padding: 100px 0;text-align: center;font-size: 2em;width: 100%;color: #898989;">Sorry ! No datas at this category.</li>
+				</if>
+				</ul>
+				
+				<!-- 分页 -->
+						<div class="pagination">							
+							{$page}
+						</div>
+					<!-- //分页 -->
+		</div>		
+		<script type="text/javascript">
+					$(".cats_display").slide({
+						mainCell : "ul",
+						autoPlay : false,
+						effect : "left",
+						vis : 5,
+						scroll : 2,
+						autoPage : true,
+						trigger:'mouseover',
+						pnLoop : false
+					});
+					$('.category .container .jumei-img-box img').zoom_img({width:100,height:106});
+					$('.category .container .jumei-img-box').hover(function (){
+						$(this).find('img').addClass('on');
+						$(this).find('a.op.buy').stop().animate({left: 0},{
+						    easing: 'easeOutBack',
+						    duration: 50,
+						    complete: true
+						});
+						$(this).find('a.op.cart').stop().animate({right: 0},{
+						    easing: 'easeOutBack',
+						    duration: 50,
+						    complete: true
+						});
+					}, function (){
+						$(this).find('img').removeClass('on');					
+						$(this).find('a.op.buy').stop().animate({left: '-170px'},{
+						    easing: 'easeOutBack',
+						    duration: 50,
+						    complete: true
+						});
+						$(this).find('a.op.cart').stop().animate({right: '-170px'},{
+						    easing: 'easeOutBack',
+						    duration: 50,
+						    complete: true
+						});					
+					})					
+				
+				</script>
+				<!--// 产品列表 -->
+				
+			</div>
+
+		</div>
+		</div>
+ 	</div>
+<!-- //商品分类 页面 -->
+<include file="Public/footer" />
+</body>
+</html>

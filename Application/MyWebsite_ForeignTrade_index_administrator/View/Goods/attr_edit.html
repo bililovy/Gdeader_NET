@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>产品添加</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/goods/attr_add.css" />
+
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">首页</a></li>
+    <li><a href="javascript:void(0)">产品属性编辑</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+<style>
+.no_data{
+	margin-top: 15px;
+	line-height: 80px;
+	max-width: 600px;
+}
+.no_data p{
+	font-size: 16px;
+	color: #898989;	
+	text-align: center;
+}
+.no_data p a{
+	padding: 5px 8px;
+	background: #009FB3;
+	color: #FFF;
+}
+.goodsalbum{
+	border: 1px dotted #898989;
+	float: left;
+	max-width: 510px;
+	padding: 8px;
+	padding-bottom: 0;
+}  
+.forminfo select{
+	height: 35px;
+	border: 1px solid #A7B5BC;
+	min-width: 120px;
+}
+.forminfo input.attrvalues{
+	resize: none;
+	width: 330px;
+	height: 50px;
+	padding: 10px;
+}
+</style>
+    <div class="formbody">
+    <div class="formtitle">
+    	<span>产品属性信息编辑</span>
+		<a href="{:U('Goods/attribute')}"><i class="fa fa-reply"></i>返回属性列表</a>
+		<input type="hidden" value="{$attr.id}" name="attrid" />
+		</div>    
+    <ul class="forminfo">
+    <li><label><b>*</b>属性名称</label><input name="attrname" type="text" class="dfinput" maxlength="20" value="{$attr.attrname}"/><i placeholder="标题不小于2个字符且不能超过20个字符" >标题不小于2个字符且不能超过20个字符</i></li>
+    <li><label><b>*</b>所属分类</label>
+		<select name="cateid">
+			<option value="0">---选择分类---</option>
+			<if condition="$cates">			
+			<foreach name="cates" item="cate">
+			<option value="{$cate.id}" <eq name="cate.id" value="$attr.cateid">selected="selected"</eq>>{$cate.separatechar}{$cate.catename}</option>
+			</foreach>
+			</if>			
+		</select>
+	<i placeholder="请选择该属性所属的分类" >请选择该属性所属的分类</i></li>
+    <li><label><b>*</b>挂载方式</label>
+    	<select name="attrinputtype">
+			<option value="">--选择挂载方式--</option>
+			<option value="1" placeholder="添加商品时，将以单选按钮展示" <eq name="attr.attrinputtype" value="1">selected="selected"</eq>>属性值单选</option>
+			<option value="3" placeholder="添加商品时，将以下拉框展示" <eq name="attr.attrinputtype" value="3">selected="selected"</eq>>属性值多选</option>
+			<option value="4" placeholder="添加商品时，将以显示文本输入框" <eq name="attr.attrinputtype" value="4">selected="selected"</eq>>手工录入</option>
+		</select>
+		<i placeholder="请选择此属性的展现方式">请选择此属性的展现方式</i>
+	</li>   	
+	<li class="attrvalue">
+		<label><b>*</b>属　性　值</label>
+		<input name="attrvalues" type="text" class="dfinput" value="{$attr.attrvalues}" <eq name="attr.attrinputtype" value="4">style="display: none"</eq>/>
+		<i placeholder="请输入此属性对应的属性值，多个值请用“|”隔开，如：白色|黄色|绿色">请输入此属性对应的属性值，多个值请用“|”隔开，如：白色|黄色|绿色</i>
+	</li> 
+	 <li>
+    <label><b>&nbsp;</b>排序设置</label>
+    <input name="sortorder" type="text" class="dfinput sort" value="{$attr.sortorder}" />
+    <i placeholder="请输入整数">请输入整数</i>
+    </li>    
+    <li><label>&nbsp;</label><input name="submit" type="button" class="submit submitable" value="更新属性" />
+	<i placeholder=""></i>
+	</li>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var $postUrl="{:U('Goods/attrEdit')}";
+/******************* BEGIN 数据处理区**************************/
+var $attrname=$('input[name="attrname"]'),
+	  $cateid=$('select[name="cateid"]'),
+	  $attrinputtype=$('select[name="attrinputtype"]'),
+	  $attrvalues=$('input[name="attrvalues"]'),
+	  $sortorder=$('input[name="sortorder"]'),
+	  $aid=parseInt($('input[name="attrid"]').val());
+	  
+$sortorder.blur(function (){
+	getNumber($(this));
+})
+
+$('input[name="submit"]').click(function (){
+	if($aid>0){
+		var $this=$(this);
+		//if($this.hasClass("submit-disable")) return false;
+		var bool_attrvalues=true;
+		var bool_cateid=  true;
+		var bool_attrinputtype=  true;
+		var bool_attrname=func_attrname($attrname);
+		if($cateid.val()<=0){
+			setTips($cateid, "请选择一个分类！");
+			bool_cateid=false;
+		}else{
+			setTips($cateid,'',true);
+		}
+		if($attrinputtype.val()<=0){
+			setTips($attrinputtype, "请选择一个属性挂在类型！");	
+			bool_attrinputtype=false;
+		}else{
+			setTips($attrinputtype,'',true);
+		}
+		if($attrinputtype.val()!=4){
+			if ($attrvalues.val()==''){
+				setTips($attrvalues, "请设置属性值，多个值用“|”隔开！");	
+				 bool_attrvalues=false;
+			}else{
+				setTips($attrvalues,'',true);
+			}
+		}
+		if(bool_attrname && bool_cateid && bool_attrinputtype && bool_attrvalues){
+			var $data={
+					attrname: $attrname.val(),
+					cateid: $cateid.val(),
+					attrinputtype: $attrinputtype.val(),
+					attrvalues: $attrvalues.val(),
+					sortorder: $sortorder.val(),
+					aid: $aid
+			}
+			$this.siblings("i").html('<span class="doing">正在提交，请稍后……</span>');
+			$this.removeClass("submitable").addClass("submit-disable");
+			$.post($postUrl,$data, function (back){
+				if(back.status==1){
+					$this.siblings("i").html('<span class="doing">更新成功，正在跳转到原来列表……</span>');
+					setTimeout(function (){
+						window.location.href=back.redirecturl
+					},1000);
+				}else{
+					var time= (back.waittime) ? back.waittime*1000 : 3000;				
+					easyDialog.open({
+						container : {
+							header: '消息提醒窗口',
+							content : back.data
+						},
+						autoClose : time
+					});			
+					$this.siblings("i").html('');
+					$this.removeClass("submit-disable").addClass("submitable");
+				}				
+			}, 'json')
+		}else{
+			setTips($(this), "表单数据还有错误，请检查！");
+			return false;
+		}
+	}else{
+		easyDialog.open({
+			container : {
+				header: '消息提醒窗口',
+				content : '系统未检测到此次操作的必需参数，请刷新重新尝试！'
+			},
+			autoClose : 4000
+		});				
+	}	
+})
+
+/******************* END 数据处理区**************************/
+
+/******************* BEGIN 效果展现区**************************/
+$attrinputtype.change(function (){
+	if($(this).val()==4){
+		$('.forminfo li.attrvalue').stop().slideUp(150);
+	}else{
+		$('.forminfo li.attrvalue').stop().slideDown(150);		
+	}
+})
+
+/******************* END 效果展现区**************************/
+
+/******************* BEGIN 函数集成**************************/
+ function func_attrname(o){
+	var value=o.val();
+	if (is_empty(value)) {
+		setTips(o, "属性名称不能为空！");
+		return false;
+	} else {
+		if (has_length_error(value, 2, 20)) {
+			setTips(o, "名称长度为2-20个字符，请检查！");
+			return false;
+		} else {
+			setTips(o, "", true);
+			return true;
+		}
+	}
+}
+function getNumber(o){
+	var value=trimValue(o.val());
+	value = value.replace(/[^0-9]/ig,"");
+	var reg=/\d/g;
+	if(reg.test(value))
+	o.val(value);
+	else
+	o.val(10);
+}
+function setTips(o, tips, isDef) {
+	isDef = (isDef == null) ? false : true;
+	o.siblings("i").html("");
+	if (isDef) {
+		if ("" !== tips) {
+			var defTips = tips;
+		} else {
+			var defTips = o.siblings("i").attr("placeholder");
+		}
+		if (typeof defTips == "undefined") {
+			defTips = "通过校验";
+		}
+		o.siblings("i").text(defTips);
+	} else {
+		o.siblings("i").html('<i style="color: #DD2D28;font-size:15px;padding-right: 5px;" class="fa fa-exclamation-circle"></i><span style="color: #D31B26;">'+ tips + "</span>");
+	}
+}
+
+/******************* END 函数集成**************************/
+
+</script>
+

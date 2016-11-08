@@ -1,0 +1,202 @@
+@import url(../common.style.css);
+.middle_content {
+    background: url(../images/default/icons/contact_bg.jpg) no-repeat fixed center center;
+    background-size: cover;
+}
+.middle_content .form{
+    max-width: 1080px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.middle_content .form .formbody{
+    float: left;
+    width:50%;
+}
+
+.middle_content .form .formbody h2{
+    color: #3C3B3B;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    font-size: 30px;
+    text-transform: capitalize;
+}
+.middle_content .form .formbody .form_desc{
+    text-align: left;
+    color: #999;
+    font-size: 1em;
+    font-weight: 500;
+    width: 90%;
+    line-height: 1.8em;
+}
+.middle_content .form .formbody .formline{
+    overflow: hidden;
+}
+.middle_content .form .formbody .formline input{
+    padding: 10px;
+    font-size: 1em;
+    width: 93%;
+    margin: 10px 0px;
+    border: 1px solid #8A8888;
+    color: #999;
+    background: none;
+    -webkit-appearance: none;
+    float: left;
+    outline: none;
+}
+.middle_content .form .formbody .formline textarea{
+    resize: none;
+    width: 93%;
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px 0px;
+    border: 1px solid #8A8888;
+    color: #999;
+    background: none;
+    -webkit-appearance: none;
+    float: left;
+    outline: none;
+    font-weight: 500;
+}
+.middle_content .form .formbody div.btn{
+    margin: 10px auto;
+    width: 150px;
+    clear: both;
+    overflow: hidden;
+    float: none;
+}
+.middle_content .form .formbody div.btn input.button{
+    margin-top: 1em;
+    color: #fff;
+    font-size: 1.1em;
+    padding: 0.7em 1em;
+    -webkit-appearance: none;
+    text-transform: uppercase;
+    display: inline-block;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    font-weight: 600;
+    border: none;
+    text-transform: uppercase;
+    outline: none;
+    cursor: pointer;
+    background: #EA8933;
+}
+.middle_content .form .formbody div.btn input.button:hover{
+    text-decoration: none;
+    color: #fff;
+    background: #CB6A1A;
+}
+
+/************* 自定义select框*********/
+.middle_content .form .formbody .cssSelect {
+    padding: 2px  0;
+    width: 93%;
+    font-size: 1em;
+    margin: 10px 0px;
+    border: 1px solid #8A8888;
+    color: #999;
+    max-width: 517px;
+    background: none;
+    -webkit-appearance: none;
+    float: left;
+    outline: none;
+    position: relative;
+    font-weight: 500;
+}
+.middle_content .form .formbody .cssSelect .selectBox {
+    width:98%;
+    margin: 0;
+    border: none;
+}
+
+.middle_content .form .formbody .cssSelect .selectBox .selectLt {
+    width: 95%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-indent: 9px;
+    color: #A5A5A5;
+    padding: 0;
+    line-height: 30px;
+    float: left;
+}
+
+.middle_content .form .formbody .cssSelect .selectBox .selectRt {
+    width: 2%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 30px;
+    color: #8A8888;
+    float: left;
+}
+
+.middle_content .form .formbody .cssSelect .optionsBox {
+    width: 99%;
+    color: #FFF;
+    max-height: 250px;
+    background: #E7B746;
+    border: 1px solid #E7B746;
+    overflow: auto;
+}
+
+.middle_content .form .formbody .cssSelect .optionsBox .optionBox.selected {
+    background: rgba(255,255,255,0.2);
+    color: #FFF;
+}
+
+.middle_content .form .formbody .cssSelect .optionsBox .optionBox.oHover {
+    background: rgba(255,255,255,0.1);
+}
+/************* 自定义select框*********/
+
+.middle_content.mini{
+    min-width: 300px;
+}
+.middle_content.mini .form .formbody .cssSelect {
+    max-width: 96%;
+}
+.middle_content .form .companyinfo{
+    float: left;
+    width: 48%;
+    margin-left: 2%;
+}
+.middle_content .form .companyinfo h2{
+    color: #3C3B3B;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    font-size: 30px;
+    text-transform: capitalize;
+}
+.middle_content .form .companyinfo .map{
+    margin-top: 45px;
+}
+.middle_content .form .companyinfo .info_detail{
+    font-size: 1.2em;
+    line-height: 2em;
+    color: #999;
+    font-weight: 400;
+    margin-top: 45px;
+}
+/********* BEGIN mini状态下*****************/
+.middle_content.mini .form .formbody{
+    width: 100%;
+    float: none;
+    margin: 0 auto;
+}
+.middle_content.mini .form .companyinfo .map{
+    margin-top: 20px;
+}
+.middle_content.mini .form .companyinfo{
+    float: none;
+    margin-left: 0;
+    margin-top: 15px;
+    width: 100%;
+}
+/********* END mini状态下*****************/

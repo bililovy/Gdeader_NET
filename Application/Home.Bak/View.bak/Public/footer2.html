@@ -1,0 +1,28 @@
+<div class="footer">
+    <div class="footer_main">
+    	<if condition="$signalnavs">
+    	<div class="linknav">
+    		<a href="/" title="{$webname}">home</a>
+    		<foreach name="signalnavs" item="signal">
+    		<a href="{:U('Signal/page',array('sid'=>$signal['id'], 'signfrom'=>'anypage'))}" title="{$signal.title}">{$signal.title}</a>
+    		</foreach>
+    		<a href="{:U('News/index',array('justfrom'=>'anypage'))}">news</a>
+    		<a href="{:U('Contact/index',array('justfrom'=>'anypage'))}">contact</a>
+    	</div>
+    	</if>
+    	<if condition="$socialtools">
+    	<div class="contactway">
+    		<foreach name="socialtools" item="tool">
+    		<a href="javascript:void(0)" class="icon fa {$tool.icon}" data-accout="{$tool.account}" title="{$tool.toolname}"></a>
+    		</foreach>			
+    	</div>
+    	</if>
+    	<div class="copyright">
+    		<div class="info">
+    			<p>{$webname}© {$copyright}.</p>
+				<p><span>Address: {$address}</span>&nbsp;<span>Email: {$email}</span>&nbsp;<span>TEL: <foreach name="tels" key="k" item="tel"><eq name="k" value="0">{$tel}<else />&nbsp;/&nbsp;{$tel}</eq></foreach></span></p>
+    		</div>
+    	</div>
+	</div>
+</div>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256830838' style='display: none;' '%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256830838' type='text/javascript'%3E%3C/script%3E"));</script>

@@ -1,0 +1,152 @@
+<include file="public/head"/>
+<body>
+
+<load href="__CSS__/news_detail.css"/>
+<!-- header -->
+<include file="public/body_header"/>
+<!--/ header -->
+<style>
+    .single h2 {
+        color: #e56c00;
+    }
+
+    .single .news_info {
+        color: #9e9e9e;
+        line-height: 2em;
+        padding-left: 1em;
+    }
+
+    .condidate_detail .ico{
+        margin-right:5px;
+        color: #e56c00;
+    }
+    .scroll-fixed{
+        background: #FFF;
+    }
+</style>
+<div class="container">
+    <div class="single">
+        <h2>{$news.title}</h2>
+        <div class="col-md-9 single_right">
+            {$news.content}
+            <a name="comment"></a>
+            <div class="comments">
+                <h6>Comments</h6>
+
+                <!-- UY BEGIN -->
+                <div id="uyan_frame"></div>
+                <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2118441"></script>
+                <!-- UY END -->
+
+
+            </div>
+
+            <div class="candidates-item">
+                <h5>Similar News</h5>
+                <foreach name="newest" item="new">
+
+                <div class="candidate_1">
+                    <div class="thumb"><img src="{$new.cover}" class="img-responsive" alt="{$new.title}"/></div>
+                    <div class="thumb_desc">
+                        <h6 class="title"><a href="{:U('News/detail', array('nid'=>$new['id']))}">{$new.title}</a></h6>
+                        <span class="meta">Published at {$new.addtime|date='Y-m-d', ###}</span>
+                        <div class="candidate_but">
+                            <ul class="top-btns">
+                                <li><a href="{:U('News/detail', array('nid'=>$new['id']))}" class="btn_5 btn-gray fa fa-plus toggle"></a></li>
+                            </ul>
+                        </div>
+                        <p class="sm_1">{$new.description|default='See details of the news !'}</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                </foreach>
+            </div>
+        </div>
+        <div class="col-md-3 scroll-fixed">
+            <table class="condidate_detail">
+                <h4>News Infomation</h4>
+                <tbody>
+                <tr>
+                    <td width="45%"><i class="ico fa fa-user"></i>Author</td>
+                    <td>{$news.author}</td>
+                </tr>
+
+                <tr>
+                    <td><i class="ico fa fa-clock-o"></i>Pub. Time</td>
+                    <td>{$news.addtime|date='Y-m-d H:i', ###}</td>
+                </tr>
+
+                <tr>
+                    <td><i class="ico fa fa-eye"></i>Views</td>
+                    <td>{$news.click}</td>
+                </tr>
+
+                <tr>
+                    <td><i class="ico fa fa-comment-o"></i>Comments</td>
+                    <td><a href="#comment">122</a></td>
+                </tr>
+                <tr>
+                    <td><i class="ico fa fa-feed"></i>Prev News</td>
+                    <if condition ="$prev">
+                        <td><a href="{:U('News/detail', array('nid'=>$prev['id']))}" title="{$prev.title}">{$prev.title|substr=0,20}...</a></td>
+                        <else />
+                        <td>Already the First News !</td>
+                    </if>
+                </tr>
+                <tr>
+                    <td><i class="ico fa fa-feed"></i>Next News</td>
+                    <if condition ="$next">
+                        <td><a href="{:U('News/detail', array('nid'=>$next['id']))}" title="{$next.title}">{$next.title|substr=0,20}...</a></td>
+                    <else />
+                        <td>Already the Last News !</td>
+                    </if>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $top = $('.scroll-fixed').offset().top;
+    var left = $('.scroll-fixed').offset().left;
+    $(document).scroll(function () {
+        var $scroller_top = $(document).scrollTop() + 60;
+        if ($scroller_top >=$top){
+            if ($('#temp').length >0){
+                return false;
+            }
+           $temp = $('.scroll-fixed').clone();
+            $temp.attr('id', 'temp');
+            $temp.css({
+                'position' : 'fixed',
+                'top' : '60px',
+                'left' : left+'px'
+            })
+            $('body').append($temp);
+        }else{
+            $('#temp').remove();
+        }
+
+    });
+   var container= $('.single_right').width();
+    $('.single_right img').each(function (){
+        if ($(this).width() > container) {
+            $(this).width(container+'px');
+        }
+    })
+</script>
+<!-- footer -->
+<include file="public/footer"/>
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script"/>
+<load href="__JS__/news2.js"/>
+<!--/script-->
+
+
+</body>
+</html>

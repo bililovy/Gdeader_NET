@@ -1,0 +1,65 @@
+<include file="Public/head" />
+<body>
+<load href="__COMMON__/js/tools/validform.min.js" />
+<load href="__COMMON__/css/tools/validform.css" />
+<load href="__CSS__/login/login.css" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+	<div class="login">
+		 <div class="container">				
+			 <h2>Please Login Your Account</h2>
+			 <div class="log fl">			 
+					 <p>Welcome, please enter the folling to continue.</p>
+					 <div class="tips"><i class="fa fa-error"></i>some where error</div>
+					 <form action="{:U('Member/login')}" method="post" class="login_form">
+						 <label>User Name:</label>	
+						 <input type="text" value="" class="input username" name="account" datatype="s5-40|e" nullmsg="Please enter your account" errormsg="Incorrect account format"  sucmsg="ok" tip="Your Email or Nickname" placeholder="Your Email or Nickname">
+						 <label>Password:</label>
+						 <input type="password" name="password" value="" class="input pwd" datatype="*6-16"  nullmsg="Please enter your password" errormsg="Incorrect password format"  sucmsg="ok">					
+						 <input type="submit" value="Login" class="submit">
+						 <div id="tips" style="line-height:35px"></div>
+						  <a href="javascript:;">Forgot Password ?</a>
+					 </form>				 
+			 </div>
+			  <div class="login-right fr">
+				  	<h3>NEW REGISTRATION</h3>
+					<p>By creating an account with our store, you will be able to manage  your own information, view and track your orders and even more operations we provided.We will continue to update the store to give you a better service.</p>
+					<a class="acount-btn" href="{:U('Member/regist')}">Create an Account</a>
+			 </div>
+			 <div class="clearfix"></div>		 
+			 
+		 </div>
+	</div>
+</div>
+<script type="text/javascript">
+$('.login .login-right .acount-btn, .login .login_form .submit').hover(function (){
+	$(this).addClass('on');
+}, function (){
+	$(this).removeClass('on');	
+})
+var item=[$('.login_form input.username'), $('.login_form input.pwd')];
+inputDefaultSet(item);
+$(".login_form").Validform({
+	tiptype:4,
+	showAllError:true,
+	ajaxPost:true,
+	postonce: true,
+	callback:function(data){
+		if(data.status==1){
+			$('#tips').html('<span style="color:#3B7E08;font-weight: bold;">'+data.data+'</span>');
+			setTimeout(function (){
+				window.location.href="{:U('Index/index')}";
+			},800)
+		}else{
+			$('#tips').html('<span style="color:#F05A00;font-weight: bold;">'+data.data+'</span>');					
+		}
+	}
+});
+</script>
+<!-- //登录表单 页面 -->
+
+<include file="Public/footer" />
+
+</body>
+</html>

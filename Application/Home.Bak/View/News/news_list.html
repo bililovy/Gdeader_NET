@@ -1,0 +1,90 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/news/news.list.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+	<div class="newsmain">
+		<div class="container">
+			<div class="left_list">
+				<h3>Blogs list</h3>
+				<div class="arclist">
+				<if condition="$newslist">
+					<foreach name="newslist" item="news">
+					<div class="article">
+						<div class="header">
+							<div class="header_l fl">
+								<span class="day">{$news.day}</span>
+								<span class="month">{$news.month}</span>
+							</div>
+							<div class="header_r fl">
+								<h1><a href="{:U('News/detail', array('nid'=>$news['id'],'jusetfrom'=>'bloglist'))}" title="{$news.title}">{$news.title|mb_substr=0,40}…</a></h1>
+								<p>Published By: <b>{$news.author}</b>, Viewers:<b>{$news.click}</b>,Published at <b>{$news.addtime|date='Y/m/d H:i',###}</b></p>
+							</div>
+						</div>	
+						<div class="news_brief">
+							<div class="left_img fl">
+								<img src="{$news.cover}" alt="{$news.title}" />
+							</div>
+							<div class="right_info fl">
+								<div class="desc">{$news.keywords}</div>
+								<div class="description">{$news.description}</div>
+								<div class="button"><a href="{:U('News/detail', array('nid'=>$news['id'],'jusetfrom'=>'bloglist'))}"  class="golink" target="_blank">read more</a></div>
+							</div>
+						</div>					
+					</div>
+					</foreach>
+					<else />
+					<div class="no_data" style="padding:50px 0; margin: 10px auto;color: #666;font-size: 1.6em;text-align: center;">No Blog !</div>
+					</if>					
+					
+				</div>
+			</div>
+			<div class="right fl">
+				<div class="timeline">
+					<h2 class="with-line"><i class="fa fa-fire"></i>Hot Read</h2>
+					<ul>
+						<if condition="$hot">
+							<li><a href="###">February 2014</a></li>
+						</if>
+					</ul>
+				</div>
+			</div>
+			<!-- 分页 -->						
+						{$page}
+					<!-- //分页 -->
+		</div>
+	</div>	
+</div>
+<script type="text/javascript">
+$('.newsmain .container .left_list .arclist .article .news_brief .left_img img').zoom_img();
+
+$('.newsmain .container .right').delegate('.timeline ul li', 'mouseenter', function (){
+	$(this).stop().animate({'padding-left': '25px'},150);
+})
+$('.newsmain .container .right').delegate('.timeline ul li', 'mouseleave', function (){
+	$(this).stop().animate({'padding-left': '18px'},150);
+})
+$(window).scroll(function (){
+	var Y=$('.newsmain .container .right .timeline').offset().top;
+	var X=$('.newsmain .container .right .timeline').offset().left;
+	if ($(window).scrollTop()>=Y ){
+		if($('.newsmain .container .right .timeline').length<2){
+			var $newChild=$('.newsmain .container .right .timeline').clone();
+			$newChild.addClass('attach');
+			$newChild.css('left',X);
+			$('.newsmain .container .right').append($newChild);			
+		}
+	}else{
+		if($('.newsmain .container .right .attach').length>0){
+			$('.newsmain .container .right .attach').remove();
+		}
+	}
+})
+</script>
+<!-- //登录表单 页面 -->
+<include file="Public/footer" />
+
+</body>
+</html>

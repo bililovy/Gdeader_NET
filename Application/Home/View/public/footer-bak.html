@@ -1,0 +1,177 @@
+<!-- Footer -->
+<div class="row footer">
+	<div class="container">
+		<!-- Subscribe -->
+		<div class="subscribe">
+			<div class="left">
+				<h5 class="orange-size">NEWS LETTER</h5>
+				<p>Get our latest deal notification by email</p>
+			</div>
+			<div class="right">
+				<form role="form" id="emailSubscribeForm" method="post" class="form-horizontal">
+					<input type="hidden" name="internalSource" id="internalSource" value="0"/>
+					<input type="text" id="email" name="email" class="form-control" placeholder="Enter Your E-mail">
+					<button type="submit" id="ga-subscriber" class="btn bg-orange" data-toggle="modal"  data-target="#Modal">Submit</button>
+				</form>
+			</div>
+		</div>
+		<!-- END Subscribe -->
+
+		<script>
+			$(document).ready(function(){
+				bootValidate(pageSubscribeValidateConfig.forms);
+			});
+			var pageSubscribeValidateConfig = {
+				forms:[{
+					id:'emailSubscribeForm',
+					submit:true,
+					url:'/edm/subscribe/save',
+					validate:{},
+					confirmFn:function(rtmsg){
+						if(rtmsg.SUCCESS){
+							$('#boxModalTitle').html(TitleMsg.subscribeMsg);
+						}else{
+							$('#boxModalTitle').html(PromptMsg.prompt);
+						}
+						$('#boxModalBody').html(rtmsg.MESSAGE);
+						var opt = function () {
+							$('#email').val("");
+						};
+						$('#boxModal').modal('show');
+						$('#boxModal').on('hide.bs.modal', opt);
+					},
+					beforeSendFn:function(){
+
+					}
+				}]
+			};
+		</script>
+		<!--Footer-menu -->
+		<div class="menu-box">
+			<!-- About us -->
+			<div class="menu-info">
+				<div class="footer-menu">
+					<h4>ABOUT US</h4>
+					<ul class="list-unstyled text-left">
+						<li><a href="http://www.taotronics.com/about-us.html">Our Company</a></li>
+						<li><a href="http://www.taotronics.com/superuser">Super User</a></li>
+					</ul>
+				</div>
+				<!-- END About us -->
+				<!-- Support -->
+				<div class="footer-menu">
+					<h4>SUPPORT</h4>
+					<ul class="list-unstyled text-left">
+						<li><a href="http://www.taotronics.com/product-registration">Warranty</a></li>
+						<li><a href="http://www.taotronics.com//support-downloads">Download</a></li>
+					</ul>
+				</div>
+				<!-- END Support -->
+
+				<!-- Ipad-footer-menu -->
+				<div class="panel-group" id="accordion">
+					<!-- Ipad-about us -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">ABOUT US</a>
+								<span class="caret pull-right"></span>
+							</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="list-unstyled text-left">
+									<li><a href="http://www.taotronics.com/about-us.html">Our Company</a></li>
+									<li><a href="http://www.taotronics.com/superuser">Super User</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- END Ipad-about us -->
+
+					<!-- Ipad-Support -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo">SUPPORT</a>
+								<span class="caret pull-right"></span>
+							</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="list-unstyled text-left">
+									<li><a href="http://www.taotronics.com/product-registration">Warranty</a></li>
+									<li><a href="http://www.taotronics.com//support-downloads">Download</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- END Ipad-Support -->
+				</div>
+				<!-- END Ipad-footer-menu -->
+			</div>
+
+			<!-- Follow us -->
+
+			<div class="footer-follow">
+				<h4>LIKE US</h4>
+				<ul class="list-inline">
+					<li><a class="fb" href="http://www.facebook.com/taotronics" target="_blank"></a></li>
+					<li><a class="tw" href="https://twitter.com/TaoTronics" target="_blank"></a></li>
+					<li><a class="yb" href="https://www.youtube.com/channel/UCOACOUc8D0VA_J7yzu0xx4g" target="_blank"></a></li>
+				</ul>
+			</div>         			<!-- END Follow us -->
+		</div>
+		<!-- END Footer-menu -->
+		<!-- phone -->
+		<div class="footer-phone">
+			<div class="left">
+				<div class="left-title">EMAIL: </div>
+				<div class="left-info">
+					<a href="mailto:support@taotronics.com">support@taotronics.com</a>
+					<a href="mailto:wholesale@taotronics.com">wholesale@taotronics.com</a>
+				</div>
+			</div>
+			<div class="right">
+				<div class="left-title">PHONE: </div>
+				<div class="left-info">1-888-456-8468 (9am - 5pm,Mon - Fri)</div>
+			</div>
+		</div>
+
+		<!-- phone-->
+	</div>
+</div>
+<!-- END Footer -->
+
+
+<!-- Copyright -->
+<div class="row copyright">
+	<div class="container">
+		<!-- Language -->
+		<div class="language">
+			<p>Please select a language</p>
+			<div class="dropdown">
+				<button type="button" class="btn dropdown-toggle" id="dropdownMenu1"  data-toggle="dropdown">
+					English(US)
+					<span class="caret"></span>
+				</button>
+			</div>
+		</div>
+		<!-- END Language -->
+		<div class="reserved">
+			<span>© 2016 TaoTronics Inc.All rights reserved.</span>
+			<a href="http://www.taotronics.com/privacy-policy.html">Privacy Policy</a>
+			<a href="http://www.taotronics.com/terms-and-conditions.html">Terms And Conditions</a>
+		</div>
+	</div>
+</div>
+<!-- END Copyright -->
+
+<div id="returnTop"></div>
+<script type="text/javascript">
+	$("#returnTop").click(function () {
+		var speed=200;//滑动的速度
+		$('body,html').animate({ scrollTop: 0 }, speed);
+		return false;
+	});
+</script>

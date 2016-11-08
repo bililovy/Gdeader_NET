@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻评论列表页面</title>
+
+<!-- BEGIN 页面公共css 和js -->
+	<load href="__COMMON__/css/init.css" />
+	<load href="__COMMON__/css/font-icons.css" />
+<load href="__ADMIN_CSS__/route.css" />
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共css 和js -->
+
+
+<!-- BEGIN 当前页面的css 和js -->
+	<load href="__COMMON__/css/tools/easydialog.css" />
+	<load href="__ADMIN_CSS__/goods/goods_faq.css"   />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/index')}" target="_top">首页</a></li>
+    <li><a href="{:U('Goods/index')}">产品列表</a></li>
+    <li><a href="{:U('Goods/faq')}">FAQ列表</a></li>
+    <li><a href="javascript:void(0)">评论内容</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+     <ul class="toolbar">
+        <li class="back-comments" onclick="window.location.href='{:U('Goods/faq')}'"><i class="fa fa-align-justify"></i>返回FAQ列表</li>
+        <li class="back-comments" onclick="window.location.href='{:U('Goods/index')}'"><i class="fa fa-reply"></i>返回产品列表</li>
+	</ul>
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    </div>  
+  <div class="main-body">
+  	<div class="news-title"><a href="javascript:void(0)" >{$goodsname}</a></div>
+  	<div class="comments">
+  	<span class="tips"><b>该产品的全部评论，您可在下方评论列表中回复网友的评论的评论</b><i>共{$faqCount}条评论</i></span>
+  		<ul class="np-nav-tab">
+                <li class="np-active">全部评论</li>	
+        </ul>
+        <div class="all-comments">
+        <input type="hidden" value="{$gid}" name="commentsnewsid" />
+        	<ul class="post-list np-comment-list" spm-nid="{$gid}">
+        	<if condition="$comments">
+        	<foreach name="comments" key="counter" item="comment">
+        	<li class="np-post" >
+        		<div class="np-post-body">
+        		<div class="np-post-header">
+        			<div class="number">{$counter+1}</div>
+        			<span class="">
+        			<a href="javascript:void(0)" title="{$comment.reviewer}" class="np-user popClick ">{$comment.reviewer}</a>
+        			</span>
+        			<span class="np-time">{$comment.addtime}</span>
+        			</div>
+        			<div class="np-post-content">
+        			<p>{$comment.content}</p>
+        			</div>
+        			<div class="np-post-footer" id ="np-post-footer">
+        			<input type="hidden" name="commentid" value="{$comment.id}" />
+        			<if condition="$comment.replytime eq 0 ">
+        			<a href="javascript:void(0)" class="reply" spm-show="false"><i class="fa fa-share"></i>回复</a>
+        			<else />
+        			<a href="javascript:void(0)" class="reply disabled" spm-show="false"><i class="fa fa-share"></i>已回复</a>        			
+        			</if>
+        			<if condition="$comment.isreleased eq 0 ">
+        			<a href="javascript:void(0)" class="isrelelased" title="点击通过审核"><i class="fa fa-times-circle"></i><b style="font-weight: normal;">未审核</b></></a>
+        			<else />
+        			<a href="javascript:void(0)" class="isrelelased disabled"><i class="fa fa fa-check-circle"></i><b style="font-weight: normal;">已审核</b></a>
+        			</if>
+        			<if condition="$comment.isshow eq 0 ">
+        			<a href="javascript:void(0)" class="isshow" title="切换显示状态"><i class="fa fa-ban"></i><b>前端未显示</b></a>
+ 					<else />
+        			<a href="javascript:void(0)" class="isshow showing" title="切换显示状态"><i class="fa fa-check-circle"></i><b>前端显示中</b></a>
+        			</if>
+        			<a href="javascript:void(0)" class="delete"><i class="fa fa-trash" _newid="{$gid}"></i>删除评论</a>
+        			<if condition="$comment.replytime eq 0 ">
+        			<div class="reply-box" style="display: none;"></div>
+        			<else />
+        			<div class="reply-box">
+        			<div class="reply-info">
+        					<h2><span class="title"><b style="color: #15558B; font-weight: normal;">{$comment.replyer}</b>&nbsp;的回复：</span><span class="reply-time">{$comment.replytime}</span></h2>
+        					<div class="reply-content">
+        						<p>{$comment.replycontent}<b class="del"><i class="fa  fa-times-circle"></i>删除</b></p>
+        					</div>
+        				</div>
+        			</div>
+        			</if>
+        			</div>
+        		</div>
+        	 </li>
+        	 </foreach>
+        	 <li class="page">{$page}</li>
+        	 <else />
+        	 <li class="no_post" >
+        	 	<p>哦豁~~，本产品暂时还无人咨询！</p>
+        	 </li>
+        	 </if>
+        	</ul>
+        	</div>         	
+        	<div id="reply-frame">
+        	<div class="reply-form">
+        		<ul class="reply-ul">
+        			<li><input type="hidden" value="0" name="replycomid" /></li>
+        			<li><textarea name="reply" class="reply-textarea"></textarea></li>
+        			<li><a href="javascript:void(0)" title="回复" class="reply-btn">回复</a><i class="form_tips" placeholder="回复内容不少于5个字">回复内容不少于5个字</i></li>
+        		</ul>
+        	</div>
+        	</div>
+  	</div>
+  </div>
+<style type="text/css" >
+.all-comments ul.post-list .no_post  {
+	border: 1px dashed #cecece;
+	border-top: none;
+}
+.all-comments ul.post-list .no_post p{
+	padding: 20px 30px;
+	font-family:"Microsoft Yahei";
+	text-align: center;
+	font-size: 18px;
+	color: #898989;
+}
+.np-post-content img.emotion{
+	display: inline;
+	margin: 0 5px;
+}
+</style>
+</body>
+</html>
+<script type="text/javascript">
+var setReplyUrl="{:U('Goods/setFAQReply')}";
+var replyDeleteUrl = "{:U('Goods/replyDelete')}";
+var commentReleaseUrl="{:U('Goods/toReleaseComment')}";
+var commentShowToggleUrl="{:U('Goods/commentShowToggle')}";
+var commentDeleteUrl="{:U('Goods/commentDelete')}";
+var face_path="__JS__/news/face/";
+
+function replace_em(str){
+	 
+	str = str.replace(/\</g,'&lt;');
+	
+	str = str.replace(/\>/g,'&gt;');
+	
+	str = str.replace(/\n/g,'<br/>');
+	
+	str = str.replace(/\[em_([0-9]*)\]/g,'<img class="emotion" src="'+face_path+'$1.gif" border="0" />');
+	
+	return str;
+	
+}
+
+$('.np-post-content').each(function (){
+	
+	$(this).html(replace_em($(this).find('p').text()));
+	
+})
+</script>
+<js file="__ADMIN_JS__/goods/goods_faq.js" />

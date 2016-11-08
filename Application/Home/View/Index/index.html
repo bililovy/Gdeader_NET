@@ -1,0 +1,240 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<!-- focus -->
+
+<load href="__JS__/toucher.js" />
+<!-- banner -->
+<div class="row banner">
+    <div id="carousel-example-generic" class="carousel slide both carousel-fade" data-ride="carousel">
+        <!-- Carousel Pointer -->
+        <if condition="$focuses">
+            <ol class="carousel-indicators">
+                <foreach name="focuses" item ="focus" key="index">
+                    <li data-target="#carousel-example-generic" data-slide-to="{$index}" <eq name="index" value="0">class="active"</eq>></li>
+                </foreach>
+            </ol>
+        </if>
+
+        <!-- Carousel pic -->
+        <div class="carousel-inner" role="listbox">
+            <foreach  name="focuses" item="focus" key="index">
+                <!-- Banner -->
+                <div class="item <eq name='index' value='0'>active</eq>">
+                    <a href="<empty name='focus.linkurl'>javascript:;<else />{$focus.linkurl}</empty>" target="_blank" class="big-bn" style=" background:url({$focus.cover}) center center no-repeat;"></a>
+                    <a href="<empty name='focus.linkurl'>javascript:;<else />{$focus.linkurl}</empty>" target="_blank" class="ipad-bn" style=" background:url({$focus.cover}) center center no-repeat;"></a>
+                    <if condition="$focus.showtype eq 3">
+                        <div class="bn-info float-left text-left">  <!-- 样式支持  bn-reg text-left  /  giveaway-bn text-center  /  bn-info float-left text-left -->
+                    <elseif condition="$focus.showtype eq 2" />
+                        <div class="bn-reg text-left">  <!-- 样式支持  bn-reg text-left  /  giveaway-bn text-center  /  bn-info float-left text-left -->
+                    <else />
+                        <div class="giveaway-bn text-center">  <!-- 样式支持  bn-reg text-left  /  giveaway-bn text-center  /  bn-info float-left text-left -->
+                    </if>
+                    <div class="desc-content">
+                        {$focus.desc|htmlspecialchars_decode=###}
+                    </div>
+                        <a href="{$focus.linkurl}" target="_blank" class="btn bg-orange margin-t15">{$focus.btntext|default='See More'}</a>
+                    </div>
+                </div>
+                <!--End Banner -->
+            </foreach>
+        </div>
+
+        <!-- Controls -->
+        <a id="carleft" class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a id="carright" class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<!-- end banner -->
+<script>
+    $(document).ready(function(){
+        //banner
+        $('.carousel').carousel({
+            interval: 5000
+        });
+
+        // banner
+        var myTouch = util.toucher(document.getElementById('carousel-example-generic'));
+        myTouch.on('swipeLeft',function(e){
+            $('#carright').click();
+        }).on('swipeRight',function(e){
+            $('#carleft').click();
+        });
+    });
+</script>
+
+<!--/ focus -->
+
+<!-- new arrivals -->
+<div class="row rav-pr">
+    <div class="container">
+        <h2 class="text-left gray">New Arrivals</h2>
+        <if condition="$hots">
+            <ul class="list-unstyled">
+                <foreach name="hots" item="g">
+
+                <li>
+                    <img class="gimg" alt="{$g.goodsname}" src="{$g.goodsimg}">
+                    <h4><a href="{:U('Goods/detail',array('gid'=>$g['id']))}" target="_blank" title="{$g.goodsname}">{$g.goodsname}</a></h4>
+                    <div class="price">
+                        <div class="price-left">
+                            <div class="info">
+                                <if condition="!$g.sell_price or $g.sell_price elt 0">
+                                    <span class="font24 bule-size">${$g.price}</span>
+                                <else />
+                                    <span class="font24 bule-size">{$g.sell_price}</span>
+                                    <span class="text-del">${$g.price}</span>
+                                </if>
+                            </div>
+                        </div>
+
+                        <div class="price-right">
+                            <div class="score fl" data-score="{$g.score}">
+                                <img src="__IMG__/icons/star-off-big.png" />
+                                <img src="__IMG__/icons/star-off-big.png" />
+                                <img src="__IMG__/icons/star-off-big.png" />
+                                <img src="__IMG__/icons/star-off-big.png" />
+                                <img src="__IMG__/icons/star-off-big.png" />
+                            </div>
+                            <div class="fav fr" id="gf_{$g.id}">❤(<span class="fav-num"><if condition="$g.favnum gt 9999">9999+<else />{$g.favnum}</if></span>)</div>
+                            <a id="ga-dailyDeals" class="btn bg-blue clear-b" href="<empty name='g.goodslink'>{:U('Goods/detail',array('gid'=>$g['id']))}<else />{$g.goodslink}</empty>" target="_blank">Buy at Amazon</a>
+                        </div>
+                    </div>
+                </li>
+
+                </foreach>
+
+            </ul>
+        </if>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // set the stars number
+    $('.rav-pr .container .price-right .score').each (function (){
+        var $score= (isNaN(parseFloat($(this).attr('data-score'))) || parseFloat($(this).attr('data-score')) <0) ? 0 : parseFloat($(this).attr('data-score'));
+        var star_on="__IMG__/icons/star-on-big.png";
+        var star_half="__IMG__/icons/star-half-big.png";
+        var imgs =$(this).find('img').length;
+        var reg=/\./g;
+        var $int_score=null;
+        var $float_score=null;
+        if (reg.test($score)){
+            var $score=$score.toString().split('.');
+            $int_score = $score[0];
+            $float_score = $score[1];
+        }else{
+            $int_score = $score;
+        }
+        for(var i=0; i< imgs; i++){
+            if (i<$int_score){
+                $(this).find('img').eq(i).attr('src', star_on);
+            }
+            if(null != $float_score && $float_score >=3){
+                $(this).find('img').eq($int_score).attr('src', star_half);
+            }
+        }
+    })
+</script>
+
+<!--/ new arrivals -->
+
+<!-- best sellers -->
+
+<div class="row rav-pr">
+    <div class="container">
+        <h2 class="text-left gray">Best Sellers</h2>
+        <if condition="$recommends">
+            <ul class="list-unstyled">
+                <foreach name="recommends" item="rg">
+
+                    <li>
+                        <img class="gimg" alt="{$rg.goodsname}" src="{$rg.goodsimg}">
+                        <h4><a href="{:U('Goods/detail',array('gid'=>$rg['id']))}" target="_blank" title="{$rg.goodsname}">{$rg.goodsname}</a></h4>
+                        <div class="price">
+                            <div class="price-left">
+                                <div class="info">
+                                    <if condition="!$rg.sell_price or $rg.sell_price elt 0">
+                                        <span class="font24 bule-size">${$rg.price}</span>
+                                        <else />
+                                        <span class="font24 bule-size">{$rg.sell_price}</span>
+                                        <span class="text-del">${$rg.price}</span>
+                                    </if>
+                                </div>
+                            </div>
+
+                            <div class="price-right">
+                                <div class="score fl" data-score="{$rg.score}">
+                                    <img src="__IMG__/icons/star-off-big.png" />
+                                    <img src="__IMG__/icons/star-off-big.png" />
+                                    <img src="__IMG__/icons/star-off-big.png" />
+                                    <img src="__IMG__/icons/star-off-big.png" />
+                                    <img src="__IMG__/icons/star-off-big.png" />
+                                </div>
+                                <div class="fav fr" id="gf_{$rg.id}">❤(<span class="fav-num"><if condition="$rg.favnum gt 9999">9999+<else />{$rg.favnum}</if></span>)</div>
+                                <a id="ga-dailyDeals1" class="btn bg-blue clear-b" href="<empty name='rg.goodslink'>{:U('Goods/detail',array('gid'=>$rg['id']))}<else />{$rg.goodslink}</empty>" target="_blank">Buy at Amazon</a>
+                            </div>
+                        </div>
+                    </li>
+
+                </foreach>
+
+            </ul>
+        </if>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.fav').click(function (){
+        addFavorite($(this));
+    })
+    // set the stars number
+    $('.rav-pr .container .price-right .score').each (function (){
+        var $score= (isNaN(parseFloat($(this).attr('data-score'))) || parseFloat($(this).attr('data-score')) <0) ? 0 : parseFloat($(this).attr('data-score'));
+        var star_on="__IMG__/icons/star-on-big.png";
+        var star_half="__IMG__/icons/star-half-big.png";
+        var imgs =$(this).find('img').length;
+        var reg=/\./g;
+        var $int_score=null;
+        var $float_score=null;
+        if (reg.test($score)){
+            var $score=$score.toString().split('.');
+            $int_score = $score[0];
+            $float_score = $score[1];
+        }else{
+            $int_score = $score;
+        }
+        for(var i=0; i< imgs; i++){
+            if (i<$int_score){
+                $(this).find('img').eq(i).attr('src', star_on);
+            }
+            if(null != $float_score && $float_score >=3){
+                $(this).find('img').eq($int_score).attr('src', star_half);
+            }
+        }
+    })
+</script>
+
+<!--/ best sellers -->
+
+<!-- subscribe -->
+<include file="public/subscribe" />
+<!--// subscribe -->
+
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<!--/script-->
+</body>
+</html>

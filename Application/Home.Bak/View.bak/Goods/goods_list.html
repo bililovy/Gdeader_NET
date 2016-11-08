@@ -1,0 +1,103 @@
+<include file="Public/header" />
+<body style="background-color: #E9F5E7;">
+<!--BEGIN 本页面所需文件-->
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/common/page.css" />
+<load href="__CSS__/goods/list.css" />
+<load href="__JS__/common/h_f2.js" />
+	<!--END 本页面所需文件-->	
+	
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />	
+<!-- END 头部导航 -->
+
+<!-- BEGIN 中部内容区域-->
+<div class="middle_content">
+	<include file="Tools/breadcrum" />
+	<!-- BEGIN 产品列表-->
+	<div class="product_container">
+		<div class="cate_name">
+			<h2>our products</h2>
+		</div>
+		<div class="left_tools">		
+			<div class="tool_list">				
+				<h3>categories</h3>
+				<if condition="$navlists">
+				<ul class="list_con">
+				<foreach name="navlists" item="navlist">
+				<li><a href="{:U('Goods/index', array('cid'=>$navlist['id'], 'justfrom'=>'gcate'))}" title="{$navlist.catename}" >{$navlist.catename|mb_substr=0,24,'UTF-8'}</a><notempty name="navlist.childs"><i class="btn fa fa-caret-down"></i>
+					<ul>	
+					<foreach name="navlist.childs" item="secondnav">
+					<li><a href="{:U('Goods/index', array('cid'=>$secondnav['id'], 'justfrom'=>'gcate'))}">{$secondnav.catename|mb_substr=0,23,'UTF-8'}</a><notempty name="secondnav.childs"><i class="btn fa fa-caret-down"></i>
+						<ul>
+						<foreach name="secondnav.childs" item="thirdnav">
+							<li><a href="{:U('Goods/index', array('cid'=>$thirdnav['id'], 'justfrom'=>'gcate'))}">{$thirdnav.catename|mb_substr=0,20,'UTF-8'}</a></li>
+						</foreach>
+						</ul>
+						</notempty>
+					</li>
+					</foreach>						
+						</notempty>
+					</li>
+					</ul>
+				</li>
+				</foreach>
+				</ul>
+				<else />
+				<ul class="list_con">
+					<li>No categories !</li>
+				</ul>
+				</if>
+				</div>
+			<foreach name="attributes" key="attrname" item="attrval">
+			<div class="tool_list">				
+				<h3>{$attrname}</h3>
+				<notempty name="attrval">
+				<ul class="list_con">
+					<foreach name="attrval"  item="value">
+					<li>				
+							<a href="{:U('Goods/index', array('cid'=>$curcateid,'attrval'=>$value,'justfrom'=>'cate'))}">{$value}</a>						
+					</li>
+					</foreach>
+				 </ul>
+				</notempty>
+			</div>
+			</foreach>
+		</div>
+		
+		<div class="right_container">
+		<if condition="$setAttrSearch">
+			<div class="no_search">No Results According to Your Condition<br />
+			<b>Recommendations:</b></div>
+		</if>
+		<if condition="$goods">
+			<div class="products">
+				<ul class="product_list">
+				<foreach name="goods" item="glist">
+					<li>
+					<div class="product_img"><a href="{:U('Goods/detail', array('gid'=>$glist['id'], 'justfrom'=>'catepage'))}" title="{$glist.goodsname}"><img src="{$glist.goodsimg}"  alt="{$glist.goodsname}"/></a></div>
+					<div class="product_info">
+						<a href="{:U('Goods/detail', array('gid'=>$glist['id'], 'justfrom'=>'catepage'))}" title="{$glist.goodsname}"><h1>{$glist.goodsname|mb_substr=0,35,'UTF-8'}…</h1></a>
+						<div class="pro_price"><b>$</b>{$glist.price}</div>
+						<div class="pro_info"><span class="date"><i class="ico fa fa-clock-o"></i>{$glist.addtime|date='Y/m/d', ###}</span> <span class="view"><i class="ico fa fa-eye"></i>{$glist.click}</span></div>
+					<div class="pro_description">{$glist.description}</div>
+					</div>
+					</li>
+					</foreach>					
+				</ul>
+			</div>
+			<div class="pagenation">{$page}</div>
+			<else />
+			<div style="text-align: center;padding: 50px 0; line-height: 3.5em;font-size: 2em;color:#989898;font-family: 'Arial'; "><b style="font-size: 3em;text-transform: uppercase;">Sorry!</b><br />No Results For Your Search  !</div>
+			</if>
+		</div>
+	</div>
+	<!-- END 产品列表-->	
+</div>
+<!-- END 中部内容区域-->
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/goods/list.js" />

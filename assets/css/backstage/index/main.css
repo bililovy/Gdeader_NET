@@ -1,0 +1,160 @@
+.content {
+    width: 98%;
+    min-width: 760px;
+    padding: 10px 1% 0px;
+}
+
+.content .info {
+    border: 1px solid #ddd;
+    background: #fff !important;
+    margin-bottom: 10px;
+}
+.content .info.infobox{
+    width: 48%;
+    float: left;
+}
+.content .info h3 {
+    height: 38px;
+    line-height: 38px;
+    padding-left: 15px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    font-weight: normal;
+    color: #4D4D4D;
+    position: relative;
+}
+
+.content .info.bgwarn h3 {
+    background: #F5D8D6;
+}
+.content .env_result{
+    overflow: hidden;
+}
+.content .env_result .stat_table {
+    border: 1px solid #ddd;
+    border-top: none;
+    width: 100%;
+    color: #666;
+    font-size: 13px;
+}
+
+.content .env_result .stat_table td {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 5px 1%;
+    white-space: nowrap;
+}
+
+.content .env_result ul.warnlist {
+    overflow: hidden;
+    width: 100%;
+}
+
+.content .env_result ul.warnlist li {
+    width: 100%;
+    line-height: 35px;
+    border: 1px solid #ddd;
+    border-top: none;
+    width: 100%;
+    color: #FF6F00;
+    font-size: 12px;
+    padding: 0px 10px;
+}
+
+.content .env_result ul.warnlist li a {
+    color: #FFF;
+    background: #E5A2A0;
+    padding: 1px 10px;
+    margin-left: 5px;
+}
+.content .env_result .envtitle {
+    line-height: 35px;
+    padding: 3px 10px;
+    color: #217E0A;
+}
+.content .env_result .env_content a {
+    padding: 2px 8px;
+    background: #1C2B36;
+    color: #FFF;
+    margin-right: 2%;
+}
+.content .env_result ul.env_content  i.process{
+    display: inline-block;
+    height:10px;
+    width: 300px;
+    border: 1px solid #1C2B36;   
+    line-height: 20px;
+    background-image:url('../../../common/images/icons/processbar.jpg');
+    background-repeat: no-repeat;
+    background-position: -300px center;
+    -moz-transition: all 1.5s ease-in-out;
+    -o-transition: all 1.5s ease-in-out;
+    -ms-transition: all 1.5s ease-in-out;
+    -webkit-transition: all 1.5s ease-in-out;
+    transition: all 1.5s ease-in-out;
+}
+.content .env_result ul.env_content {
+    overflow: hidden;
+    float: left;
+    width: 100%;
+}
+.content .env_result ul.env_content  li{
+    line-height: 35px;
+    border: 1px solid #ddd;     
+    overflow: hidden;
+    height: 35px;
+}
+.content .env_result ul.env_content  li span{
+    display: inline-block;
+}
+.content .env_result ul.env_content  li span.tt{
+    border-right: 1px solid #ddd;     
+    height: 100%;
+    float: left;
+    padding: 0 10px;
+    min-width: 100px;
+    text-align: left;
+    font-weight: bold;
+    border-top: none;
+    color: #1C2B36;    
+    height: 35px;    
+}
+.content .env_result ul.env_content  li span.data{
+    padding: 0 5px;
+    margin-left: 15px;
+    line-height: 35px;    
+    overflow: hidden;
+    float: left;    
+    height: 35px;    
+}
+.content .env_result ul.env_content  li span.data p{
+    float: left;
+}
+.content .env_result ul.env_content span.space_used , .content .env_result ul.env_content span.use_percent{
+    font-weight:bold;
+}
+.content .env_result ul.env_content span.ok , .content .env_result ul.env_content span.ok{
+    color: #2C5D05;
+}
+.content .env_result ul.env_content span.err , .content .env_result ul.env_content span.err{
+    color: #E51A29;
+}
+
+.content ul.notice li{
+    line-height: 25px;
+    padding: 0 10px;
+    color: #1C2B36;
+    font-size: 14px;
+}
+.content ul.notice li a{
+    margin: 0 5px;
+    padding: 2px 5px;
+    background: #1C2B36;
+    color: #FFF;
+}
+.footer, .footer a{
+    text-align: center;
+    padding: 10px 0;
+    color: #666;
+}

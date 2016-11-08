@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统基本设置页面</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/sysconfig/system_setting.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/ajaxFileUpload.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">主页</a></li>
+    <li><a href="javascript::">系统基本设置</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+    <div class="formbody">    
+    <div class="formtitle"><span>系统基本设置</span></div>    
+    <ul class="forminfo">
+	<li><label><b>*</b>网站名称</label><input name="webname" type="text" class="dfinput" maxlength="100" value="{$sysconfig.webname}"/><i>填写为本网站名字,100个字符以内</i></li>
+    <li><label><b>&nbsp;</b>关键词</label><input name="keywords" type="text" class="dfinput" maxlength="100" value="{$sysconfig.keywords}"/><i>非必填，但建议填写(100字符以内，多个关键词用“,”隔开),利于搜索引擎收录网站</i></li>
+    <li><label style="line-height: 80px;"><b>&nbsp;</b>网站logo</label>
+    	<div class="uploadBox"><i class="btnupload fa fa-plus"></i><input type="hidden" value="{$sysconfig.logo}" name="logo"/><input type="file" accept="image/*" name="logoFile" id="logoFile" onchange="ajaxFileUpload(this)"/></div>
+    	<div class="showarea" <notempty name="sysconfig.logo">style="display: block;"</notempty>><span style="display: block;float: left;line-height: 80px;color: #FFF">图像预览</span><img src="{$sysconfig.logo}"  style="width: 200px; height: 80px; float: left; margin-left: 20px;"/></div>
+    	<i style="display: block;line-height: 25px; padding-left: 90px;clear: both; " placeholder="logo尺寸建议200*80像素，请先做好logo图，否则影响前端显示效果">logo尺寸建议200*80像素，请先做好logo图，否则影响前端显示效果</i>
+    </li>
+    <li  class="lab-desc"><label><b>&nbsp;</b>网站简介</label><cite><textarea name="description" value="" class="description">{$sysconfig.description}</textarea><div class="count-text">还可输入<span class="text-num">250</span>个字</div><i>描述不超过250字符，建议填写，利于搜索引擎收录网站</i></cite></li>
+    <li><label><b>&nbsp;</b>联系电话</label><input name="tels" type="text" class="dfinput" value="{$sysconfig.tels}"/><i>非必填，多个号码请用逗号“，”隔开，如123，456</i></li>
+    <li><label><b>&nbsp;</b>公司传真</label><input name="faxes" type="text" class="dfinput" value="{$sysconfig.faxes}"/><i>非必填，多个号码请用逗号“，”隔开，如123，456</i></li>
+   	<li><label><b>&nbsp;</b>电子邮箱</label><input name="email" type="text" class="dfinput" value="{$sysconfig.email}"/><i>非必填，只填写一个邮箱</i></li>
+    <li><label><b>&nbsp;</b>ICP备案号</label><input name="icp" type="text" class="dfinput" value="{$sysconfig.icp}"/><i>非必填</i></li>
+    <li><label><b>&nbsp;</b>公司地址</label><input name="address" type="text" class="dfinput" value="{$sysconfig.address}"/><i>非必填</i></li>
+    <li><label><b>&nbsp;</b>版权申明</label><input name="copyright" type="text" class="dfinput" value="{$sysconfig.copyright}"/><i>非必填</i></li>
+    <li><label>&nbsp;</label><input name="submit" type="button" class="submit submitable" value="确认设置" />
+   	<i placeholder=""></i>
+</li>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var $configSubmitUrl="{:U('Sysconfig/index')}";
+var $imgUploadUrl="{:U('Sysconfig/imgUpload')}";
+</script>
+<load href="__ADMIN_JS__/sysconfig/system_setting.js" />

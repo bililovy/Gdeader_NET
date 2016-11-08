@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理员列表主页</title>
+
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/adminuser/adminuser_list.css" />
+<load href="__ADMIN_CSS__/adminuser/promptDialog.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)" >网站管理员中心</a></li>
+    </ul>
+    </div>    
+    <div class="rightinfo">
+    <input type="hidden" name="sessionuserid" value="{$Think.session.login_infos.userid}" />
+    <div class="tools">    
+    	<ul class="toolbar">
+        <li class="click"><a href="{:U('AdminUser/add')}"><i class="fa fa-user-plus"></i>添加管理员</a></li>
+       </ul> 
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>    
+    </div> 
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th>序号</th>
+        <th>管理员昵称</th>
+        <th>真实姓名</th>
+        <th>电子邮箱</th>
+        <th>加入时间</th>
+        <th>登录次数</th>
+        <th>是否可删</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition ="$adminusers">
+        <foreach name="adminusers" item="user">
+        <tr>
+        <td><input name="id[]" type="checkbox" value="{$user.id}" />&nbsp;{$user.id}</td>
+        <td class="uname">{$user.username|default='<span style="color:#999;">未设置</span>'}</td>
+        <td class="tname">{$user.truename|default='<span style="color:#999;">未设置</span>'}</td>
+        <td>{$user.email|default='<span style="color:#999;">未设置</span>'}</td>
+        <td>{$user.addtime|date='Y-m-d H:i', ###}</td>
+        <td>{$user.logintimes}</td>
+        <td><eq name="user.canbedelete" value="0">不可删<else />可删除</eq></td>
+        <td>
+        <input type="hidden" value="{$user.id}" name="adminid" />
+		<a href="javascript:void(0);" title="编辑信息" class="tab-btn edit">编辑</a>
+		<a href="javascript:void(0);" title="修改密码" class="tab-btn chpwd">改密</a>
+		<a href="javascript:void(0);" title="删除" class="tab-btn delete">删除</a>
+		</td>
+        </tr>  
+        </foreach>       
+         <else />
+         <tr>
+        <td colspan="8"><div style="line-height: 50px; color: #898989;font-size: 20px;">当前还没有管理员，请点击左上方“添加管理员”</div></td>
+        </tr>          
+         </if>      
+        <tr>
+        <td class="multi-operate" colspan="8">
+			{$page}
+		</td>
+        </tr> 
+        </tbody>        
+    </table>      
+    </div>
+<!-- BEGIN dialog弹窗--->
+<div class="dialogbox" id="dialogbox"></div>
+<!-- END dialog弹窗--->
+</body>
+</html>
+<script type="text/javascript">
+var $adminUpdateUrl="{:U('AdminUser/update')}";
+</script>
+<load href="__ADMIN_JS__/adminuser/adminuser_list.js" />
+<load href="__ADMIN_JS__/adminuser/promptDialog.js" />

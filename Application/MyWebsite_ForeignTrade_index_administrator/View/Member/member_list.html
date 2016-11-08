@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>设计师信息列表</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__COMMON__/css/tools/album_zoom.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/member/member_list.css" />
+<load href="__COMMON__/js/tools/album_zoom.jquery.js" />
+<load href="__COMMON__/js/tools/album_zoom.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+<style>
+table.tablelist td div.data{
+	max-height: 50px;
+	overflow: hidden;
+	line-height:20px;
+}
+table.tablelist td div.data.sign{
+	overflow: auto;
+}
+table.tablelist td a.op_show{
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+    padding: 2px;
+	margin: 0 5px;
+    border-radius: 10px;
+    font-size: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+    background-color: #CCC;
+    transition: background .3s ease-out;
+}
+table.tablelist td a.op_show i{
+	display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin-left: 0;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.6);
+	-o-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+table.tablelist td span.op_show_text{
+	line-height: 18px;
+	display: block;
+	font-size: 12px;
+	margin-top: 5px;
+}
+table.tablelist td span.op_show_text.warn{
+	color: #E55015;
+}
+table.tablelist td span.op_show_text.ok{
+	color: #009FB3;
+}
+table.tablelist td a.op_show.enabled i {
+    margin-left: 14px;
+}
+table.tablelist td a.op_show.enabled {
+    background-color: #006cb7;
+}
+table.tablelist td a.op_show.enabled:hover {
+    background-color: #007bd1;
+}
+</style>
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">首页</a></li>
+    <li><a href="javascript:void(0)">前端用户列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">    
+    <div class="tools">    
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U('Member/add')}'"><i class="fa fa-user-plus"></i>新增用户</li>
+        </ul> 
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+        	{$page}
+    </div>
+   
+	<div class="shaix"> 	
+    <table class="tablelist table">
+    	<thead>
+    	<tr>       
+        <th width="30px">序号</th>
+        <th width="100px">用户昵称</th>
+        <th>用户邮箱</th>
+        <th width="80px">购物车数量</th>
+        <th width="80px">是否禁用</th>
+        <th>注册时间</th>
+        <th width="100px">登录次数</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="!$designers">
+         <tr class="tbcontent">
+        <td>&nbsp;{++$count}<input type="hidden" value="{$designer.designerid}" name="designerid" /></td>
+        <td><div class="data">nickname</div></td>
+        <td><div class="data">bililovy@126.com</div></td>
+        <td><div class="data">15件</div></td>
+        <td><div class="data"><a class="op_show" href="javascript:;"bosszone="bofang_button_close"><i></i></a><span class="op_show_text warn">禁用</span></div></td>
+       	<td><div class="data">2015-16-14 15:22</div></td>        
+       	<td><div class="data">154次</div></td>        
+        <td class="multi-operate ">
+        <input type="hidden" value="{$designer.designerid}" name="id" />
+		<a href="{:U('Teamer/designerUpdate', array('did'=>$designer['designerid']))}" title="编辑资料" class="tab-btn edit-news">编辑</a>
+		<br />
+		<a href="javascript:void(0)" title="删除" class="tab-btn recycle" spm-name="{$designer.designername}">删除</a>
+		</td>
+        </tr>    
+		<else />
+		<tr>
+        	<td colspan="8" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前没有用户注册，您可自行添加用户！</td>
+        </tr>
+		</if>
+        </tbody>    
+        <tr>
+        <td class="multi-operate multi-operate-btn" colspan="8">{$page}</td>
+        </tr> 
+    </table>    
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+var $deleteUrl="{:U('Teamer/designerDel')}";
+$('table.table td a.op_show').click(function(){
+	if ($(this).hasClass('enabled')){
+		$(this).removeClass('enabled');
+		$(this).siblings('span.op_show_text').addClass('warn').removeClass('ok').text('禁用');
+	}else{
+		$(this).addClass('enabled');		
+		$(this).siblings('span.op_show_text').addClass('ok').removeClass('warn').text('启用');
+	}
+})
+</script>
+<load href="__ADMIN_JS__/member/member_list.js" />

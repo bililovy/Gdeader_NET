@@ -1,0 +1,171 @@
+<header class="header row header--fixed hide-from-print animated slideDown" id="header">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+                    <span class="sr-only">Switching navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Logo -->
+                <div class="logo"><a href="/" title="{$webname}"><img class="img-responsive" src="{$logo}" width="110"></a></div>
+                <!-- END Logo -->
+            </div>
+
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <div class="nav-triangle-up"></div>
+                <ul class="nav navbar-nav">
+                    <foreach name="navs" item="nav">
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{$nav.navlink|default='javascript:;'}">
+                            <i class="nav-ico fa fa-{$nav.navico}"></i>
+                            <span>PRODUCTS</span>
+                        </a>
+                        <ul class="dropdown-menu menu-pr" role="menu">
+                            <div class="triangle-up"></div>
+                            <li data-submenu-id="submenu-2">
+                                <a href="http://www.taotronics.com/OfficeProducts.html"><div class="left">Office Products</div><div class="right">></div></a>
+                                <div id="submenu-2" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-office.jpg) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/BarcodeScanner.html">Barcode Scanner</a></li>
+                                        <li><a href="http://www.taotronics.com/HandheldScanner.html">Handheld Scanner</a></li>
+                                        <li><a href="http://www.taotronics.com/ipadstand.html">iPad Stand</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li data-submenu-id="submenu-4">
+                                <a href="http://www.taotronics.com/automotiveaccessories.html"><div class="left">Car Accessories</div><div class="right">></div></a>
+                                <div id="submenu-4" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-car.jpg) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/accessory mount.html">Accessory Mount</a></li>
+                                        <li><a href="http://www.taotronics.com/dvr.html">DVR</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li data-submenu-id="submenu-5">
+                                <a href="http://www.taotronics.com/PetSupplies.html"><div class="left">Pet Supplies</div><div class="right">></div></a>
+                                <div id="submenu-5" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-pet.jpg) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/black-light-flashlight.html"> Black Light Flashlight</a></li>
+                                        <li><a href="http://www.taotronics.com/pet-supplies-dog-leash.html">Dog leash</a></li>
+                                        <li><a href="http://www.taotronics.com/automotive.html">Automotive</a></li>
+                                        <li><a href="http://www.taotronics.com/waste-bags.html">Waste Bags</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li data-submenu-id="submenu-6">
+                                <a href="http://www.taotronics.com/homeimprovement.html"><div class="left">Home and Lighting</div><div class="right">></div></a>
+                                <div id="submenu-6" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-home.jpg) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/ledstrip.html">LED Strip/String Lights</a></li>
+                                        <li><a href="http://www.taotronics.com/HomeLighting.html">Home Lighting</a></li>
+                                        <li><a href="http://www.taotronics.com/PlantsAndGarden.html">Plants and Garden</a></li>
+                                        <li><a href="http://www.taotronics.com/tvaccessories.html">TV Accessories</a></li>
+                                        <li><a href="http://www.taotronics.com/motion-sensor-light.html">Motion Sensor Light</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li data-submenu-id="submenu-7">
+                                <a href="http://www.taotronics.com/bluetoothaccessories.html"><div class="left">Bluetooth</div><div class="right">></div></a>
+                                <div id="submenu-7" class="popover" style="background:#fff url(http://www.taotronics.com/images/submenu-bg-bluetooth.jpg) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/Transmitter.html">Transmitter</a></li>
+                                        <li><a href="http://www.taotronics.com/Receiver.html">Receiver</a></li>
+                                        <li><a href="http://www.taotronics.com/earphones.html">Earphones</a></li>
+                                        <li><a href="http://www.taotronics.com/Speakers.html">Speakers</a></li>
+                                        <li><a href="http://www.taotronics.com/selfiestick.html">Selfie Stick</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li data-submenu-id="submenu-40">
+                                <a href="http://www.taotronics.com/sportsoutdoors.html"><div class="left">Sports & Outdoors</div><div class="right">></div></a>
+                                <div id="submenu-40" class="popover" style="background:#fff url(http://www.taotronics.com/images/) left bottom no-repeat;">
+                                    <ul class="list-unstyled submenu-box">
+                                        <li><a href="http://www.taotronics.com/campinglight.html">Camping Light</a></li>
+                                        <li><a href="http://www.taotronics.com/tt-sh014-camera-lens-kit-for-phone-tablet.html">Camera Lens Kit for Phone/Tablet</a></li>
+                                        <li><a href="http://www.taotronics.com/runningbelt.html">Running Belt</a></li>
+                                        <li><a href="http://www.taotronics.com/bicycle-mount.html">Bicycle Mount</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+</foreach>
+                    <li><div class="fav"><span class="tip">999+</span><i class="fav fa fa-heart"></i><span class="fav">My Favorite</span></div></li>
+                </ul>
+            </div>
+            <!-- END Menu -->
+
+            <div class="nav-right-box">
+                <!-- search -->
+                <div class="search-icn"><a href="javascript:void(0);"><i class="menu-icn-search"></i><span>Search</span></a></div>
+                <!-- END Search -->
+
+                <!--Login -->
+                <div class="top-login">
+                    <if condition="$_SESSION['member'] and $_SESSION['member']['SIGNIN_AUTHKEY']=='ALLOW_IN'">
+                        <p style="margin: 0"><i class="fa fa-user"></i>{$Think.session.member.username}</p>
+                        <a href="{:U('Member/exitSign')}" title="logout"><i class="fa fa-sign-out" style="font-size: 1.3em;"></i><span id="singout">sign out</span></a>
+                        <else />
+                    <a href="{:U('Member/login')}"><i class="menu-icn-login"></i></a>
+                    <span><a href="{:U('Member/login')}">Sign In</a> / <a href="{:U('Member/regist')}">Register</a></span>
+                </div>
+              </if>
+                <!--END Login -->
+            </div>
+        </nav>
+    </div>
+
+    <!-- search-box -->
+    <div class="search-box">
+        <div class="container">
+            <div class="search-box-info">
+                <form role="form" id="searchForm" method="post">
+                    <input type="text" class="form-control" id="txtSearchM" name="" placeholder="Search">
+                    <button type="submit" class="btn bg-orange" id="btnSearchM" onclick="productSearch('txtSearchM');">Search</button>
+                    <button type="button" class="search-close">X</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end search-box -->
+</header>
+<!-- END Header -->
+
+<script type="text/javascript" >
+    $(document).ready(function(){
+        // 设置header一级菜单可以点击
+        $(document).off('click.bs.dropdown.data-api');
+    });
+    //search product
+    function productSearch(txtid){
+        var _keywords = document.getElementById(txtid).value;
+        if(!isEmpty(_keywords)){
+            $('#searchForm').attr("action","http://www.taotronics.com/catalog/product/search/" + _keywords);
+            $('#searchForm').submit();
+            //window.location.href="http://www.taotronics.com/catalog/product/search/" + _keywords;
+        }
+    }
+    function logout(){
+        var dateTime = new Date().getTime();
+        $.ajax({
+            url: 'http://customer.sunvalleytek.com/noaccount/logout',
+            type: 'POST',
+            dataType : "jsonp",
+            jsonp:'callback',
+            jsonpCallback:"brandLogout",
+            data: {
+                randDate: dateTime
+            },
+            success:function(json){
+
+            }
+        });
+    }
+
+    function brandLogout(rtmsg){
+        window.location.href='http://www.taotronics.com/customer/logout';
+    }
+</script>

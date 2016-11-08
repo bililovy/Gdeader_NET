@@ -1,0 +1,156 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<include file="public/breadcrumb" />
+<style type="text/css">
+	/*--login--*/
+	.login-page {
+		padding: 6em 0;
+	}
+	.login-left {
+		padding: 0;
+	}
+	.login-left h3, .login-right h3 {
+		color:#000;
+		font-size: 1.2em;
+		padding-bottom: 0.5em;
+		font-weight:600;
+	}
+	.login-left p, .login-right p {
+		color: #999;
+		display: block;
+		font-size: 1em;
+		margin: 0 0 2em 0;
+		line-height: 1.8em;
+	}
+	.acount-btn {
+		border: 2px solid #000;
+		color: #000;
+		font-size: 1em;
+		padding: 0.7em 1.2em;
+		transition: 0.5s all;
+		-webkit-transition: 0.5s all;
+		-moz-transition: 0.5s all;
+		-o-transition: 0.5s all;
+		display: inline-block;
+		text-transform: uppercase;
+	}
+	.acount-btn:hover, .login-right input[type="submit"]:hover{
+		background:#000;
+		text-decoration:none;
+		color:#fff;
+	}
+	.login-right form {
+		padding: 1em 0;
+	}
+	.login-right form div {
+		padding: 0 0 2em 0;
+	}
+	.login-right span {
+		color: #999;
+		font-size:0.8125em;
+		padding-bottom: 0.2em;
+		display: block;
+		text-transform: uppercase;
+	}
+	.login-right input[type="password"] ,
+	.login-right input[type="text"] {
+		border: 1px solid #555;
+		outline-color:#08538C;
+		width: 96%;
+		font-size:0.8125em;
+		padding: 0.5em;
+	}
+	.login-right input[type="submit"] {
+		border: 2px solid #000;
+		color: #000;
+		font-size: 1em;
+		padding: 0.7em 1.2em;
+		transition: 0.5s all;
+		-webkit-transition: 0.5s all;
+		-moz-transition: 0.5s all;
+		-o-transition: 0.5s all;
+		display: inline-block;
+		text-transform: uppercase;
+		outline:none;
+		background-color: #fff;
+	}
+</style>
+<div class="container">
+	<div class="login-page">
+		<iframe name="loginSubmit" src="" style="display: none;"></iframe>
+		<div class="account_grid">
+			<div class="col-md-6 login-left">
+				<h3>NEW CUSTOMERS</h3>
+				<p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+				<a class="acount-btn" href="{:U('Member/regist')}">Create an Account</a>
+			</div>
+			<div class="col-md-6 login-right">
+				<h3>REGISTERED CUSTOMERS</h3>
+				<p>If you have an account with us, please log in.</p>
+				<form target="loginSubmit" action="{:U('Member/login')}" method="post" onsubmit="return check();">
+					<div>
+						<span>Email Address<label>*</label></span>
+						<input type="text" name="account" placeholder="Email Address">
+					</div>
+					<div>
+						<span>Password<label>*</label></span>
+						<input type="password" name="password" >
+					</div>
+
+					<a class="forgot" href="{:U('Member/findpwd')}">Forgot Your Password?</a>
+					<input type="submit"  id="submit" value="Login">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<!--/script-->
+<script type="text/javascript">
+	function check(){
+		return true;
+	}
+
+	function promptTips(message,time, type, isok){
+//        alert(type);
+		type = type =null ? 0 : type;
+		isok= null == isok  ? false : isok;
+		tips_color =[1, '#E5C00'];
+		switch (type){
+			case 1:
+				var obj = $('input[name="account"]');
+				break;
+			case 2:
+				var obj = $('input[name="password"]');
+				break;
+			default :
+				var obj = $('input#submit');
+
+				if (isok){
+					tips_color= [1, '#056A15'];
+				}
+		}
+
+		layer.tips(message, obj , {
+			tips: tips_color,
+			time: time
+		});
+		if (isok){
+			setTimeout(function (){
+				window.location.href='/';
+
+			}, time);
+		}
+	}
+</script>
+</body>
+</html>	

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品属性展示</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/goods/attr_list.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">产品属性列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U('Goods/attrAdd')}'"><i class="fa fa-plus"></i>添加属性</li>
+        </ul> 
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    </div>    
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th width="5%">序号</th>
+        <th width="10%">属性名称</th>
+        <th width="10%">所属分类</th>
+        <th width="15%">挂载方式</th>
+        <th width="30%">属性值</th>
+        <th width="10%">排序</th>
+        <th width="20%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="$attrs">
+        <foreach name="attrs" item="attr">
+         <tr class="tbcontent">
+		 <td><div class="tdcontent">{++$count}</div></td>
+		 <td><div class="tdcontent">{$attr.attrname}</div></td>
+		 <td><div class="tdcontent">{$attr.catename}</div></td>
+		 <td><div class="tdcontent"><if condition="$attr.attrinputtype eq 1">属性值单选<elseif condition="$attr.attrinputtype eq 3" />属性值多选选<elseif condition="$attr.attrinputtype eq 4"/>手动输入<else />未设置</if></div></td>
+		 <td><div class="tdcontent">{$attr.attrvalues|default='<b style="color: #898989;">待输入</b>'}</div></td>
+		 <td><div class="tdcontent">{$attr.sortorder}</div></td>
+        <td class="multi-operate ">
+	       	<div class="tdcontent">
+	       		 <input type="hidden" value="{$attr.id}" name="attrid" />
+                <a href="{:U('Goods/AttrClone', array('aid'=>$attr['id']))}" title="克隆" class="tab-btn copy">复制</a>
+				<a href="{:U('Goods/attrEdit', array('aid'=>$attr['id']))}" title="编辑" class="tab-btn edit">编辑</a>
+				<a href="javascript:void(0)" title="" class="tab-btn recycle">删除</a>
+	       	</div>
+		</td>
+        </tr> 
+        </foreach>
+        <else/>
+        <tr><td colspan="7" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前暂无可用属性，请点击左上角添加属性，添加后方可进行产品属性添加操作</td></tr>
+ 		</if>
+        </tbody>    
+        <tr>
+        <td class="multi-operate multi-operate-btn" colspan="7">{$page}</td>
+        </tr> 
+    </table>    
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $attrTrashUrl="{:U('Goods/attrDel')}";
+
+$(".tab-btn.recycle").click(function() {
+			var $this = $(this);
+			var id = parseInt($(this).siblings('input[name="attrid"]').val());
+			if (id > 0) {
+				var btnFn = function() {
+					var $data = {
+						aid : id
+					};
+					$.post($attrTrashUrl, $data,function(back) {
+								if (back.status == 1) {
+									if ($("table.tablelist").find("tr.tbcontent").length <= 0) {
+										window.location.href = back.data;
+									} else {
+										window.location.reload();
+									}
+								} else {
+									easyDialog.open({
+										container : {
+											content : back.data
+										},
+										autoClose : 3000
+									});
+								}
+							}, "json");
+					return false;
+				};
+				easyDialog.open({
+					container : {
+						header : "消息提醒窗口",
+						content : "您将删除此属性，删除后将无法再找回。<br />确定删除吗？",
+						yesFn : btnFn,
+						noFn : true
+					},
+					follow : $this[0],
+					followX : -275,
+					followY : 25
+				});
+			} else {
+				easyDialog.open({
+					container : {
+						content : "当前操作缺失参数，请刷新重试！"
+					},
+					autoClose : 2000
+				});
+			}
+		});
+
+</script>

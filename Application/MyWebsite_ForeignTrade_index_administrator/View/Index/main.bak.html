@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+<meta name="renderer" content="webkit" />
+<title>{$pageinfo.pagetitle}-系统后台主页</title>
+
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+</head>
+<body>
+<!-- BEGIN 本页面加载 -->
+<load href="__ADMIN_CSS__/index/main.css" />
+<!-- END 本页面加载 -->
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="javascript:void(0)" style="color: #3672A6;">首页</a></li>
+    </ul>
+    </div>    
+    <div class="mainindex">    
+    <div class="welinfo">
+    <b>亲爱的<span class="name">{$Think.session.truename}</span>{$helloword}好，欢迎再次进入<b>{$pageinfo.pagetitle}</b>网站后台系统</b>
+    <!-- <a href="{:U('AdminUser/index')}">帐号设置</a> -->
+    </div>    
+    <div class="welinfo">
+    <i class="fa fa-clock-o"></i><span>您上次登录的时间：{$Think.session.lastlogintime}</span> <span>这是您第<b>{$Think.session.logintimes}</b>次登录本系统</span> 
+    </div>    
+    <div class="xline"></div>
+	<div class="fast_opbtn">
+    <div class="box"></div>
+    <div class="xline" style="overflow: hidden; clear: both;marigin-bottom: 10px;"></div>  
+    <div class="welinfo"> 
+    <b><i class="fa fa-lightbulb-o"></i>系统公告&通知栏</b>
+    </div>
+    <ul class="infolist">
+	    <li><span>1.此系统仅针对贵公司网站定制开发，不得转让和出售！</span></li>
+	    <li><span>2.使用中，如果由于人为修改源程序导致程序出现bug的，将不提供免费维护！如需维护，将收取相应服务费。</span></li>
+	    <li><span>3.本系统移交贵公司确认无误后，即结束系统大型维护服务，如果后期需要增加功能，升级网站，修改页面等，将收取相应服务费。</span></li>
+	    <li><span style="color: #D31B26;">4.本系统对客户敏感资料做了加密防护，在本系统移交贵公司确认接手后，服务器和网站维护将一并属于贵公司，如果使用过程中由于服务器原因，导致客户资料泄漏，与本系统开发公司和所有开发者无关。</span></li>
+	    <li><span>5.其他相关事宜，如有需要，请直接联系洽谈责任人</span></li>
+    </ul>
+    <div class="xline"></div>    
+</div>
+</body>
+</html>

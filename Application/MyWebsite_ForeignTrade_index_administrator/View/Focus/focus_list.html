@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>焦点图列表</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__COMMON__/tools/album_lightboxgroup/css/album_zoom.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/focus/focus_list.css" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.jquery.js" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" >首页</a></li>
+    <li><a href="javascript:void(0)">焦点图设置列表</a></li>
+    </ul>
+ </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">    
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U( 'Focus/focusadd')}'"><i class="fa fa-user-plus"></i>添加幻灯片</li>
+        </ul> 
+        <div style="float: left;line-height: 25px; margin-top: 5px;margin-left: 45px;color: #898989;">点击焦点图片查看大图，支持键盘 “←&nbsp;&nbsp;&nbsp;→”方向键切换查看</div>
+		 <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+		</ul>
+    </div>
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th width="5%">序号</th>
+        <th width="10%">焦点图</th>
+        <th width="25%">标题</th>
+        <th width="10%">名称</th>
+        <th width="14%">链接地址</th>
+        <th width="8%">是否启用</th>
+        <th width="8%">排序</th>
+        <th width="20%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+       	<if condition="$focuses">
+        <foreach name="focuses" item="focus">
+         <tr class="tbcontent">
+        <td class="first">&nbsp;{++$count}<input type="hidden" value="{$focus.id}" name="focusid"/></td>
+        <td><div class="tdcontent cover"><a href="{$focus.cover}" rel="lightbox-group"><img src="{$focus.cover}" width="90" title="点击查看大图" style="cursor:pointer;"/></a></div></td>
+        <td><a href="javascript:void(0)"  class="preview">{$focus.title|mb_substr=0,19,'UTF-8'}</a></td>
+        <td>{$focus.focusname|default='<b style="color: #898989;">未设置</b>'|mb_substr=0,23,'UTF-8'}</td>
+        <td><a <empty name='focus.linkurl'>href="javascript:void(0)"<else />href="{$focus.linkurl}" target="_blank"</empty> class="preview"><empty name='focus.linkurl'><b style="color:#898989">未设置链接地址</b><else />{$focus.linkurl|mb_substr=0,23,'UTF-8'}</empty></a></td>
+        <td class="toggle-show">
+        <if condition="$focus.isshow eq 0">
+        <span data-nid="{$focus.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        <else />
+        <span data-nid="{$focus.id}" style="background-image: url(__ADMIN_IMG__/icons/big_right.png); background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        </if>
+        </td>
+        <td>{$focus.sortorder}</td>
+        <td class="multi-operate ">
+        <input type="hidden" value="{$focus.id}" name="id" />
+		<a href="{:U('Focus/focusUpdate', array('fid'=>$focus['id']))}" title="编辑焦点图" class="tab-btn edit-news">编辑</a>
+		<a href="javascript:void(0)"  class="tab-btn recycle">删除</a>
+		</td>
+        </tr> 
+		</foreach>
+		<else />
+        <tr>
+        	<td colspan="9" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前没有可用的幻灯图片，您可以点击左上方添加幻灯图片！</td>
+         </tr>
+		</if>
+        </tbody>    
+        <tr>
+        <td class="multi-operate multi-operate-btn" colspan="9">
+        	{$page}
+			 </td>
+        </tr> 
+    </table>    
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $modifyUrl="{:U('Focus/focusModify')}";
+</script>
+<load href="__ADMIN_JS__/focus/focus_list.js" />

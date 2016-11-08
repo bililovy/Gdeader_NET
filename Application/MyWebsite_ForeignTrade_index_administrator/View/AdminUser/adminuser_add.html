@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理员添加</title>
+
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/adminuser/adminuser_add.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/js/tools/md5.js" />
+<!-- END 当前页面的css 和js -->
+
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">主页</a></li>
+    <li><a href="javascript:void(0)">添加管理员账户</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    <style>
+
+    </style>
+    <div class="formtitle"><span>添加管理员</span>
+	<a href="{:U('AdminUser/index')}"><i class="fa fa-reply"></i>返回管理员列表</a>
+	</div>
+    <div class="form-box">
+   <div class="add-admin">
+    <ul class="forminfo">   
+    <li><label><b>*</b>昵&nbsp;&nbsp;&nbsp;&nbsp;称</label><input name="username" type="text" value="" class="dfinput" /><i placeholder="昵称为字母或字母+数字,不超过20位">昵称为字母或字母+数字,不超过20位</i></li>
+    <li><label><b>*</b>电子邮箱</label><input name="email" type="text" class="dfinput" /><i placeholder="必填项，请确认邮箱可用">必填项，请确认邮箱可用</i></li>
+    <li><label><b>*</b>真实姓名</label><input name="truename" type="text" class="dfinput" /><i placeholder="必填项，输入中文姓名">必填项，输入中文姓名</i></li>
+    <li><label>&nbsp;</label><input name="" type="button" class="btn next" value="下一步" id="next"/></li>
+    </ul>
+    <ul class="set-pass">
+    	  <li><label><b>*</b>设置密码</label><input name="password" type="password" class="dfinput" /><i placeholder="必填项，6-20位非中文字符">必填项，6-20位非中文字符</i></li>
+    	  <li><label><b>*</b>确认密码</label><input name="c_password" type="password" class="dfinput" /><i placeholder="校验通过">请再次输入密码</i></li>
+    	  <li><label><b>*</b>是否锁定</label><input name="canbedelete" type="radio" value="1" style="margin-left: 18px;" checked="checked" />不锁定&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="canbedelete" type="radio" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;锁定<i placeholder="锁定后无法直接删除">锁定后避免管理员被误删。</i></li>
+    	  <li class="btns"><label>&nbsp;</label><input name="" type="button" class="btn prev" value="返回修改"/><input name="" type="button" class="btn add" value="确认添加"/></li>
+    </ul>
+    </div>
+    </div>    
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+var adminAddUrl ="{:U('AdminUser/add')}";
+</script>
+<load href="__ADMIN_JS__/adminuser/adminuser_add.js" />

@@ -1,0 +1,66 @@
+<include file="Public/header" />
+<body>
+<load href="__COMMON__/tools/dialog/easydialog/easydialog.css" />
+<load href="__COMMON__/tools/dialog/easydialog/easydialog.min.js" />
+<load href="__ADMIN_CSS__/index/main.css" />
+
+<div class="content">    
+    <div class="info infobox env_prober">
+        <h3>环境监测</h3>
+           <div class="env_result">    
+              <ul class="env_content">
+                    <li><span class="tt">服务器操作系统</span><span class="data">{$Think.SYSTEM_OS}</span></li>
+                    <li><span class="tt">服务器解译引擎</span><span class="data" id="serverdata" >{$Think.server.SERVER_SOFTWARE}</span></li>
+                    <li><span class="tt">网站系统版本</span><span class="data">{$Think.const.SYSTEM_VERSION}</span></li>
+                    <li><span class="tt">系统框架版本</span><span class="data">{$Think.const.WINSYS_VERSION}</span></li>
+                    <li><span class="tt">系统内核版本</span><span class="data">Core Driver&nbsp;&nbsp;V{$Think.version}</span></li>
+                    <li><span class="tt">运行环境版本</span><span class="data">{$Think.const.php_version}</span></li>
+                    <li><span class="tt">数据库版本</span><span class="data">{$Think.const.SQL_VERSION}</span></li>
+                    <li><span class="tt">当前网站域名</span><span class="data">{$Think.server.HTTP_HOST}</span></li>
+              </ul>             
+        </div>
+    </div>
+    <div class="info infobox env_prober" style="margin-left:2%;">
+        <h3>管理员登录信息</h3>
+           <div class="env_result">
+              <ul class="env_content">
+                    <li><span class="tt">当前登陆用户</span><span class="data">{$logininfo.username}<notempty name="logininfo.truename"><span style="color: #B8730B;margin-left: 10px;">（{$logininfo.truename}）</span></notempty></span></li>
+                    <li><span class="tt">登录身份</span><span class="data">{$logininfo.adminrole}</span></li>
+                    <li><span class="tt">上次登录时间</span><span class="data">{$logininfo.lastlogintime}</span></li>
+                    <li><span class="tt">上次登录IP</span><span class="data">{$logininfo.lastloginip}</span></li>
+                    <li><span class="tt">登录系统次数</span><span class="data">{$logininfo.logintimes}次</span></li>
+                    <li><span class="tt">说明</span><span class="data">{$logininfo.roledesc|default='欢迎进入网站管理系统，数据无价，请谨慎操作各项数据，避免数据丢失！'}</span></li>
+              </ul>             
+        </div>
+    </div>
+     <div class="info env_prober" style="clear: both;">
+        <h3>系统信息监测</h3>
+           <div class="env_result">
+              <div class="envtitle">
+                <b>温馨提醒：</b>为了提升运行速度，下列环境探测数据没有自动获取，如需查看数据，请点击下列探测项后面的“检测数据”按钮。
+              </div>
+              <div class="tools" style="padding: 0 10px; padding-left: 68px;margin-bottom:10px; color: #B8730B;">每次获取数据后系统会缓存600秒，要获取实时数据，请点击右侧“清理缓存”按钮后，再获取数据<a href="javascript:void(0)" onclick="clearSpaceChache(this,'{:U('Index/DoGet')}')" style="margin: 0 5px;background: #989898;padding: 1px 5px;color: #FFF;margin-left: 50px;">清理缓存</a></div>
+              <ul class="env_content usagedata">
+                    <li><span class="tt">网站空间总配额</span><span class="data" id="spacetotal"><i style="color: #868686;font-style:normal;">数据待检测</i></span></li>
+                    <li><span class="tt">空间使用量</span><span class="data"><i class="process"></i>（已使用<span class="space_used">***</span>/使用率<span class="use_percent">***</span>）</span><a href="javascript:void(0)" onclick="getUsage(this,'{:U('Index/DoGet', array('from'=>'main'))}','website')">检测数据</a></li>
+                    <li><span class="tt">数据库总配额</span><span class="data" id="sqltotal"><i style="color: #868686;font-style:normal;">数据待检测</i></span></li>
+                    <li><span class="tt">数据库使用量</span><span class="data"><i class="process"></i>（已使用<span class="space_used">***</span>/使用率<span class="use_percent">***</span>）</span><a href="javascript:void(0)" onclick="getUsage(this,'{:U('Index/DoGet', array('from'=>'main'))}','mysql')">检测数据</a></span></li>
+              </ul>             
+        </div>
+    </div>
+      <div class="info env_prober" style="clear: both;">
+        <h3>系统公告说明</h3>
+        <ul class="notice">
+            <li style="color: #D31B26;">1.为了保护开发版权，基于winsystem系统（以下简称本系统）开发的此网站程序已采用防伪验证，更换服务器或空间后，系统 将无法使用，如需更换服务器或空间，请更换成功后，联系<a href="http://www.cduwin.com" target="_blank">成都万应科技</a>客服重新授权方可使用。</li>
+            <li>2.基于winsystem系统（以下简称本系统）开发的此网站程序，使用权仅针对贵公司所有，未经成都万应网络科技允许，不得转让和出售。</li>
+            <li>3.使用中，如果由于人为修改源程序导致程序出现bug的，将不提供免费维护！如需维护，将收取相应服务费。</li>
+            <li>4.本系统移交贵公司确认无误后，即结束系统大型维护服务，如果后期需要增加功能，升级网站，修改页面等，将收取相应服务费。</li>
+            <li style="color: #D31B26;">5.本系统对客户敏感资料做了加密防护，在本系统移交贵公司确认接手后，服务器和网站维护将一并属于贵公司，如果使用过程中由于服务器原因，导致客户资料泄漏，与成都万应网络科技有限公司和所有开发者无关，但我们会提供维护服务。</li>
+            <li>6.其他相关事宜，如有需要，请直接联系成都万应科技<a href="http://www.cduwin.com" target="_blank">在线客服</a></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="http://api.cduwin.com/cgi_bin/remote_notice/notice.php?{$accessstring}"></script>
+</body>
+</html>
+<load href="__ADMIN_JS__/index/main.js" />

@@ -1,0 +1,17 @@
+<!-- crumb -->
+<div class="crumb-box">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <foreach name="pageinfo.breadcrumb" item="crumb" key="link">
+                <?php $i++; ?>
+                <if condition = "$i == count($pageinfo['breadcrumb'])">
+                    <li  class="active">{$crumb}</li>
+                 <else/>
+                    <li><a href="{$link}">{$crumb}</a></li>
+                </if>
+            </foreach>
+        </ol>
+    </div>
+</div>
+<!-- end crumb -->

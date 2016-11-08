@@ -1,0 +1,76 @@
+<include file="Public/header" />
+
+<body>
+<!--BEGIN 本页面所需文件-->	
+<load href="__CSS__/goods/detail.css" />	
+<load href="__COMMON__/tools/imgzoom/css/etalage.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<load href="__COMMON__/js/tools/jquery.superslide.min.js" />
+<load href="__COMMON__/tools/owlcarousel/js/highlight.pack.js" />	
+<load href="__COMMON__/tools/imgzoom/js/jquery.etalage.min.js" />	
+<!--END 本页面所需文件-->	
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />	
+<!-- END 头部导航 -->
+<!-- BEGIN 中部内容区域-->
+
+<div class="middle_content">
+<include file="Tools/breadcrum" />
+<div class="product_main">
+<if condition="$goodsalbums">
+	<div class="product_img">
+		<ul id="etalage">
+		<foreach name="goodsalbums" item="album">
+			<li>
+				<img class="etalage_thumb_image" src="{$album.imgpath}" />
+				<img class="etalage_source_image" src="{$album.imgpath}" alt="{$goodsid}" />
+			</li>
+			</foreach>			
+		</ul>		
+	</div>
+	</if>
+	<div class="product_info">
+		<h1>{$goods.goodsname}</h1>
+		<div class="price"><span class="priceshow"><b>$</b>{$goods.price}</span><span class="click"><i class="fa fa-eye"></i>{$goods.click}</span></div>
+		<div class="attrs_list">
+			<foreach name="goodsattr" item="attr">
+			<span class="attr"><label>{$attr.attrname}:</label><foreach name="attr.attrvalue" item="attrval">{$attrval}&nbsp;&nbsp;&nbsp;</foreach></span>
+			</foreach>		
+		</div>
+		<div class="divide_line"></div>
+		<div class="description">
+			<div class="title">description</div>
+			<p>{$goods.description}</p>
+		</div>
+	</div>
+	<div class="product_detail">
+		<div class="detail_intro_title">details for the product</div>
+		<div class="detail_content">
+			<!-- 来自自己编辑 -->
+				{$goods.goodsdetail}
+					<!-- 来自自己编辑 -->
+		</div>
+	</div>
+	<div class="product_relative">
+		<div class="detail_intro_title">related products</div>
+		<if condition="$recommends">
+		<div class="detail_content">
+			<!-- BEGIN 推荐产品 按点击量-->
+					<div class="owl-carousel">
+						<foreach name="recommends" item="pro">
+						<div class="product"><a href="{:U('Goods/detail', array('gid'=>$pro['id'], 'justfrom'=>'productdetail'))}" title="{$pro.goodsname}"><img src="{$pro.goodsimg}"/><h1><span class='txt'>{$pro.goodsname|mb_substr=0,55,'UTF-8'}</span><span class="info"><span class="view"><i class="fa fa-eye"></i>{$pro.click}</span><span class="date"><i class="fa fa-clock-o"></i>{$pro.addtime|date='Y/m/d', ###}</span></span></h1></a></div>
+						</foreach>
+					</div>
+	<!-- END 推荐产品 按点击量-->
+		</div>
+		</if>
+	</div>
+</div>
+</div>
+<!-- END 中部内容区域-->
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/goods/detail.js" />

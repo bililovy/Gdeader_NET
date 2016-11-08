@@ -1,0 +1,252 @@
+@CHARSET "UTF-8";
+
+.shopping_cart {
+    overflow: hidden;
+    width: 100%;
+}
+.shopping_cart  .container{
+    width: 1100px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.shopping_cart  .container .title{
+    padding: 0 0 9px 0;
+    border-bottom: 1px solid #E0E0E0;
+    font-family: Bitter, Myriad Pro, Verdana, serif;
+    font-weight: normal;
+    color: #666;
+    line-height: 1;
+    font-size: 32px;
+    text-transform: capitalize;
+}
+.shopping_cart  .container .wishlist{
+    margin-top: 15px;
+}
+.shopping_cart  .container .wishlist .listtable{
+    overflow: hidden;
+}
+.shopping_cart  .container .wishlist .listtable .th_item,
+.shopping_cart  .container .wishlist .listtable .items
+{
+    overflow: hidden;
+}
+.shopping_cart  .container .wishlist .listtable .th_item .th,
+.shopping_cart  .container .wishlist .listtable .items .th{
+    margin-bottom: 10px;
+    line-height: 50px;
+    color: #444;
+    display: block;
+    float: left;
+    font-size: 1.2em;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 0 15px;
+    font-weight: 600;
+}
+.shopping_cart  .container .wishlist .listtable .items .th{
+    height: 106px;
+    font-weight: normal;
+}
+.shopping_cart  .container .wishlist .listtable  .th.img{
+    width: 120px;
+}
+.shopping_cart  .container .wishlist .listtable  .th.img img{
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.shopping_cart  .container .wishlist .listtable  .th.goodsname{
+    text-align: left;
+}
+.shopping_cart  .container .wishlist .listtable  .th.pname{
+    width: 520px;
+}
+.shopping_cart  .container .wishlist .listtable  .th.price{
+    width: 80px;
+}
+.shopping_cart  .container .wishlist .listtable  .th.op{
+    width: 260px;
+}
+.shopping_cart  .container .wishlist .listtable  .th.op.operate a.opbtn{
+    font-size: 1.6em;
+    margin: 0 10px;
+    color: #9f9f9f;
+}
+.shopping_cart  .container .bg{
+    background: #F7F7F7;
+}
+.shopping_cart  .container .tool{
+    line-height: 25px;
+    margin-top: 10px;
+    font-size: 1.2em;
+    padding: 9px 0 10px 0;
+    height: 29px;
+    border-bottom:1px solid #999;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.shopping_cart  .container .tool a.optool{
+    padding: 0 20px;
+    height: 29px;
+    background: #f1f3f5;
+    border: 0 none;
+    color: #666;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease ;
+    -ms-transition: all 0.5s ease ;
+    -o-transition: all 0.5s ease ;
+    transition: all 0.5s ease ;
+    text-transform: capitalize;
+}
+.shopping_cart  .container .tool a.optool:hover{
+    background: #2798A2;
+    color: #FFF;
+}
+.shopping_cart  .container .tool a i.fa{
+    margin-right: 8px;
+}
+/***************BEGIN 热销产品***************/
+.tag_title{
+    line-height: 35px;
+    padding-left: 10px;
+    overflow: hidden;
+}
+.tag_title h1{
+    font-weight: 600;
+    margin-bottom: 0;
+    font-size: 1.6em;
+    color: #666;
+    text-transform: uppercase;
+    line-height: 35px;
+    float: left;
+    text-transform: capitalize;
+}
+.tag_title h1 i.fa{
+    font-size: 1.6em;
+}
+.hot_product{
+    width: 100%;
+}
+.hot_product .hot_container{
+    width: 1100px;
+    overflow: hidden;
+    margin: 30px auto;
+}
+
+.hot_product .hot_container h1 i.fa{
+    color: #DE6C0A;
+}
+.hot_product .hot_container div.controller{
+    float: right;
+    width: 85px;
+}
+.hot_product .hot_container div.controller a.btn{
+    font-size: 1.4em;
+    padding: 0px 8px;
+    border: 1px solid #2C909B;
+    margin-left: 5px;
+    text-align: center;
+    color: #2C909B;
+}
+.hot_product .hot_container div.controller a.btn i.fa{
+    margin: 0;
+    padding: 0;
+}
+.hot_product .hot_container div.controller a.btn:hover{
+    background: #2C909B;
+    color: #FFF;
+}
+.hot_product .hot_container div.controller a.btn.nextStop,
+.hot_product .hot_container div.controller a.btn.prevStop{
+    background: #e5e5e5;
+    border:1px solid #e1e1e1;
+    color: #FFF;
+}
+.hot_product .hot_container  .product_scroller{
+    position: relative;
+    overflow: hidden;
+    clear: both;
+    margin-top: 20px;
+}
+.hot_product .hot_container  .product_scroller ul{
+    margin: 0 auto;
+    float: left;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li {
+    padding: 2px;
+    float: left;
+    margin-right: 20px;
+    border: 2px solid #EEEEEE;
+    width: 252px;
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li.on{
+    border: 2px solid #2C909B;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li > img{
+    width: 100%;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li p.gname{
+    font-size: 1.6em;
+    font-weight: 400;
+    font-family: 'Raleway', sans-serif;
+    color: #4D4D52;
+    margin-top: 15px;
+    padding: 2px 3px;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li p.price{
+    color: #31838B;
+    text-shadow: 1px 0px 0px #52D6E3;
+    -webkit-text-shadow: 1px 0px 1px #52D6E3;
+    -moz-text-shadow: 1px 0px 1px #52D6E3;
+    -o-text-shadow: 1px 0px 1px #52D6E3;
+    font-weight: 300;
+    font-size: 1.8em;
+    text-align: center;
+    margin-top: 10px;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li div.opbtn{
+    line-height: 50px;
+    margin-top: 15px;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li div.opbtn i.fa{
+    margin-right: 10px;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li div.opbtn a{
+    display: block;
+    float: left;
+    width: 49.2%;
+    background: #2C909B;
+    color: #FFF;
+    font-size: 1.4em;
+    text-align: center;
+    margin-left: 2px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.hot_product .hot_container  .product_scroller ul.prolist li div.opbtn a:hover{
+    background: #DD5555;
+}
+
+.price-right .score img{
+    width:15px;
+}
+.price-right .btn.bg-blue{
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(246, 219, 153, 1) 0%, #f0c452 100%) repeat scroll 0 0;
+    border: 1px solid #a88734;
+    color: #333;
+    width: 100%;
+}
+/*************** END 热销产品***************/

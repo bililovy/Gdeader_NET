@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>配置单页面</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/companyinfo/companyinfo_set.css" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/tools/htmlEditor/kingeditor/kindeditor-all-min.js" />
+<!-- END 当前页面的css 和js -->
+<script type="text/javascript" >
+var uploadurla="{:U('Companyinfo/contentUpload')}"; //后台上传地址
+var cssurl="";
+var $sessionid ="{$sessionid}";//后台传输出来 用php生成sessionid
+</script>
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">    	
+      <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">公司简介设置</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+
+    <div class="formbody"> 
+    <div class="formtitle">
+    <span>公司简介设置</span>
+    <input type="hidden" value="{$pageinfo.id}" name="pageid" />
+    </div>    
+    <ul class="forminfo">
+    <li><label><b>*</b>页面标题</label><input name="title" type="text" class="dfinput" maxlength="40" value="{$pageinfo.title}"/><i placeholder="标题不小于5个字符且不能超过40个字符" >标题不小于5个字符且不能超过40个字符</i></li>
+    <li><label><b>&nbsp;</b>关键字</label><input name="keywords" type="text" maxlength="100" class="dfinput" value="{$pageinfo.keywords}"/><i placeholder="最多100个字符，多个关键字用中英文逗号(，)隔开" >最多100个字符，多个关键词用中英文逗号(，)隔开。建议填写，利于搜索引擎收录网站</i></li>
+    <li  class="lab-desc"><label><b>&nbsp;</b>页面描述</label><cite><textarea name="description" value="" class="description">{$pageinfo.description}</textarea><div class="count-text">还可输入<span class="text-num">200</span>个字</div><i>描述不超过200字，建议填写，利于搜索引擎收录网站</i></cite></li>
+    <li><label><b>&nbsp;</b>是否显示</label>
+	<if condition="$pageinfo and $pageinfo.isshow eq 1">
+	<input name="isshow" type="hidden" value=1" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>显示</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>不显示</a>
+	</cite>
+	<elseif condition="$pageinfo and $pageinfo.isshow eq 0" />
+		<input name="isshow" type="hidden" value="0" />
+		<cite class="checkshow">
+			<a href="javascript:void(0)" class="show"><i class="fa fa-square-o"></i>显示</a>
+			<a href="javascript:void(0)" class="not_show"><i class="fa fa-check-square"></i>不显示</a>
+		</cite>
+	<else />
+		<input name="isshow" type="hidden" value=1" />
+		<cite class="checkshow">
+			<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>显示</a>
+			<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>不显示</a>
+		</cite>
+	</if>
+	<i>选择“显示”，则前端相应区域可访问此内容，否则此内容不可访问</i>
+	</li>    
+	<li><label><b>&nbsp;</b>内容设置</label><div style="line-height: 35px;color: #898989;">此内容将显示在前端页面正文内容区域，请用心美化。</div></li>
+    <li class="editor">    
+<textarea id="content" name="content" style="width:100%;height:700px;">{$pageinfo.content}</textarea>
+    </li>
+    <li><label>&nbsp;</label><input name="submit" type="button" class="submit submitable" value="提交数据" />
+	<i placeholder=""></i>
+	</li>
+    </ul>  
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var postUrl="{:U('Companyinfo/Intro')}";
+</script>
+<load href="__ADMIN_JS__/companyinfo/companyinfo_set.js" />

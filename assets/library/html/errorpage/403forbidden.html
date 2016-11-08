@@ -1,0 +1,83 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]> <html class="no-js" lang="zh_CN"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	
+	<title>403 - Directory Not Allowed To Access</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<!-- CSS: implied media=all -->
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/blue.css">
+	<script src="js/jquery-1.6.2.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+<body>
+	<div id="error-container">
+		<div id="error">
+			<div id="pacman"></div>
+		</div>		
+		<div id="container">
+			<div id="title">
+				<h1>Sorry! This Directory is not allowed to access!</h1>
+			</div>
+			<div id="content">				
+				<div class="right">					
+					<p class="no-top">You can access the other items：</p>
+					<ul class="links">
+						<li><a href="/"  target="_top">» home</a></li>
+						<li><a href="http://www.kingjb.com/About/" target="_top">» about us</a></li>
+						<li><a href="http://www.kingjb.com/About/contact"  target="_top">» contact us</a></li>
+					</ul>					
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div id="footer">
+				© 2015  All rights reserved,company name&copy;.
+				<span style="margin-left: 30px;"><b style="font-size: 25px;margin: 0 5px;color: #EB4C0F;" id="time">15</b></span>seconds to jump the page before!
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var time=document.getElementById('time');
+	var count=15;
+function cutTime(){
+		time.innerHTML=count;
+		if(count==0){
+			window.history.go(-1);
+			return false;
+		}
+		count--;
+		setTimeout(cutTime,1000);
+	}
+
+function setParentIframeHeight(id){
+  try{
+    var parentIframe = parent.document.getElementById(id);
+     if(window.attachEvent){
+      window.attachEvent("onload", function(){
+        parentIframe.height = document.documentElement.scrollHeight;
+      });
+      return;
+    }else{
+      window.onload = function(){
+        parentIframe.height = document.body.scrollHeight;
+      };
+      return;				 
+    }	 
+  }catch(e){
+    throw new Error('setParentIframeHeight Error');
+  }
+}
+
+	cutTime();
+	setParentIframeHeight('errorFrame');
+</script>
+</html>

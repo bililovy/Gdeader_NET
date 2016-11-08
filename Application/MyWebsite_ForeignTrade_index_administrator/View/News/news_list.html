@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻添加</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__COMMON__/tools/album_lightboxgroup/css/album_zoom.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/news/news_list.css" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.jquery.js" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">博文列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">     
+      <div style="float: left;line-height: 25px; margin-top: 5px;margin-left: 45px;color: #898989;">点击下方图片查看大图，支持键盘 “←&nbsp;&nbsp;&nbsp;→”方向键切换查看</div>   	
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    </div>
+    <style>
+
+  </style>
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th width="5%">序号</th>
+        <th width="8%">封面</th>
+        <th width="32%">新闻标题</th>
+        <th width="8%">前端显示</th>
+        <th width="12%">发布时间</th>
+        <th width="7%">浏览次数</th>
+        <th width="8%">发布者</th>
+        <th width="5%">排序</th>
+        <th width="15%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="$news">
+        <foreach name="news" item="new">
+         <tr class="tbcontent">
+        <td>&nbsp;{++$count}<input type="hidden" value="{$new.id}" name="newsid"/></td>
+        <td><div class="data" style="margin: 0 auto;"><a href="{$new.cover}" rel="lightbox-group" title="点击查看大图"><img src="{$new.cover}" width="60" height="41" style="margin: 0 auto;"/></a></div></td>
+        <td>{$new.title|mb_substr=0,23,'UTF-8'}</td>
+        <td class="toggle-show">
+        <if condition="$new.isshow eq 0">
+        <span data-nid="{$new.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        <else />
+        <span data-nid="{$new.id}" style="background-image: url(__ADMIN_IMG__/icons/big_right.png); background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        </if>
+        </td>
+        <td>{$new.addtime|date='Y-m-d H:i', ###}</td>
+        <td>{$new.click}次</td>
+        <td>{$new.author}</td>
+        <td>{$new.sortorder}</td>
+        <td class="multi-operate ">
+        <input type="hidden" value="{$new.id}" name="id" />
+		<a href="{:U('News/update', array('id'=>$new['id']))}" title="编辑新闻" class="tab-btn edit-news">编辑新闻</a>
+		<a href="javascript:void(0)" title="" class="tab-btn recycle">删除</a>
+		</td>
+        </tr> 
+        </foreach>
+        <else />        
+        <tr>
+        	<td colspan="9" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前没有可显示的新闻，您可以点击左侧添加新闻！</td>
+        </tr>
+        </if>
+        </tbody>    
+        <tr>
+        <td class="multi-operate multi-operate-btn" colspan="9">{$page}</td>
+        </tr> 
+    </table>    
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $newsUpdateUrl="{:U('News/update')}";
+var $newsDeleteUrl="{:U('News/delete')}";
+</script>
+<load href="__ADMIN_JS__/news/news_list.js" />

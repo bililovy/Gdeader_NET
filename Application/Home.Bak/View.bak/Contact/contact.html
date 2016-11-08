@@ -1,0 +1,63 @@
+<include file="Public/header" />
+<body>
+<!--BEGIN 本页面所需文件-->
+<load href="__COMMON__/tools/select/css/select.css" />
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/contact/contact.css" />
+<load href="__COMMON__/tools/select/js/select.js" />
+<load href="__JS__/common/h_f2.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+	<!--END 本页面所需文件-->
+
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />		
+<!-- END 头部导航 -->
+<!-- BEGIN 中部区域-->
+<style>
+
+</style>
+<div class="middle_content">
+	<include file="Tools/breadcrum" />
+	<div class="form">
+		<div class="formbody">
+			<h2>contact us</h2>
+			<div class="form_desc">If you have any questions or suggestions, please tell us to help us advance!</div>
+			<div class="formline"><input type="text" value="" placeholder="Name" class="input" name="name" /></div>
+			<div class="formline"><input type="text" value="" placeholder="Email Address" class="input" name="email" /></div>
+			<div class="formline"><input type="text" value="" placeholder="Subjuect" class="input" name="subject" /></div>
+			<div class="formline">
+				<select name="type" class="msgselect">
+				<if condition="$msgtypes">
+					<option value="0">please select a type</option>
+					<foreach name="msgtypes" item="msgtype">
+					<option value="{$msgtype.id}">{$msgtype.typename}</option>
+					</foreach>
+				<else />
+					<option value="0">Unable ! No message type</option>
+				</if>
+				</select>				
+			</div>
+			<div class="formline"><textarea name="content" placeholder="Message"></textarea></div>
+			<div class="btn"><input name="submit" type="button" value="Send message" class="button"></div>
+		</div>
+		<div class="companyinfo">
+			<h2>contact info</h2>
+			<div class="map"><iframe src="{:U('Contact/mapApi')}" style="width: 100%; max-width: 510px;min-height: 320px;border: none;" scrolling="no"/></iframe></div>
+			<div class="info_detail">
+				email:{$email}<br />
+				phone: <foreach name="tels" item="tel">{$tel}&nbsp;/&nbsp;</foreach><br />				
+				address: {$address}
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<!-- END 中部区域-->
+
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+	</body>
+	</html>
+	<load href="__JS__/contact/contact.js" />

@@ -1,0 +1,59 @@
+<div class="header">
+	<div class="head_nav">
+		<div class="logo"><a href="/"><img src="{$logo}"/></a></div>
+		<div class="mini_menu"><b style="float: left;display: block;width: 60px;line-height: 40px;">MENU</b><i class="fa fa-align-justify"></i></div>
+	
+		<ul class="Menulist">
+		<foreach name="navlists" item="navlist">
+			<li class="Flist"><a href="{:U('Goods/index', array('cid'=>$navlist['id'], 'justfrom'=>'indexpage'))}">{$navlist.catename}</a>
+				<notempty name="navlist.childs">
+				<ul>
+					<foreach name="navlist.childs" item="subnav">
+					<li><a href="{:U('Goods/index', array('cid'=>$subnav['id'], 'justfrom'=>'indexpage'))}">{$subnav.catename}</a>
+						<notempty name="subnav.childs">
+						<ul>
+							<foreach name="subnav.childs" item="lastchild">
+							<li><a href="{:U('Goods/index', array('cid'=>$lastchild['id'], 'justfrom'=>'indexpage'))}">{$lastchild.catename}</a></li>
+							</foreach>
+						</ul>
+						</notempty>
+					</li>
+					</foreach>
+					</li>
+				</ul>
+				</notempty>
+			</li>
+			</foreach>	
+			<li class="Flist"><a href="{:U('News/index', array('justfrom'=>'indexpage'))}">News</a>
+			<li class="Flist"><a href="{:U('Contact/index', array('justfrom'=>'indexpage'))}">Contact Us</a>
+		</ul>
+	</div>
+	<if condition="$focuses">
+	<div class="slideTxtBox">
+		<div class="searchbox">
+			<input type="text" class="search_input" name="sq" value="" placeholder="Please type what you want to search" />
+			<input type="button" name="submit" value="s" class="search_btn" />
+		</div>
+		<div class="bd">
+			<ul>
+			<foreach name="focuses" item="focus">
+				<li style="background-image: url({$focus.cover});"><a href="<empty name='focus'>javascript:void(0)<else />{$focus.linkurl}</empty>"><h1>{$focus.title}<span class="line"></span></h1></a></li>
+			</foreach>
+			</ul>	
+		</div>
+		<div class="hd">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>	
+	</if>
+</div>
+
+<script type="text/javascript">
+	//焦点图轮换
+	jQuery(".slideTxtBox").slide({ titCell:".hd ul", mainCell:".bd ul", effect:"fold",  easing: 'swing', autoPlay:true, autoPage:true, trigger:"click",interTime:3000 });
+</script>

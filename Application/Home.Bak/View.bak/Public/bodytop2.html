@@ -1,0 +1,36 @@
+<div class="header">
+	<div class="inner_main">
+		<div class="logo"><a href="/" title="webname"><img src="{$logo}" /></a></div>
+		<div class="mininav"><i class="fa fa-align-justify"></i>menu</div>		
+		<div class="searbtnbox"><button class="searchbarspread"><i class="fa fa-search"></i></button></div>
+		<div class="navigator">
+			<if condition="navlists">
+			<ul class="navlist">				
+				<li><a href="/" title="{$webname}">home</a></li>
+				<foreach name="navlists" item="navlist">
+				<li>
+					<a href="{:U('Goods/index', array('cid'=>$navlist['id'], 'justfrom'=>'gcate'))}" title="{$navlist.catename}">{$navlist.catename}</a>
+					<notempty name="navlist.childs">
+					<ul class="subnav">
+						<foreach name="navlist.childs" item="secondnav">
+						<li>
+						<a href="{:U('Goods/index', array('cid'=>$secondnav['id'], 'justfrom'=>'gcate'))}" title="{$secondnav.catename}">{$secondnav.catename}</a>
+						<notempty name="secondnav.childs">
+						<ul class="subnav">
+							<foreach name="secondnav.childs" item="thirdnav">
+							<li><a href="{:U('Goods/index', array('cid'=>$thirdnav['id'], 'justfrom'=>'gcate'))}" title="{$thirdnav.catename}">{$thirdnav.catename}</a></li>
+							</foreach>
+						</ul>
+						</notempty>
+						</li>
+						</foreach>						
+					</ul>
+					</notempty>
+				</li>
+				</foreach>				
+			</ul>
+			</if>
+		</div>
+		<div class="searchbar"><div class="searchmain"><i class="tips" style="float: left;line-height:25px; margin-right: 5px;font-style: normal;"></i><input type="text" class="search input" placeholder="search something here !" name="searchinput"/><button class="search_submit">search</button></div></div>
+	</div>
+</div>

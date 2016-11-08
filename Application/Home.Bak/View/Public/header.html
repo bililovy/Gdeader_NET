@@ -1,0 +1,230 @@
+<!-- header 顶部功能菜单 -->
+	<div class="head_top">
+		<div class="head_top_container">
+			<div class="con_left">
+				<div class="icon fa fa-volume-up"></div>
+				<!-- <div class="main">
+				this is a title for your webiste,welcome to our web
+					<ul class="notice_list">
+						<li class="item"><a href="###">1.this is a notice for your web that you published</a></li>
+						<li class="item"><a href="###">2.this is a notice for your web that you published</a></li>
+						<li class="item"><a href="###">3.this is a notice for your web that you published</a></li>
+						<li class="item"><a href="###">4.this is a notice for your web that you published</a></li>
+						<li class="item"><a href="###">5.this is a notice for your web that you published</a></li>						
+					</ul>
+					<div class="btn">
+						<a href="javascript:" class="fa fa-sort-up prev" title="prev"></a>
+						<a href="javascript:" class="fa fa-sort-down next" title="next"></a>
+					</div>
+				</div> -->
+				<div class="main">Welcom to the site, please enjoy yourself !</div>
+			</div>
+			<div class="con_right">
+				<div class="info">
+					<if condition="$_SESSION['member'] and $_SESSION['member']['SIGNIN_AUTHKEY']=='ALLOW_IN'">
+						<div class="login">
+							<p class="logon">Hello,<a href="javascript:;" title="check details"><b class="uname">{$Think.session.member.username}</b></a>!</p>	
+							<a href="{:U('Member/exitSign')}" title="logout"><i class="fa fa-sign-out"></i>sign out</a>
+						</div>
+						<else />
+						<div class="unlog" >sign here !
+							<div class="sublist">
+								<a href="{:U('Member/login')}" class="op">sign in</a>
+								<a href="{:U('Member/regist')}" class="op">register</a>
+							</div>
+					</div>
+					</if> 				
+				</div>
+				<div class="clearfix line_vertical"></div>
+				<div class="share">
+					<ul class="sharelist">
+					<foreach name="socialtools" item="tool">
+						<li><a href="{$tool.account}" target="_blank" data-accout="{$tool.account}" title="{$tool.toolname}"><i class="fa {$tool.icon}"></i></a></li>
+					</foreach>		
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 顶部js -->
+	<script type="text/javascript">
+		//未登录时，登陆按钮显示隐藏
+		$('.head_top .con_right .unlog').hover(function(){
+			$(this).find('div.sublist').stop().slideDown(200);
+		}, function (){
+			$(this).find('div.sublist').stop().slideUp(200);			
+		})
+		$(".con_left .main").slide({mainCell:"ul.notice_list",autoPage:true,effect:"topLoop",autoPlay:true,vis:2,prevCell:".prev",nextCell:".next"})
+		
+		</script>
+	<!-- /顶部js -->
+	<!--// header 顶部功能菜单 -->
+	
+	<!--logo 和搜索部分  -->
+	<div class="header">
+		<div class="header_main">
+			<div class="logo fl"><a href="/" title="{$webname}" class="logo_link" style="background-image: url({$logo});">website name</a></div>
+			<div class="searchbox fl">
+				<input type="text" class="search fl color_89"  value="{$searchkey}" placeholder="Please enter your search key" data-post-url="{:U('Search/sq',array('q'=>'-kw-'))}" name="sq"/>
+				<button class="submit fl submit_btn" ><i class="fa fa-search"></i></button>
+			</div>
+			<div class="cartinfo fr">
+		  			<div class="cartbox">
+		  				<if condition="$member">
+		  				<a href="javascript:" class="cartmain"><i class="fl fa fa-shopping-basket"></i>
+		  				<span class="item_info">Wishlist:&nbsp;&nbsp; <b id="itemCount">{$member.count}</b>&nbsp;items</span>
+		  				</a>
+		  				<else />
+		  				<span style="color: #1A909D; line-height: 35px;display: block;text-align: center;"><a href="{:U('Member/login')}" style="font-weight: bold;color: #B4B4B4; line-height: 35px;display: block;text-align: center;">Login to get my wishlist</a></span>
+		  				</if>		  				
+		  			</div>
+		  			<!-- 购物车列表  列出最新的四件商品 -->
+		  			<if condition="$member">
+	  				<ul class="item_list" id="cart_item_list"></ul>
+	  				</if>
+		  			<!-- // 购物车列表  列出最新的四件商品 -->
+			</div>
+		</div>		
+	</div>	
+     <style>
+        .fix_nav{
+            position: fixed;
+            top:0;
+            left:0;
+            background: #FFF;
+            width: 100%;
+            z-index: 999;
+        }
+        .fix_nav .cont{            
+            height: 60px;
+            width: 1100px;
+            margin: 0 auto;
+            background: #F00;
+            overflow: hidden;
+        }
+        .fix_nav .m_logo{
+            background-repeat: no-repeat;
+            background-size:150px 60px;
+            width: 150px;
+            height: 60px;
+            float: left;           
+        }
+        .fix_nav .m_search{
+            float: right;
+            margin-right: 15px;
+        }
+        .fix_nav .m_search .search{
+            
+        }
+    </style>
+
+   <!-- <div class="fix_nav">
+       <div class="cont">
+        <div class="m_logo" style="background-image:url({$logo});"></div>
+        <div class="m_search">
+            <input type="text" class="search fl color_89"  value="{$searchkey}" placeholder="Please enter your search key" data-post-url="{:U('Search/sq',array('q'=>'-kw-'))}" name="sq"/>
+				<button class="submit fl submit_btn" ><i class="fa fa-search"></i></button>
+        </div>
+        </div>
+    </div>-->
+
+	<script type="text/javascript">
+		if($('.search').val() == $('.search').attr('placeholder') || $('.search').val() ==''){
+			inputDefaultSet($('.search'));			
+		}
+		$('.cartinfo').hover(function (){
+			if($(this).find('ul.item_list').find('li.goods').length >0){				
+				$(this).find('ul.item_list').stop(true).slideDown({ 
+				    duration: 500,  
+				    easing: 'easeOutBack',  
+				    complete: true 
+				});
+			}
+		},function (){
+			$(this).find('ul.item_list').stop(true).slideUp({ 
+			    duration: 500,  
+			    easing: 'easeInOutBack',  
+			    complete: true 
+			});			
+		})
+		
+		//搜索按钮
+		var $searchbtn=$('button.submit_btn');
+		$searchbtn.click(function (){
+			var sq=$(this).siblings('input[name="sq"]');
+			var sqv=sq.val();
+			var $searchUrl= sq.attr('data-post-url');
+			if (sqv.replace(/[ ]/g, '') !='' && sqv.replace(/[ ]/g, '') !=sq.attr('placeholder').replace(/[ ]/g, '')){
+				$searchUrl=$searchUrl.replace('-kw-', sq);
+				window.location.href=$searchUrl;
+			}else{
+				ZENG.msgbox.show('What to Search?', 1, 3000);
+			}
+		});
+	</script>
+	<!--//logo 和搜索部分  -->
+	
+		<!-- 导航部分 -->
+	<div class="navs">
+		<div class="navigator">
+			<ul class="navlist">
+					<li  class="on"><a href="/" title="{$webname}">home</a></li>
+					<foreach name="navs" item="nav">					
+					<li><a href="{$nav.navlink|default='javascript:;'}" title="{$nav.navname}" <eq name="nav.openway" value="1">target="_blank"</eq>>{$nav.navname}</a>
+						<if condition="!empty($nav['childs'])">
+						<ul class="subnav">
+							<foreach name="nav.childs" item="subnav">	
+							<li class="item">
+								<a href="{$subnav.navlink}" title="{$subnav.navname}" <eq name="subnav.openway" value="1">target="_blank"</eq>>{$subnav.navname}
+								<if condition="!empty($subnav['childs'])"> <i class="fa fa-caret-right"></i></if>
+								</a>
+								<if condition="!empty($subnav['childs'])">
+								<ul class="subnav">
+								<foreach name="subnav.childs" item="thirdnav">	
+								<li class="item"><a href="{$thirdnav.navlink}" title="{$thirdnav.navname}" <eq name="thirdnav.openway" value="1">target="_blank"</eq>>{$thirdnav.navname}</a></li>
+								</foreach>
+								</ul>
+								</if>
+							</li>	
+							</foreach>						
+						</ul>
+						</if>
+					</li>
+					</foreach>
+			</ul>
+		</div>
+	</div>   
+	<!-- 导航js -->
+	<script language="javascript">
+			$(".navigator .navlist > li > a").wrapInner( '<div class="navbox"><span class="out"></span></div>' );
+			$(".navigator .navlist > li > a> .navbox").each(function() {
+				$( '<span class="over">' +  $(this).text() + '</span>' ).appendTo( this );
+			});
+			 $(".navigator .navlist li.on").find('div.navbox').css('margin-top', '-40px');
+			 $(".navigator .navlist li").hover(function() {				 
+				 if($(this).find('div.navbox').length>0){
+						$(this).find('div.navbox').stop().animate({'margin-top':	'-40px'},{ 
+						    easing: 'easeOutQuint', 
+						    duration: 500, 
+						    complete: true
+						}); // move down - hide	
+				 }	
+				 if($(this).children('ul.subnav').length>0){
+					 $(this).children('ul.subnav').stop().slideDown(80);
+				 }
+			}, function() {
+				if($(this).find('div.navbox').length>0){
+					if($(this).hasClass('on')) return false;
+					$(this).find('div.navbox').stop().animate({'margin-top':	'0px'},{ 
+					    easing: 'easeOutQuint', 
+					    duration: 500, 
+					    complete: true 
+					}); // move down - hide		
+				}
+				 if($(this).children('ul.subnav').length>0){
+					 $(this).children('ul.subnav').stop().slideUp(80);
+				 }
+			});
+	</script>	
+	<!-- //导航js -->
+	<!-- //导航部分 -->

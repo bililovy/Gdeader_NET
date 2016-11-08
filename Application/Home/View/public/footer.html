@@ -1,0 +1,62 @@
+<div class="footer-section">
+    <div class="container">
+        <div class="footer-grids">
+            <div class="col-md-2 footer-grid">
+                <h4>products</h4>
+                <ul>
+                    <foreach name="goods_cates" item="cate">
+                        <li><a href="{:U('Goods/index', array('cid'=>$cate['id'],'justfrom'=>'footer'))}" <if condition="preg_match('/Index/ui','__CONTROLLER__')">target="_blank"</if>>{$cate.catename}</a></li>
+                    </foreach>
+                </ul>
+            </div>
+            <div class="col-md-2 footer-grid">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="{:U('Index/about')}">About Us</a></li>
+                    <li><a href="{:U('Index/introduction')}">Introduction</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 footer-grid">
+                <h4>service</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="{:U('News/index')}" <if condition="preg_match('/Index/ui','__CONTROLLER__')">target="_blank"</if>>News</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 footer-grid">
+                <h4>guidance</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <foreach name="navs" item="nav" key="i">
+                        <li>
+                        <a href="{$nav.navlink}">{$nav.navname}</a>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+
+            <div class="col-md-4 footer-grid1">
+                <if condition ="$socialtools">
+                    <div class="social-icons">
+                        <foreach name ="socialtools" item="social">
+                            <a href="{$social.account}" title="{$social.toolname}" target="_blank"><i class="icon fa {$social.icon}"></i></a>
+                        </foreach>
+                    </div>
+                </if>
+                <p>{$copyright}.<a href="{$domain}">--{$webname}</a></p>
+                <p><i class="fa fa-phone" style="margin-right: 5px;"></i>phone:</span><span class="content"><if condition="! is_array($tels)">{$tels}<else /><foreach name="tels" item="tel" key="index"><neq name="index" value="0">&nbsp;/&nbsp;</neq><elt name="index" value="4">{$tel}</elt> </foreach></if></span></p>
+                <p><i class="fa fa-envelope-o" style="margin-right: 5px;"></i>Email:</span><span class="content">  {$email} </span> </p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<include file="public/right_float" />
+
+<script type="text/javascript">
+    //image lazy load
+//    $("img.lazy").lazyload({
+//        effect: "fadeIn",
+//        threshold : 200
+//    });
+</script>

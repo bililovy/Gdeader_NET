@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$pageinfo.pagetitle}-官方网站管理后台</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 本页面加载 -->
+<load href="__ADMIN_CSS__/index/index.css" />
+<load href="__ADMIN_JS__/index/tendina.min.js" />
+<load href="__ADMIN_JS__/common.js" />
+<!-- END 本页面加载 -->
+</head>
+<body>
+    <!--顶部-->
+    <div class="layout_top_header">
+            <div style="float: left"><span style="font-size: 18px;font-weight: bold;line-height: 50px;padding-left: 20px;color: #FFF"><empty name="$webname">公司<else />{$webname}--</empty>网站管理后台</h1></span></div>
+            <div style="float: left;" class="topnav">
+				<a href="{:U('Index/main')}" title="主页" target="menuFrame">主页</a>
+					<a href="/" title="网站首页" target="_blank">网站首页</a>
+					<a href="javascript:void(0)" class="clearcache" title="一般更新系统配置时，需要清理缓存">清理系统缓存</a>
+					<span class="tips">系统缓存清理中，请稍候……</span>
+			</div>
+			<div id="ad_setting" class="ad_setting">
+                <a class="ad_setting_a" href="javascript:; ">
+                    <i class="icon-user glyph-icon" style="font-size: 20px"></i>
+                    <span><empty name="Think.session.truename">{$Think.session.login_infos.username}<else />{$Think.session.truename}</empty></span>
+                    <i class="icon-chevron-down glyph-icon"></i>
+                </a>
+                <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
+                    <li class="ad_setting_ul_li"> <a href="{:U('AdminUser/index')}"  target="menuFrame"><i class="icon-user glyph-icon"></i> 个人中心 </a> </li>
+                    <li class="ad_setting_ul_li"> <a href="{:U('Sign/exitsign')}" target="_parent"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
+                </ul>
+            </div>
+    </div>
+    <!--顶部结束-->
+    <!--菜单-->
+    <div class="layout_left_menu">
+        <ul id="menu">
+        	 <li class="childUlLi">
+               <a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-folder-open"></i>网站配置</a>
+                <ul class="subchildUl">
+                    <li><a href="{:U('Sysconfig/index')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>基本信息</a></li>
+                    <li><a href="{:U('Sysconfig/socialMedia')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>社交工具</a></li>
+                    <li><a href="{:U('Sysconfig/navs')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>导航设置</a></li>
+                </ul>
+            </li>
+        	 <li class="childUlLi">
+               <a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-user"></i>用户管理</a>
+                <ul class="subchildUl">
+                    <li><a href="{:U('Member/index')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>前台用户管理</a></li>
+                    <li><a href="{:U('AdminUser/index')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>系统用户管理</a></li>
+                </ul>
+            </li>
+           <li class="childUlLi">
+           <a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-folder-open"></i>单页管理系统<i class="refresh fa fa-refresh" style="float: right;margin-right: 5px; line-height: 30px;"></i></a>                   
+           		<ul class="subchildUl">
+           			<li><a href="{:U('Signalpage/add')}"  target="menuFrame"><i class="fa fa-angle-double-right"></i>添加单页面</a></li>
+           			<if condition="$signalpages">  
+           			<li>
+           			<a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-angle-double-right"></i>单页管理</a>           			 
+           				<ul class="thirdChildUl">
+	           			<foreach name="signalpages" item="signalpage">
+	                    <li><a href="{:U('Signalpage/pageSet', array('pageid'=>$signalpage['id'],'justfrom'=>'menulist'))}" target="menuFrame"><i class="fa fa-angle-double-right"></i>{$signalpage.title|mb_substr=0,21, 'UTF-8'}</a></li>
+	           			</foreach>
+           				</ul> 
+           			</li>
+           			</if>
+                  </ul>           
+           	</li>        
+            <li class="childUlLi">
+                <a href="javascript:void(0)" target="menuFrame"> <i class="fa fa-file-photo-o"></i>产品管理系统</a>
+                <ul class="subchildUl">
+                    <li><a href="{:U('Goods/index')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>产品列表</a></li>
+                    <li><a href="{:U('Goods/add')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>添加产品</a></li>
+                    <li><a href="{:U('Goods/category')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>产品分类管理</a></li>
+                    <li><a href="{:U('Goods/attribute')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>产品属性管理</a></li>
+                    <li><a href="{:U('Goods/faq')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>产品FAQ管理</a></li>
+                </ul>
+            </li>
+            <li class="childUlLi">
+                <a href="javascript:void(0)" target="menuFrame"> <i class="fa fa-laptop"></i>页面/信息设置</a>
+                <ul class="subchildUl">
+                    <li><a href="{:U('Companyinfo/about')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>关于我们</a></li>                   
+                    <li><a href="{:U('Companyinfo/Intro')}" target="menuFrame"><i class="fa fa-angle-double-right"></i>公司简介</a></li>
+                </ul>
+            </li>
+            <li class="childUlLi">
+                <a href="javascript:void(0)"> <i class="fa fa-newspaper-o"></i>内容管理系统</a>
+                <ul class="subchildUl">
+                	<li><a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-angle-double-right"></i>博文管理</a>           			 
+           				<ul class="thirdChildUl">
+		                   <li><a href="{:U('News/index')}"  target="menuFrame"><i class="fa fa-angle-double-right"></i>博文列表</a></li>
+		                   <li><a href="{:U('News/add')}"  target="menuFrame"><i class="fa fa-angle-double-right"></i>添加文章</a></li>
+           				</ul>
+           			</li>                	
+                </ul>
+            </li>         
+            <li class="childUlLi">
+                <a href="{:U('Focus/index')}" target="menuFrame"><i class="fa fa-money"></i>焦点图管理</a>              
+            </li>     
+            <li class="childUlLi">
+                <a href="javascript:void(0)" target="menuFrame"><i class="fa fa-comment"></i>留言管理系统</a> 
+                <ul class="subchildUl">
+                   <li><a href="{:U('Message/index')}"  target="menuFrame"><i class="fa fa-angle-double-right"></i>留言信息管理</a></li>
+                   <li><a href="{:U('Message/msgtype')}"  target="menuFrame"><i class="fa fa-angle-double-right"></i>留言分类管理</a></li>
+                </ul>
+            </li>        
+        </ul>
+    </div>
+    <!--菜单-->
+    <div id="layout_right_content" class="layout_right_content">      
+        <div class="mian_content">
+            <div id="page_content">
+                <iframe id="menuFrame" name="menuFrame" src="{:U('Index/main')}" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="layout_footer">
+        <p>Copyright © 2015-2018- {$pageinfo.pagetitle}-系统版权所有</p>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $cacheUrl="{:U('Sysconfig/clearCache')}";	
+$('.childUlLi a i.refresh').click(function (){
+	window.location.reload();
+})
+</script>
+<load href="__ADMIN_JS__/index/cache.js" />

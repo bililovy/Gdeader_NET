@@ -1,0 +1,65 @@
+<div class="header">
+	<div class="head_nav">
+<div class="logo"><a herf="###"></a></div>
+<div class="mini_menu hide"><b style="float: left;display: block;width: 60px;line-height: 40px;">MENU</b><i class="fa fa-align-justify"></i></div>
+<if condition="$navlists">
+	<ul id="Menulist">
+	<foreach name="navlists" item="topnav">
+	<li><a class="fNiv">{$topnav.catename}</a>
+	<if condition="topnav.childs">
+		<ul>
+		<li class="arrow"></li>
+		<foreach name="topnav.childs" item="subnav">
+		<li><a>{$subnav.catename}</a>
+			<notempty name="subnav.childs">
+				<ul>
+				<foreach name="subnav.childs" item="thirdnav">
+					<li><a href="##">{$thirdnav.catename}</a></li>
+				</foreach>
+				</ul>
+			</notempty>
+		</li>
+		</foreach>
+		</ul>
+		</if>
+		</li>
+	</foreach>
+	</ul>
+</li>	
+</ul>
+</if>
+</div>
+	<div class="slideTxtBox">
+		<div class="searchbox">
+			<input type="text" class="search_input" name="sq" value="" placeholder="Please type what you want to search" />
+			<input type="button" name="submit" value="s" class="search_btn" />
+		</div>
+		<div class="bd">
+			<ul>
+				<li style="background-image: url(http://www.wm.cn/static/demo/images/banner33.jpg);"><a href="###"><h1>Helping you to grow your business <span class="line"></span></h1></a></li>
+				<li style="background-image: url(http://www.wm.cn/static/assets/images/default/test/1.jpg);"><a href="###"><h1>Hello!Helping you to grow your business <span class="line"></span></h1></a></li>
+				<li style="background-image: url(http://www.wm.cn/static/assets/images/default/test/2.jpg);"><a href="###"><h1>Whate you to grow your business <span class="line"></span></h1></a></li>
+				<li style="background-image: url(http://www.wm.cn/static/assets/images/default/test/3.jpg);"><a href="###"><h1>Whate you to grow your business <span class="line"></span></h1></a></li>
+				<li style="background-image: url(http://www.wm.cn/static/assets/images/default/test/4.jpg);"><a href="###"><h1>My Hello grow your business <span class="line"></span></h1></a></li>
+			</ul>
+		</div>
+		<div class="hd">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>	
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#Menulist").jMenu({
+    	absoluteTop: 40
+    });
+  })
+	//焦点图轮换
+	jQuery(".slideTxtBox").slide({ titCell:".hd ul", mainCell:".bd ul", effect:"fold",  easing: 'swing', autoPlay:true, autoPage:true, trigger:"click",interTime:3000 });
+</script>

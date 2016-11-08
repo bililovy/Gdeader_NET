@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>设计师添加表单</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/member/member_add.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/js/tools/select.js" />
+<!-- END 当前页面的css 和js -->
+
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}">首页</a></li>
+    <li><a href="{:U('member/index')}">前端用户</a></li>
+    <li><a href="javascript:void(0)">新增用户</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+
+    <div class="formbody">    
+    <div class="formtitle">
+    	<span>新增用户</span>
+		<a href="{:U('member/index')}"><i class="fa fa-reply"></i>返回用户列表</a>
+	</div>
+    <ul class="forminfo">
+    <li><label><b>*</b>用户昵称</label><input name="name" type="text" class="dfinput" maxlength="20" /><i placeholder="名字不少于2个字且不能超过20个字" >名字不少于2个字且不能超过20个字</i></li>
+    <li>
+    <label><b>*</b>用户邮箱</label>
+    <input name="email" type="text" class="dfinput" value="" maxlength="15" />
+    <i placeholder="请填写可用邮箱，可作为找回密码或登录使用”">请填写可用邮箱，可作为找回密码或登录使用</i>
+    </li>    
+    <li>
+    <label><b>*</b>初始密码</label>
+    <input name="password" type="text" readonly="true" class="dfinput" value="New123456" maxlength="15" />
+    <i placeholder="">默认初始密码，不可自行更改</i>
+    </li>    
+    <li><label><b>&nbsp;</b>用户状态</label>
+	<input name="isshow" type="hidden" value="1" />
+	<cite class="checkshow">
+		<a href="javascript:void(0)" class="show"><i class="fa fa-check-square"></i>启用用户</a>
+		<a href="javascript:void(0)" class="not_show"><i class="fa fa-square-o"></i>禁用用户</a>
+	</cite>
+	</li>
+    <li><label>&nbsp;</label>
+    <input name="submit" type="button" class="submit submitable" value="提交信息" />
+	<i placeholder=""></i>
+	</li>
+    </ul>  
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	$(".checkshow").find("a").click(
+			function() {
+				$(this).find("i.fa").removeClass("fa-square-o").addClass(
+						"fa-check-square");
+				$(this).siblings("a").find("i.fa").removeClass(
+						"fa-check-square").addClass("fa-square-o");
+				if ($(this).hasClass("show")) {
+					$isshow = 1;
+				} else {
+					if ($(this).hasClass("not_show")) {
+						$isshow = 0;
+					} else {
+						$isshow = 1;
+					}
+				}
+				$(this).parent().siblings('input[name="isshow"]').val($isshow);
+			});
+
+
+</script>
+<load href="__ADMIN_JS__/member/member_add.js" />
+

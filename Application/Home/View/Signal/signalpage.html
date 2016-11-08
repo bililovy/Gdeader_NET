@@ -1,0 +1,22 @@
+<include file="public/head" />
+<body>
+	<!--BEGIN 本页面所需文件-->
+<load href="__CSS__/signal.css" />
+	<!--END 本页面所需文件-->
+<div class="bodyContainer">
+<!-- BEGIN 头部导航 -->
+<include file="public/body_header" />
+<include file="public/breadcrumb" />
+<!-- END 头部导航 -->
+<!-- BEGIN 中部区域 -->
+	<div class="middle_content">
+		<div class="signalpage_content" id="signalpage_content"  style="margin: 15px auto;">{$signalinfo.content}</div>
+	</div>
+<!-- END 中部区域 -->
+</div>
+<!-- BEGIN 页底部 -->
+<include file="public/footer" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/signal.js" />

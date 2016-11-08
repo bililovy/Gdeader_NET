@@ -1,0 +1,207 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/index/index.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<div class="bodyContainer">
+<!-- 鍏叡閮ㄥ垎 -->
+<include file="Public/header" />
+<!--// 鍏叡閮ㄥ垎 -->
+<!-- 鐒︾偣鍥�-->
+<!-- focus 鐒︾偣鍥�-->
+<div class="slider">
+		<div class="bd">
+			<ul>
+				<foreach name="focuses" item="focus">
+				<li><a <notempty name="focus.linkurl">target="_blank" href="{$focus.linkurl}"<else />href="javascript:;"</notempty> title="{$focus.title}"><img
+						src="{$focus.cover}" alt="{$focus.title}"/></a></li>
+				</foreach>				
+			</ul>
+		</div>
+		<div class="hd">
+			<ul></ul>
+		</div>
+		<div class="pnBtn prev">
+			<span class="blackBg"></span> <a class="arrow"
+				href="javascript:void(0)"></a>
+		</div>
+		<div class="pnBtn next">
+			<span class="blackBg"></span> <a class="arrow"
+				href="javascript:void(0)"></a>
+		</div>
+	</div>
+	<script type="text/javascript">	
+			$(".slider .bd li").first().before( jQuery(".slider .bd li").last() );	
+			$(".slider").hover(function(){ jQuery(this).find(".arrow").stop(true,true).fadeIn(300) },function(){ jQuery(this).find(".arrow").fadeOut(300) });	
+			$(".slider").slide({ titCell:".hd ul", mainCell:".bd ul", effect:"leftLoop", easing:"easeInOutBack", autoPlay:true, vis:3, autoPage:true, trigger:"click"});	
+	</script>
+	<!--// focus 鐒︾偣鍥�-->
+	
+<!-- //鐒︾偣鍥�-->
+
+<!-- 浼樻儬淇冮攢妯″潡 -->
+		<div class="promote">
+				<!-- Section Start-->
+				  <div class="flagintro normal">
+				  		<div class="flagpart">
+				  			<div class="content">
+					  			<div class="fl fa fa-truck"></div>
+					  			<div class="r_info fl">
+						  			<h2>Free Shipping</h2>
+						  			<p class="brief">Free Shipping on order over $49</p>
+					  			</div>
+				  			</div>
+				  		</div>
+				  		
+				  		<div class="flagpart">
+				  			<div class="content">
+					  			<div class="fl fa fa-credit-card"></div>
+					  			<div class="r_info fl">
+					  			<h2>Easy Payment</h2>
+					  			<p class="brief">Pay Your Deal At Amazon</p>
+					  			</div>
+				  			</div>
+				  		</div>
+				  		
+				  		<div class="flagpart">
+				  			<div class="content">
+					  			<div class="fl fa fa-clock-o"></div>
+					  			<div class="r_info fl">
+					  			<h2>24hrs Shipping</h2>
+					  			<p class="brief">Shipping at Anytime you want</p>
+					  			</div>
+					  		</div>
+				  		</div>
+				  		
+				  		<div class="flagpart">
+				  			<div class="content border_none">
+					  			<div class="fl fa fa-check"></div>
+					  			<div class="r_info fl">
+					  			<h2>Over 500+ Choice</h2>
+					  			<p class="brief">300+products to choose</p>
+					  			</div>
+					  		</div>
+				  		</div>
+				  </div>		
+				  <div style="height: 20px;"></div>
+		  <!-- Section End-->				  
+		</div>		
+	<!-- //浼樻儬淇冮攢妯″潡 -->
+
+<!-- 鐑攢浜у搧 -->
+	<div class="hot_product">
+		<div class="hot_container">
+			<div class="tag_title">
+				<h1><i class="fa fa-fire"></i>HOT NEW</h1>
+				<div class="controller">
+					<a href="javascript:" title="prev" class="btn prev"><i class="fa fa-caret-left"></i></a>				
+					<a href="javascript:" title="next" class="btn next"><i class="fa fa-caret-right"></i></a>
+				</div>				
+			</div>
+			<div class="product_scroller">				
+				<if condition="$hots">		
+				<ul class="prolist">
+					<foreach name="hots" item="hotgoods">
+					<li class="item" >
+					<a href="{:U('Goods/detail',array('gid'=>$hotgoods['id']))}" title="{$hotgoods.goodsname}" target="_blank" class="pro_link">
+						<img src="{$hotgoods.goodsimg}" alt="{$hotgoods.goodsname}" />
+						<p class="gname">{$hotgoods.goodsname}</p>
+						<p class="price">${$hotgoods.price}</p>
+					</a>
+					<div class="opbtn" id="{$hotgoods.id}">
+						<a href="javascript:;" class="add_wish"><i class="fa fa-shopping-basket"></i>Wishlist</a>
+						<a href="<empty name='hotgoods.goodslink'>{:U('Goods/detail',array('gid'=>$hotgoods['id']))}<else />{$hotgoods.goodslink}</empty>" class="buy" target="_blank"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+					</div>
+					</li>
+					</foreach>
+					</ul>
+					</if>			
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(".hot_container").slide({ mainCell:"ul.prolist",autoPlay:true,effect:"leftLoop", vis:4, scroll:2, autoPage:true, pnLoop:false });
+	$('.product_scroller ul.prolist li').hover(function (){
+		$(this).addClass('on');
+	},function(){
+		$(this).removeClass('on');
+	})
+	</script>
+<!-- //鐑攢浜у搧 -->
+
+<!-- 鎺ㄨ崘浜у搧 -->	
+<div class="rec">
+	<div class="tag_title">
+				<h1><i class="fa fa-tag"></i>RECOMMENDATIONS</h1>							
+	</div>
+	<if condition ="$recommends">
+	<ul class="jumei-xp-list">	
+		<foreach name="recommends" item="rgoods" key='idx'>		
+				<li <if condition='(($idx+1)%3)==1'>class="noml"<elseif condition='(($idx+1)%3)==0'/>class="nomr"</if>>
+					<div class="jumei-img-box" id="{$rgoods.id}">
+							<img class="scrollLoading" data-url="{$rgoods.goodsimg}" src="{$rgoods.goodsimg}" alt="{$rgoods.goodsname}">
+							<a href="<empty name='rgoods.goodslink'>{U('Goods/detail',array('gid'=>$rgoods['id']))}<else />{$rgoods.goodslink}</empty>" class="op buy" target="_blank"><i class="fa fa-shopping-cart"></i>buy now</a>
+							<a href="javascript:" class="op cart add_wish"><i class="fa fa-shopping-basket"></i>add to cart</a>
+					</div>
+						<a href="{:U('Goods/detail',array('gid'=>$rgoods['id']))}" title="{$rgoods.goodsname}" class="glink" target="_blank" >{$rgoods.goodsname|mb_substr=0,40}..</a>
+						<div class="intro_box">
+							<div class="xp-price red-color">
+								<em>$</em><span>{$rgoods.price}</span>
+							</div>
+							<div class="price_icon_wrap fr">
+								<i class="fa fa-eye"></i>{$rgoods.click}
+							</div>
+						</div>
+					</li>
+				</foreach>
+				</ul>
+				<else />
+				<div class="no_data" style="padding: 25px 0; color: #999; font-size: 1.5em; text-align: center;">No Recommended Products here !</div>
+				</if>
+	</div>
+			<script type="text/javascript">
+			$('.jumei-img-box img').zoom_img({width:100,height:106});
+			$('.jumei-img-box').hover(function (){
+				$(this).find('img').addClass('on');
+				$(this).find('a.op.buy').stop().animate({left: 0},{
+				    easing: 'easeOutBack',
+				    duration: 50,
+				    complete: true
+				});
+				$(this).find('a.op.cart').stop().animate({right: 0},{
+				    easing: 'easeOutBack',
+				    duration: 50,
+				    complete: true
+				});
+			}, function (){
+				$(this).find('img').removeClass('on');					
+				$(this).find('a.op.buy').stop().animate({left: '-170px'},{
+				    easing: 'easeOutBack',
+				    duration: 50,
+				    complete: true
+				});
+				$(this).find('a.op.cart').stop().animate({right: '-170px'},{
+				    easing: 'easeOutBack',
+				    duration: 50,
+				    complete: true
+				});					
+			})		
+			</script>
+	<!--// 鎺ㄨ崘浜у搧 -->			
+
+
+<!-- 鍏充簬鎴戜滑 绠�粙 -->
+	<div class="introduce">
+		<div class="introduce_container">
+				<div class="tag_title">
+				<h1><i class="fa fa-globe"></i>OUR INTRODUCTION</h1>
+			</div>
+			<div class="main">{$introduction}</div>
+		</div>
+	</div>
+<!--// 鍏充簬鎴戜滑 绠�粙 -->
+
+</div>
+<include file="Public/footer" />
+
+</body>
+</html>

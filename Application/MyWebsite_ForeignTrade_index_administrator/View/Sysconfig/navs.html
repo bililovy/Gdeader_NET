@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航设置</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/sysconfig/nav1.css" />
+<load href="__COMMON__/js/tools/Validator.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+<style>
+
+</style>
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">    	
+      <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">前段导航设置</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+
+    <div class="formbody"> 
+    	<div class="tool">
+    		<a href="javascript:;" class="btn addnav fl">添加顶级导航</a>
+    		<a href="javascript:;" class="btn spread fr">展开所有下级导航</a>
+    	</div>
+    	<table class="table" cellpadding="0" cellspacing="0" border="0">
+    		<thead>
+    			<tr id="list-top">
+    				<th width="10" class="list">序号</th>
+    				<th width="20" class="list">排序</th>
+					<th class="list">显示图标</th>
+    				<th class="list">导航名称</th>
+    				<th class="list">链接地址</th>
+    				<th width="80" class="list">打开方式</th>
+    				<th width="110" class="list">启用/停用</th>
+    				<th class="list">操作</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			
+    			<foreach name="navs" item="nav" key="top">
+    				<tr class="column_1">
+    				<td>{$top+1}</td>
+    				<td>{$nav.sortorder|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="sortorder" value="{$nav.sortorder}" /></td>
+    				<td><i class="icon fa fa-{$nav.navico}"></i></td>
+						<td>
+    					<notempty name="nav.childs">
+	    					<img src="/assets/common/images/icons/colum1nx.gif" id="img_{$nav.id}" class="guid dragdown">
+    					<else />
+    						<div class="sethere"></div>
+    					</notempty>
+	    				<span class="nav_name">{$nav.navname|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="navname" value="{$nav.navname}" /></span>
+    				</td>
+    				<td><a <empty name="nav.navlink">href="javascript:;"<else />href="{$nav.navlink}" target="_blank"</empty>>{$nav.navlink|default='<b style="color: #999">未设置</b>'}</a><input type="hidden" name="navlink" value="{$nav.navlink}" /></td>
+    				<td><eq name="nav.openway" value="1">新窗口打开<else />本窗口打开</eq><input type="hidden" name="openway" value="{$nav.openway}" /></td>
+    				<td>
+    					<input type="hidden" name="navid" value="{$nav.id}" />
+						<eq name="nav.isshow" value="1">
+	    					<a class="op_show enabled" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text ok">启用</span>
+	    					<else />
+	    					<a class="op_show" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text warn">停用</span>
+	    					</eq>
+                            <input type="hidden" name="isshow" value="{$nav.isshow}" />
+					</td>
+    				<td class="list-text">
+    					<div class="op_box">
+	    						<input type="hidden" name="navid" value="{$nav.id}" />
+	    						<input type="hidden" name="pid" value="{$nav.pid}" />
+							<input type="hidden" name="navico" value="{$nav.navico}" />
+								<a href="javascript:;" class="update">设置</a>
+								<a href="javascript:;" class="addsub">添加下级导航</a>							
+								<a href="javascript:;" class="recycle" >删除</a>							
+							</div>
+    				</td>
+    			</tr>
+	    			<foreach name="nav.childs" item="subnav" key="sub">
+	    				<tr class="column_2 column_level_{$nav.id} tr_list bg none">
+		    				<td>{$sub+1}</td>
+		    				<td>{$subnav.sortorder|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="sortorder" value="{$subnav.sortorder}" /></td>
+							<td><i class="icon fa fa-{$subnav.navico}"></i></td>
+							<td>
+		    				<div class="guid_line" style="width: 30px;"></div>
+		    				<notempty name="subnav.childs">
+	    					<img src="/assets/common/images/icons/colum1nx.gif" id="img_{$subnav.id}" class="guid dragdown">
+	    					<else />
+	    						<div class="sethere"></div>
+	    					</notempty>
+		    				<span class="nav_name">{$subnav.navname|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="navname" value="{$subnav.navname}" /></span>
+		    				</td>
+		    				<td><a <empty name="subnav.navlink">href="javascript:;"<else />href="{$subnav.navlink}" target="_blank"</empty>>{$subnav.navlink|default='<b style="color: #999">未设置</b>'}</a><input type="hidden" name="navlink" value="{$subnav.navlink}" /></td>
+		    				<td><eq name="subnav.openway" value="1">新窗口打开<else />本窗口打开</eq><input type="hidden" name="openway" value="{$subnav.openway}" /></td>
+		    				<td>
+		    				<input type="hidden" name="navid" value="{$subnav.id}" />
+								<eq name="subnav.isshow" value="1">
+			    					<a class="op_show enabled" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text ok">启用</span>
+			    					<else />
+			    					<a class="op_show" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text warn">停用</span>
+			    					</eq>
+                                    <input type="hidden" name="isshow" value="{$subnav.isshow}" />
+							</td>
+		    				<td class="list-text">
+		    					<div class="op_box">
+			    						<input type="hidden" name="navid" value="{$subnav.id}" />
+			    						<input type="hidden" name="navico" value="{$subnav.navico}" />
+	    								<input type="hidden" name="pid" value="{$subnav.pid}" />
+										<a href="javascript:;" class="update">设置</a>
+										<a href="javascript:;" class="addsub">添加下级导航</a>							
+										<a href="javascript:;" class="recycle" >删除</a>							
+									</div>
+		    				</td>
+		    			</tr>	
+			    			<foreach name="subnav.childs" item="thirdnav" key="third">
+		    				<tr class="column_2 column_level_{$subnav.id} tr_list bg none">
+			    				<td>{$third+1}</td>
+			    				<td>{$thirdnav.sortorder|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="sortorder" value="{$thirdnav.sortorder}" /></td>
+								<td><i class="icon fa fa-{$thirdnav.navico}"></i></td>
+								<td>
+			    				<div class="guid_line" style="width: 55px;"></div>			    				
+		    					<div class="sethere"></div>		    					
+			    				<span class="nav_name">{$thirdnav.navname|default='<b style="color: #999">未设置</b>'}<input type="hidden" name="navname" value="{$thirdnav.navname}" /></span>
+			    				</td>
+			    				<td><a <empty name="thirdnav.navlink">href="javascript:;"<else />href="{$thirdnav.navlink}" target="_blank"</empty>>{$thirdnav.navlink|default='<b style="color: #999">未设置</b>'}</a><input type="hidden" name="navlink" value="{$thirdnav.navlink}" /></td>
+			    				<td><eq name="subnav.openway" value="1">新窗口打开<else />本窗口打开</eq><input type="hidden" name="openway" value="{$thirdnav.openway}" /></td>
+			    				<td>
+			    					<input type="hidden" name="navid" value="{$thirdnav.id}" />
+									<eq name="thirdnav.isshow" value="1">
+				    					<a class="op_show enabled" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text ok">启用</span>
+				    					<else />
+				    					<a class="op_show" href="javascript:;" bosszone="bofang_button_close"><i></i></a><span class="op_show_text warn">停用</span>
+				    					</eq>
+                                        <input type="hidden" name="isshow" value="{$thirdnav.isshow}" />
+								</td>
+			    				<td class="list-text">
+			    					<div class="op_box">
+				    						<input type="hidden" name="navid" value="{$thirdnav.id}" />	    						
+	    									<input type="hidden" name="pid" value="{$thirdnav.pid}" />
+										<input type="hidden" name="navico" value="{$thirdnav.navico}" />
+											<a href="javascript:;" class="update">设置</a>			
+											<a href="javascript:;" class="recycle" >删除</a>							
+										</div>
+			    				</td>
+			    			</tr>		    			
+		    			</foreach>	    			
+	    			</foreach>
+    			</foreach>
+    		</tbody>
+    		<tfoot>
+    			<tr>
+    				<td colspan="7"><a href="javascript:;" class="btn addnav fl" style="color: #0A95A7;margin-left: 15px;padding: 5px 0;"><i class="fa fa-plus"></i>添加顶级导航</a></td>
+    			</tr>
+    		</tfoot>
+    	</table>
+	</div>
+<style>
+#dialog_box .goodscate,
+#dialog_box .goods{
+	display: block;
+}
+</style>
+<div class="mask" id="dialog_mask"></div>
+<div class="dialog_box" id="dialog_box">
+	<div class="dialog_head"><span class="dialog_head_text" id="dialog_head_text">-------</span><a href="javascript:;" class="dialog_close"><i class="fa fa-close"></i></a></div>
+	<div class="dialog_body">
+	<input type="hidden" value="" name="parentid"/>
+			<div class="dialog_item">
+				<label class="dialog_label">导航名称</label>
+				<div class="element">
+				<input type="text" class="ipt nav_name"  name="navname" value=""  />				
+				</div>
+			</div>
+			<div class="dialog_item">
+				<label class="dialog_label">导航图标</label>
+				<div class="element">
+				<input type="text" class="ipt nav_ico"  name="navico" value=""  style="width: 40px;"  />
+					<i style="font-style: normal;">请直接填入图标代号，代号请<a href="http://fontawesome.dashgame.com/#new" target="_blank" title="请打开图标代号页面后，找到你需要使用的图标样式，复制后面的代号填入即可" style="margin: 0 5px;color: #cf4625;">点此查看</a></i>
+				</div>
+			</div>
+			<div class="dialog_item">
+				<label class="dialog_label">导航排序</label>
+				<div class="element">
+				<input type="text" class="ipt nav_name"  name="sortorder" value="10"  />				
+				</div>
+			</div>
+			<div class="dialog_item">
+				<label class="dialog_label">打开方式</label>
+				<div class="element">
+				<input type="hidden" name="openway" value="0"/>
+					<a href="javascript:;" class="radio link self"><i class="fa fa-dot-circle-o"></i>本窗口打开</a>
+					<a href="javascript:;" class="radio link blank"><i class="fa fa-circle-o"></i>新窗口打开</a>
+				</div>
+			</div>
+			<div class="dialog_item">
+				<label class="dialog_label">导航设置</label>
+				<div class="element">
+					<a href="javascript:;" class="radio config diy"><i class="fa fa-dot-circle-o"></i>自定义配置</a>
+					<a href="javascript:;" class="radio config sys"><i class="fa fa-circle-o"></i>使用系统选项</a>				
+				</div>
+			</div>
+			<div class="dialog_item" id="navsetContainer">
+			<input type="hidden" name="navlink" />
+				<div id="diyset">
+					<label class="dialog_label">导航链接</label><div class="element"><input type="text"  id="navlink" class="ipt navlink"  placeholder="必须带http://或https://"/></div>
+				</div>
+				<!-- 如果是使用商品 -->
+				<div id="sysset" style="position: relative;display : none;">				
+					<label class="dialog_label">商品链接</label>
+					<div class="element">
+						<select name="goodscate" class="goodscate" style="margin-bottom: 5px; width: 208px;">
+						</select>
+						<select name="goods" class="goods" style="width: 208px;">
+							<option value="">所有商品</option>
+						</select>
+					</div>					
+				</div>
+				<!-- 如果是使用商品 -->
+			</div>
+			<div class="dialog_item">
+				<label class="dialog_label">是否启用</label>
+				<div class="element">
+					<input type="hidden" name="isshow" value="1"/>
+					<a href="javascript:;" class="radio show enable"><i class="fa fa-dot-circle-o"></i>启用</a>
+					<a href="javascript:;" class="radio show unenable"><i class="fa fa-circle-o"></i>停用</a>	
+				</div>
+			</div>
+			<div class="dialog_item bottom" style="margin-bottom: 0;">
+                <input type="hidden" value="" name="navid" />
+				<button class="btn bt_tip_normal" >取消</button>
+				<button class="btn bt_tip_hit submit">确定</button>
+			</div>
+			<div class="dialog_item" id="tips" style="margin-bottom: 0;text-align: center;"></div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var $postUrl="{:U('Sysconfig/navAdd')}";
+var $postUpdateUrl="{:U('Sysconfig/navEdit')}";
+var $deleteUrl ="{:U('Sysconfig/navDelete')}";
+var $ajaxGetCat="{:U('Sysconfig/ajaxGetCate')}";
+var $ajaxChangeShow ="{:U('Sysconfig/ajaxChangeShow')}";
+var $ajaxGetGoods="{:U('Sysconfig/ajaxGetGoods')}";
+var $cateLink="{:U('Home/Goods/index', array('cid'=>'LINK','justfrom'=>'nav'))}";
+var $goodsLink="{:U('Home/Goods/detail', array('gid'=>'LINK','justfrom'=>'nav'))}";
+</script>
+<load href="__ADMIN_JS__/sysconfig/nav.js" />
+

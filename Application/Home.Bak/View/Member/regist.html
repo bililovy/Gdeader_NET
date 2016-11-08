@@ -1,0 +1,77 @@
+<include file="Public/head" />
+
+<body>
+<load href="__COMMON__/js/tools/validform.min.js" />
+<load href="__COMMON__/css/tools/validform.css" />
+<load href="__CSS__/login/register.css" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+<!-- 注册表单 页面 -->
+<style>
+
+</style>
+ 	<div class="register">
+		 <div class="container">				
+			 <h2>REGISTRATION</h2>
+			 <div class="log">			 
+					 <p>Welcome, please enter the folling to continue.</p>
+					 <p>If you have previously registered with us, <a href="#">click here</a></p>
+					 <div class="tips"><i class="fa fa-error"></i>some where error</div>
+					 <form action="{:U('Member/regist')}" method="post" class="register_form">
+						 <div class="item_line">
+							 <label>Nick Name:</label>	
+							 <input type="text" value="" name="nickname" class="input username" sucmsg="ok" datatype="s5-40" nullmsg="Please check your nickname" errormsg="Error Format of The Item" placeholder="nickname should be 5-40 characters">
+						 </div>
+						 <div class="item_line">
+							 <label>Email:</label>	
+							 <input type="text" value="" name="email" class="input email" datatype="e"  sucmsg="ok"  nullmsg="Please Enter an Available Email" errormsg="Please Enter an Available Email" placeholder="Enter an Available email">
+						 </div>
+						 <div class="item_line">
+							 <label>Password:</label>	
+							 <input type="password" value=""  name="pwd" class="input pwd" sucmsg="ok"  nullmsg="Please Enter a correct password" errormsg="Please Enter a correct password" datatype="*6-16" placeholder="">
+						 </div>
+						 <div class="item_line">
+						 <label>Confirm Password:</label>
+						 <input type="password" value=""  name="repwd" datatype="*" sucmsg="ok"  nullmsg="Enter password again" errormsg="Please Enter password again"" recheck="pwd"class="input repwd" placeholder="">		
+						 </div>			
+						 <div class="item_line cap">
+						 <label>Verify Code:</label>
+						 <input type="text" value="" class="input captcha" name="captcha" datatype="*4-5"  sucmsg="ok"  nullmsg="Enter the verify code" errormsg="Verify code is incorrect" maxlength="4" placeholder="Enter the verify code on the right">
+						 <div class="captcha_right"	><a href="javascript:;" title="click to change"><img src="{:U('Member/captcha','','')}"  onclick="this.src=this.src+'/'+Math.random()"/></a></div>	
+						 </div>			
+						 <div class="item_line">
+						 <input type="submit" value="register" class="submit"><div id="tips" style="padding-left: 160px;"></div>
+						  <a href="{:U('Member/login')}" class="tologin">Sign In &gt;&gt;</a>
+						  </div>
+					 </form>				 
+			 </div>			 
+			 <div class="clearfix"></div>		 
+			 
+		 </div>
+	</div>
+	<script type="text/javascript">
+		var item=[$('.register_form input.username'), $('.register_form input.email'), $('.register_form input.pwd'), $('.register_form input.repwd'), $('.register_form input.captcha')];
+		inputDefaultSet(item);
+		$(".register_form").Validform({
+			tiptype:4,
+			showAllError:true,
+			ajaxPost:true,
+			postonce: true,
+			callback:function(data){
+				if(data.status==1){
+					$('#tips').html('<span style="color:#3B7E08;font-weight: bold;">'+data.data+'</span>');
+					setTimeout(function (){
+						window.location.href="{:U('Member/login')}";
+					},800)
+				}else{
+					$('#tips').html('<span style="color:#F05A00;font-weight: bold;">'+data.data+'</span>');					
+				}
+			}
+		});
+	</script>
+ </div>
+<!-- //注册表单 页面 -->
+<include file="Public/footer" />
+</body>
+</html>

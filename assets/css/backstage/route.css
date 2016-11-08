@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+/******** BEGIN 面包线导航*******************/
+.forminfo input.select_btn , .forminfo input.uploadBtn{
+	margin: 0 3px;
+}
+
+.place {
+	height: 40px;
+	background: url(../images/Icons/righttop.gif) repeat-x;
+}
+
+.place a.reload {
+	background: #3672A6;
+	color: #FFF;
+	display: block;
+	overflow: hidden;
+	padding: 5px;
+	line-height: 30px;
+	float: right;
+	margin-right: 20px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.place a:reload:hover {
+	color: #FFF;
+}
+
+.place span {
+	line-height: 40px;
+	font-weight: bold;
+	float: left;
+	margin-left: 12px;
+}
+
+.placeul li {
+	float: left;
+	line-height: 40px;
+	padding-left: 7px;
+	padding-right: 12px;
+	background: url(../images/Icons/rlist.gif) no-repeat right;
+}
+
+.placeul li:last-child {
+	background: none;
+}
+
+.placeul a,a:focus {
+	text-decoration: none;
+	color: #333;
+	outline: none;
+	blr: expression(this.onFocus = this.blur () );
+}
+
+.placeul a:hover {
+	color: #3672A6;
+	text-decoration: none;
+}
+
+.toolbar1 {
+	float: right;
+	margin-right: 50px;
+	margin-top: 3px;
+}
+
+.toolbar1 li i {
+	font-size: 18px;
+	color: #3672A6;
+	padding: 8px;
+}
+
+.toolbar1 li {
+	background: url(../images/icons/toolbg.gif) repeat-x;
+	cursor: pointer;
+	line-height: 33px;
+	height: 33px;
+	border: solid 1px #d3dbde;
+	float: left;
+	padding-right: 10px;
+	margin-left: 5px;
+	border-radius: 3px;
+}
+
+.toolbar1 li a {
+	color: #3672A6;
+}
+
+td.a{
+	margin: 0 3px;
+}
+/******** END 面包线导航*******************/

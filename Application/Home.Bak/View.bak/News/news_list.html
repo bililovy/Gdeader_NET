@@ -1,0 +1,64 @@
+<include file="Public/header" />
+
+<body>
+	<!--BEGIN 本页面所需文件-->
+	
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/common/page.css" />
+<load href="__CSS__/news/list.css" />
+<load href="__JS__/common/h_f2.js" />
+
+	<!--END 本页面所需文件-->
+
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />
+<!-- END 头部导航 -->
+
+<!-- BEGIN 中部内容区域--->
+<div class="middle_content">
+	<include file="Tools/breadcrum" />
+	<div class="content_main">
+		<div class="lst_news">
+				<h2>news focus</h2>
+				<if condition="$focus">
+				<div class="news_con">
+					<div class="focus_img"><a href="{:U('News/detail', array('nid'=>$focus['id'], 'justfrom'=>'newspage'))}"><img src="{$focus.cover}" alt="{$focus.title}"/></a></div>
+					<div class="right_news_con">
+						<h1>{$focus.title}</h1>
+						<div class="description">{$focus.description}</div>
+						<div class="goto_btn"><a href="{:U('News/detail', array('nid'=>$focus['id'], 'justfrom'=>'newspage'))}">read detail...</a></div>
+					</div>				
+				</div>
+				</if>
+		</div>
+		
+		<div class="news">
+		<h2>our news</h2>
+		<if condition="$newslist">
+		<ul class="newslist">
+		<foreach name="newslist" item="news">
+			<li>
+				<div class="cover"><a href="{:U('News/detail', array('nid'=>$news['id'], 'justfrom'=>'newspage'))}"><img src="{$news.cover}" /></a></div>
+				<div class="right_desc">
+					<h1><a href="{:U('News/detail', array('nid'=>$news['id'], 'justfrom'=>'newspage'))}">{$news.title|mb_substr=0,32,'UTF-8'} ...</a></h1>
+					<div class="news_desc">{$news.description|mb_substr=0,175,'UTF-8'}</div>
+				</div>
+			</li>
+			</foreach>
+		</ul>
+			<div class="page">
+				{$page}
+			</div>		
+		</if>
+	</div>
+
+		
+</div>
+<!-- END 中部内容区域--->
+
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/news/list.js"/>

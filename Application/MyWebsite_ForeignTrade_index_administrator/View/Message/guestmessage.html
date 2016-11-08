@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>客户留言板列表</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__COMMON__/tools/select/css/select.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/message/guestmessage.css" />
+<load href="__COMMON__/tools/select/js/select.js" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<!-- END 当前页面的css 和js -->
+
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">  
+	<li><a href="{:U('Index/main')}">首页</a></li>
+    <li><a href="javascript::">客户留言板</a></li>
+    </ul>
+    <a class="reload" href="javascript:void(0)" onclick="window.location.reload()"><i class="fa fa-refresh"></i>重载此页面</a>
+    </div>
+	<div class="content">
+		<h3>以下是来自网站客户的留言</h3>
+		<span class="tips">根据网站结构规划，此系统不提供留言回复功能，如需反馈客户留言，请通过其留言所填写的email或其他联系方式回访。</span>
+
+<div class="tool">
+<div class="selector">
+	<span class="st">你当前查看的是</span>
+	<if condition="$msgtypes">
+	<select name="msgtype">
+		<option value="{:U('Message/guestmsg')}" <eq name='curmsgtype' value='0'>selected="selected"</eq>>所有类别</option>
+		<foreach name="msgtypes" item="msgtype">
+		<option value="{:U('Message/guestmsg', array('msgtype'=>$msgtype['id']))}" <eq name='curmsgtype' value='$msgtype.id'>selected="selected"</eq>>{$msgtype.typename}</option>
+		</foreach>
+	</select>
+	</if>
+	<span style="float: left;display: block;margin: 0 5px; line-height: 40px;">类型下的</span>
+	<select name="showtype">
+		<option value="{:U('Message/guestmsg', array('msgtype'=>$curmsgtype))}"<eq name='cond' value='all'>selected="selected"</eq>>所有留言信息</option>
+		<option value="{:U('Message/guestmsg', array('msgtype'=>$curmsgtype,'cond'=>'unread'))}" <eq name='cond' value='0'>selected="selected"</eq>>未阅读留言</option>
+		<option value="{:U('Message/guestmsg', array('msgtype'=>$curmsgtype,'cond'=>'read'))}" <eq name='cond' value='1'>selected="selected"</eq>>已阅读留言</option>
+	</select>
+	<div class="tips">正在加载中……</div>
+</div>
+<!-- BEGIN 上分页 -->
+{$page}
+<!-- END 上分页 -->
+</div>
+<if condition="$msgtypes">
+	<div class="msg_list">
+			<if condition="$messages">
+				<foreach name="messages" item="msg">
+					<dl id="Mto{$msg.id}">
+						<dt><div class="msginfo"><span class="fa fa-bullhorn"></span><span class="kh">留言客户：{$msg.uname}</span><span class="email">留言邮箱：{$msg.email}</span><span class="adtime">留言时间：{$msg.addtime|date='Y-m-d H:i', ###}</span></div><input type="hidden" value="{$msg.id}" name="umsgid"/></dt>
+						<dd><p class="msg_con">{$msg.message}</p></dd>
+						<dd><input type="hidden" value="{$msg.id}" name="msgid"/><p class="opbtn"><em class="delmsg">删除留言</em><eq name="msg.ishandled" value="0"><em class="signdone able">标记已阅读</em><else /><em class="signdone unable">本条已阅读</em></eq></p></dd>
+						<input type="hidden" value="{$msg.id}" name="mid"/>
+					</dl>
+				</foreach>
+			<else />				
+				<div class="no_data">暂无客户留言，请选择其他条件尝试查看，请随时关注此板块留言信息并及时反馈。祝生意兴隆！</div>
+			</if>
+		</div>
+<else />
+<div class="no_data">当前留言系统未设置分类，如不设置分类，将无法使用留言功能，请<a href="{:U('Message/msgtype', array('handleway'=>'add'))}">前往添加分类</a>，至少有一个分类后，留言功能方能开启！</div>
+</if>
+	
+				    <!-- BEGIN 下分页 -->
+{$page}
+<!-- END 下分页 -->
+	</div>
+</body>
+</html>
+<script type="text/javascript">	
+var $postUrl="{:U('Message/guestupdate')}";
+</script>
+<load href="__ADMIN_JS__/message/guestmessage.js" />
+

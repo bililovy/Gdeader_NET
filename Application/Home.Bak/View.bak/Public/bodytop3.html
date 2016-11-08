@@ -1,0 +1,24 @@
+<load href="__COMMON__/tools/msgbox/css/msgbox.css" />
+<load href="__COMMON__/tools/msgbox/js/msgbox.js" />
+<div class="header">
+		<div class="topcontent">
+			<div class="logo"><a href="/" title="{$webname}"><img src="{$logo}" />{$webname}</a></div>
+			<div class="mininav">menu<i class="fa fa-align-justify"></i></div>
+			<if condition="$signalnavs">
+			<ul class="navigator">			
+				<li><a href="/">home</a></li>
+				<li><a href="{:U('Contact/index')}">contact us</a></li>
+				<foreach name="signalnavs" item="signal">
+				<li><a href="{:U('Signal/page', array('sid'=>$signal['id']))}">{$signal.title}</a></li>
+				</foreach>
+			</ul>	
+			</if>	
+		</div>
+		<div class="banner">
+			<div class="text">All around the world !</div>
+			<div class="searchbox">
+				<input type="text" name="sq" value="" placeholder="Search something here !" class="search_input"/>
+				<button class="submit_btn"><i class="fa fa-search"></i></button>
+			</div>
+		</div>
+</div>

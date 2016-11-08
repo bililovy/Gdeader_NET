@@ -1,0 +1,45 @@
+<style type="text/css">
+
+    .side_bar_right{position:fixed;width:54px;height:105px;right:40px;bottom:10px;z-index:100;}
+    .side_bar_right ul li{width:54px;height:54px;float:left;position:relative;border-bottom:1px solid #444;}
+    .side_bar_right ul li .side_bar_rightbox{position:absolute;width:54px;height:54px;top:0;right:0;transition:all 0.3s;background:#E56C00;opacity:0.8;filter:Alpha(opacity=80);color:#fff;font:14px/54px "微软雅黑";overflow:hidden;}
+    .side_bar_right ul li .side_bar_righttop{width:54px;height:54px;line-height:54px;display:inline-block;background:#E56C00;opacity:0.8;filter:Alpha(opacity=80);transition:all 0.3s;}
+    .side_bar_right ul li .side_bar_righttop:hover{background:#ae1c1c;opacity:1;filter:Alpha(opacity=100);}
+    .side_bar_right ul li img{float:left;}
+    .side_bar_right .side_bar_rightbox{text-align: center; color:#FFF}
+    .side_bar_right .side_bar_rightbox i{color:#FFF;font-size: 1.6em; }
+    .side_bar_right .side_bar_rightbox #favorite_count {margin-left: 5px;
+        color: #ffffff; display: none}
+
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $(".side_bar_right ul li").hover(function(){
+            $(this).find(".side_bar_rightbox").stop().animate({"width":"124px"},200, function (){
+                $('#favorite_count').fadeIn(100);
+            }).css({"opacity":"1","filter":"Alpha(opacity=100)","background":"#ae1c1c"})
+        },function(){
+            $(this).find(".side_bar_rightbox").stop().animate({"width":"54px"},200, function (){
+                $('#favorite_count').fadeOut(100);
+            }).css({"opacity":"0.8","filter":"Alpha(opacity=80)","background":"#E56C00"})
+        });
+
+    })
+    //回到顶部
+    function gotoTop(){
+        $('html,body').animate({'scrollTop':0},600);
+    }
+</script>
+<div class="side_bar_right">
+    <ul>
+        <if condition="$member">
+        <li><a href="{:U('Goods/wishlist')}" title="favorite Cart"><div class="side_bar_rightbox" ><i class="fa fa-heart"></i><span id="favorite_count" >({$member.count|default=0})</span></a></li>
+        <else />
+        <li><a href="{:U('Member/login')}" title="Login to see the favorite cart"><div class="side_bar_rightbox" ><i class="fa fa-heart"></i><span id="favorite_count" >(0)</span></a></li>
+        </if>
+            <li style="border:none;" onclick="gotoTop()"><a href="javascript:;"  class="side_bar_righttop"><img src="__IMG__/icons/side_icon05.png"></a></li>
+    </ul>
+</div>

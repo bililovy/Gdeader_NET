@@ -1,0 +1,127 @@
+<include file="Public/head" />
+<body>
+<load href="__CSS__/goods/detail.css" />
+<load href="__COMMON__/js/tools/jquery.imgzoom.js" />
+<div class="bodyContainer">
+<include file="Public/header" />
+<include file="Public/breadcrumb" />
+<div class="detail_box">
+	<div class="container">
+		<div class="showmain">					
+				<div class="preview fl">
+					<div id="vertical" class="bigImg">
+						<img src="" alt="{$goods.goodsname}" id="midimg" />
+						<div style="display:none;" id="winSelector"></div>
+					</div>
+					<div class="smallImg">
+						<div class="scrollbutton smallImgUp disabled"></div>
+						<div id="imageMenu">
+							<ul>
+							<foreach name="goodsalbums" item="album">
+								<li <eq name='key' value='0'>class="active"</eq>><img src="{$album.imgpath}" width="68" alt="{$goods.goodsname}"/></li>
+							</foreach>
+							</ul>
+						</div>
+						<div class="scrollbutton smallImgDown"></div>
+					</div>
+					<div id="bigView" style="display:none;">
+						<img width="800" height="850" alt="" src="" />
+					</div>
+				</div>
+				<div class="rightinfo fl">
+					<div class="operate">
+						<i class="fa fa-angle-left"></i>back to : <a href="{:U('Goods/index',array('cid'=>$goods['cateid'],'justfrom'=>'goodsdetail'))}" class="back">{$goods.catename}</a>
+					</div>
+					<h1>{$goods.goodsname}</h1>
+					<div class="goods">
+						<h2>${$goods.price}</h2>
+						<div class="attrs_list">
+							<foreach name="goodsattr" item="attr">
+							<span class="attr"><label>{$attr.attrname}:</label><if condition="!is_array($attr['attrvalue'])">{$attr.attrvalue}<else /><foreach name="attr.attrvalue" item="attrval">{$attrval}&nbsp;&nbsp;&nbsp;</foreach></if></span>
+							</foreach>								
+						</div>
+						<div class="desc">
+							<span>Product Features</span>
+								{$goods.description}
+						</div>
+						<div class="op" id="{$goods.id}">
+							<a href="<empty name='goods.goodslink'>javascript:alert('Can not be bought !');<else />{$goods.goodslink}</empty>" class="btn buy"><i class="fa fa-shopping-cart"></i>buy now</a>
+							<a href="javascript:;" class="btn wish add_wish"><i class="fa fa-shopping-basket"></i>add to wishlist</a>
+						</div>
+					</div>
+				</div>
+				<!-- 右侧近期记录浏览记录 -->
+					<div class="history fl">
+						<div class="title"><i class="fa fa-clock-o"></i>Popular Goods</div>
+						<if condition="$popular">
+						<a href="javascript:;" class="button prev"><i class="fa fa-angle-up"></i></a>
+						<a href="javascript:;" class="button next"><i class="fa fa-angle-down"></i></a>
+						<div class="scroll">
+							<ul>
+								<foreach name="popular" item="g">
+								<li><a href="{:U('Goods/detail',array('gid'=>$g['id'],'justfrom'=>'goodsdetail'))}" title="{$g.goodsname}"><img src="{$g.goodsimg}" alt="{$g.goodsname}" /><h2>{$g.goodsname|mb_substr=0,26}</h2></a></li>
+								</foreach>
+							</ul>
+						</div>
+						</if>						
+					</div>
+				<!--// 右侧近期记录浏览记录 -->
+		</div>
+		<!-- 宝贝详情 -->
+		<div class="contain details">
+			<div class="heading">
+				<span class="maintext">Product Descriptions</span>
+				<span class="subtext"> See More Infomation About the Product</span>
+			</div>
+			<div class="mainbody">
+				<!-- 来自自己编辑 -->
+				{$goods.goodsdetail}
+					<!-- 来自自己编辑 -->
+			</div>
+		</div>
+		<!--// 宝贝详情 -->
+		
+		<!-- 相关宝贝 -->
+		<if condition="$recommends">
+		<div class="contain related">
+			<div class="heading">
+				<span class="maintext">Related Products</span>
+				<span class="subtext"> See Our Most featured Products</span>
+			</div>
+			<div class="related_pro">
+				<ul class="prolist">
+				<foreach name="recommends" item="pro">
+					<li class="item">
+					<div class="imgbox">
+						<img src="{$pro.goodsimg}" alt="{$pro.goodsname}" />
+						<a href="{:U('Goods/detail', array('gid'=>$pro['id'], 'justfrom'=>'productdetail'))}" title="{$pro.goodsname}" class="link"><i class="fa fa-search"></i>quick view</a>
+					</div>
+					<div class="info">
+						<h2><a href="{:U('Goods/detail', array('gid'=>$pro['id'], 'justfrom'=>'productdetail'))}" title="{$pro.goodsname}">{$pro.goodsname|mb_substr=0,55}..</a></h2>
+						<div class="oparea" id="{$pro.id}">
+							<p class="price">${$pro.price}</p>
+							<a href="javascript:;" class="btn add_wish"><i class="fa fa-shopping-basket"></i>add to wishlist</a>
+						</div>
+					</div>
+					</li>
+					</foreach>
+				</ul>
+				<div class="hd">
+					<ul>
+					</ul>
+				</div>
+			</div>		
+	     
+		</div>
+		</if>
+		<!--// 相关宝贝 -->		
+	</div>
+</div>	
+<script type="text/javascript">
+$('#vertical img').attr('src',$('#imageMenu ul li:first-child').find('img').attr('src'));
+</script>
+</div>
+<include file="Public/footer" />
+</body>
+<load href="__JS__/Goods/detail.js" />
+</html>

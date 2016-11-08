@@ -1,0 +1,58 @@
+<div class="is_top">
+		<a href="/" class="logo"><img src="{$logo}" style="width: 200px;height: 80px;"/></a>
+		<div class="rongqi">
+		<div class="rongqileft">
+				<p><i class="fa fa-phone" style="margin-right: 5px; font-size: 14px;"></i>Tels：<foreach name="tels" item="tel">{$tel}&nbsp;&nbsp;</foreach></p>
+		</div>
+		<div class="rongqiright">
+			<ul>
+				<li><a href="{:U('Company/contact')}">Contact</a></li>
+			</ul>
+		</div>
+		</div>
+</div>
+<div class="mainbox">
+			<div class="mainnav">
+				<table>
+					<tr>						
+					<td <eq name="controller" value="About" >class="on"</eq>>
+							<a href="{:U('About/index')}">
+							<div class="mtitle">关于金标</div>
+							<div class="ctitle">ABOUT US</div>
+					</a>
+					 <!--<ul></ul>-->
+					</td>
+					<td <eq name="controller" value="Case" >class="on"</eq>>
+							<a href="{:U('Case/index')}">
+		                    <div class="mtitle">作品展示</div>
+							<div class="ctitle">CASE SHOW</div></a> 
+							<!--<ul></ul>--></td>
+					<td <eq name="controller" value="Team" >class="on"</eq>>
+							<a href="{:U('Team/index')}">
+							<div class="mtitle">设计团队</div>
+							<div class="ctitle">TEAMERS</div>
+					</a> 
+					<!--<ul></ul>-->
+						</td>
+					<td <eq name="controller" value="Project" >class="on"</eq>>
+							<a href="{:U('Project/index')}">
+							<div class="mtitle">工程管理</div>
+							<div class="ctitle">schedule</div>
+					</a> <!--<ul></ul>-->
+					</td>
+					<td <eq name="controller" value="Service" >class="on"</eq>>
+							<a href="{:U('Service/index')}">
+							<div class="mtitle">金标服务</div>
+							<div class="ctitle">SERVICES</div>
+					</a> <!--<ul></ul>-->
+					</td>
+					<td <eq name="controller" value="Home" >class="on"</eq>>
+							<a href="{:U('Home/index')}">
+							<div class="mtitle">设计前言</div>
+							<div class="ctitle">Design</div>
+					</a> <!-- <ul></ul>-->
+					</td>
+					</tr>
+				</table>
+			</div>
+</div>

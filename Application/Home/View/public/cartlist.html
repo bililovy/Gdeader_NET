@@ -1,0 +1,19 @@
+<if condition="$cartlist">
+<li class="begin"><p>Recently Added Items ({$count})</p></li>
+<foreach name="cartlist" item="goods">
+<li class="goods">
+	<div class="img fl"><a href="{:U('Goods/detail', array('gid'=>$goods['id']))}" title="{$goods.goodsname}" ><img src="{$goods.goodsimg}" alt="{$goods.goodsname}" /></a></div>
+	<div class="ginfo fl">
+		<p class="gname"><a href="{:U('Goods/detail', array('gid'=>$goods['id']))}" title="goods name" >{$goods.goodsname}</a></p>
+		<p class="price">${$goods.price}</p>
+	</div>
+	<div class="operator fr"><a href="<empty name='goods.goodslink'>{:U('Goods/detail', array('gid'=>$goods['id']))}<else />{$goods.goodslink}</empty>" class="buy_btn" title="Buy Now"><i class="fa fa-shopping-cart"></i></a></div>
+</li>
+</foreach>	  					
+<li class="end">
+<a href="{:U('Goods/wishlist')}"  class="fl" title="check cart">check out</a>
+<span class="cartsum fr">Total: <b>${$totalPrice}</b>  </span>
+</li>
+<else />
+	<li class="goods" style="line-height: 35px; padding:10px 15px;border: none; text-align: center;color: #1593A0;font-size: 1.3em;">Wishlist Empty !</li>
+</if>

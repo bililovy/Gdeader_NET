@@ -1,0 +1,106 @@
+<include file="Public/header" />
+<body id="index">
+	<!--BEGIN 本页面所需文件-->
+	<load href="__COMMON__/tools/select/css/select.css" />
+	<load href="__COMMON__/tools/msgbox/css/msgbox.css" />
+	<load href="__COMMON__/tools/owlcarousel/css/owl.carousel.css" />
+	<load href="__COMMON__/tools/owlcarousel/css/owl.theme.css" />
+	<load href="__CSS__/index/index.css" />
+
+	<load href="__COMMON__/tools/select/js/select.js" />
+	<load href="__COMMON__/tools/msgbox/js/msgbox.js" />
+	<load href="__COMMON__/js/tools/jquery.superslide.min.js" />
+	<load href="__COMMON__/js/tools/Validator.js" />
+	<load href="__COMMON__/tools/owlcarousel/js/owl.carousel.js" />
+	<load href="__COMMON__/tools/owlcarousel/js/highlight.pack.js" />	
+	<!--END 本页面所需文件-->
+<!--BEGIN 头部区域html-->
+<include file="Public/bodytop1" />
+<!--END 头部区域html-->
+
+<!-- BEGIN 中部区域  -->
+<div class="middle_main">
+	<!-- BEGIN 公司简介-->
+	<div class="company_profile">
+		<div class="htitle">
+			<div class="ht_left"><i class="fa fa-globe"></i> Company Introductions</div>
+			<if condition="$news">
+			<div class="ht_right">
+				<i class="fa fa-volume-up"></i>
+				<div class="newslist">
+					<foreach name="news" item="newfocus">
+					<a href="{:U('News/detail', array('nid'=>$newfocus['id'], 'justfrom'=>'indexglobal'))}" title="{$newfocus.title}">{$newfocus.title|mb_substr=0,55,'UTF-8'}</a>
+					</foreach>
+					</div>
+				<span class="news_btn">					
+					<b class="ico left fa fa-caret-left prev" title="last news"></b>
+					<b class="ico right fa fa-caret-right next" title="next news"></b>
+				</span>
+			</div>
+			</if>
+		</div>
+		<div class="content">{$introduction}</div>
+	</div>
+<script type="text/javascript">
+	//新闻上下轮换
+	jQuery(".company_profile .htitle").slide({mainCell:".newslist", effect:"top",  easing: 'swing', autoPlay:true,pnLoop:true,interTime:3000 });
+</script>
+	<!-- END 公司简介-->
+	<!-- BEGIN 新品推荐-->
+
+	<div class="product_box">
+		<div class="htitle">
+			<div class="ht_left"><i class="fa fa-paypal"></i>new products</div>
+		</div>
+		<if condition="$goodsNew">
+		<div class="content">
+			<ul class="prolist">
+				<foreach name="goodsNew" key="k" item="newgoods">
+				<li <if condition="$k %3 eq 0">class="nom"</if>>
+					<a href="{:U('Goods/detail', array('gid'=>$newgoods['id'], 'justfrom'=>'indexpage'))}"><img src="{$newgoods.goodsimg}"/></a>
+					<h1>{$newgoods.goodsname}</h1>
+					<b class="tag">NEW</b>
+				</li>
+				</foreach>					
+			</ul>
+		</div>
+		</if>
+	</div>
+	<!-- END 新品推荐-->
+	
+	<!-- BEGIN 关于我们 -->
+	<div class="aboutus">
+		<div class="con_main">
+			<div class="htitle">
+				<div class="ht_left"><i class="fa fa-tags"></i>about us</div>
+			</div>
+			<div class="content">{$about}</div>
+		</div>
+	</div>
+	<!-- END 关于我们-->
+	
+	<!-- BEGIN 人气产品 按点击率desc-->
+		<div class="hot_products common">
+			<div class="htitle">
+				<div class="ht_left"><i class="fa fa-tags"></i><b>hot</b> products recommendation</div>
+			</div>
+			<if condition="$recommendGoods">
+			<div class="products">
+					<div class="owl-carousel">
+					<foreach name="recommendGoods" item="recgoods">
+						<div class="product"><a href="{:U('Goods/detail', array('gid'=>$recgoods['id'], 'justfrom'=>'indexpage'))}"><img src="{$recgoods.goodsimg}"/><h1><span class='txt'>{$recgoods.goodsname|mb_substr=0,50,'UTF-8'}</span><span class="info"><span class="view"><i class="fa fa-eye"></i>{$recgoods.click}</span><span class="date"><i class="fa fa-clock-o"></i>{$recgoods.addtime|date='Y/m/d',###}</span></span></h1></a></div>
+					</foreach>
+					</div>
+			</div>
+			</if>
+		</div>
+	<!-- END 人气产品 按点击率desc-->
+</div>
+<!-- END 中部区域  -->
+
+<!-- BEGIN 底部区域-->
+<include file="Public/footer1" />
+<!-- END 底部区域-->
+</body>
+</html>
+<load href="__JS__/index/index.js" />

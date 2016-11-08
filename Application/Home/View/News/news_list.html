@@ -1,0 +1,132 @@
+<include file="public/head" />
+<body>
+<!-- header -->
+<include file="public/body_header" />
+<!--/ header -->
+<!-- focus -->
+<load href="__CSS__/news.css" />
+<div class="leaf-main-content">
+<h2 style="text-align: center; line-height: 1.2em">Blog & News</h2>
+
+    <foreach name="newslist" item="news">
+        <div class="plugthumb">
+            <div class="tp">
+                <figure class="effect-bubba">
+                    <img class="lazy" src="__IMG__/icons/news_default.jpg" data-original="{$news.cover}" width="250" height="158" alt="<b>{$news.title}</b>" style="display: block;">
+                    <figcaption>
+                        <p><i class="fa fa-eye"></i> {$news.click}</p>
+                        <p><i class="fa fa-navicon"></i> News Detail</p>
+                        <p>Read More</p>
+                        <a href="{:U('News/detail', array('nid'=>$news['id']))}" target="_blank">See Detail</a>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="plug-info">
+                <div class="plug-title">
+                    <a href="{:U('News/detail', array('nid'=>$news['id']))}" title="{$news.title}"><b>{$news.title}</b></a>
+                </div>
+                <div class="plug-description">
+                    {$news.description}
+                </div>
+            </div>
+            <div class="plug-mesg">
+                <span class="pull-left"><img src="__IMG__/icons/news_publiser_head.png" width="24" height="24" alt="{$news.author}">&nbsp;{$news.author}</span>
+                <span class="date pull-right">{$news.addtime|date='Y-m-d', ###}</span>
+            </div>
+        </div>
+
+    </foreach>
+
+
+
+    <!--插件-->
+    <div class="page" style="clear:both;">
+    {$page}
+
+    </div>
+</div>
+<style>
+    /***** BEGIN 列表分页样式*******/
+    .pagination {
+        display: inline-block;
+        margin: 0 auto;
+        margin-top: 25px;
+        padding-left: 10px;
+        text-align: center;
+    }
+
+    .pagination ul {
+        font-size: 0;
+        *word-spacing: -1px /*IE6、7*/;
+        padding-left: 15px;
+    }
+
+    .pagination ul li {
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        display: inline-block;
+        margin: 0 0 0 -1px;
+    }
+
+    .pagination ul li {
+        *display: inline /*IE6、7*/;
+        *zoom: 1;
+    }
+
+    .pagination li span {
+        font: normal 14px/20px "microsoft yahei";
+        color: #AAA;
+        background-color: #FAFAFA;
+        text-align: center;
+        display: block;
+        min-width: 20px;
+        padding: 8px;
+        border: 1px solid #E6E6E6;
+        position: relative;
+        z-index: 1;
+    }
+
+    .pagination li a span,.pagination li a:visited span {
+        color: #005AA0;
+        text-decoration: none;
+        background-color: #FFF;
+        position: relative;
+        z-index: 1;
+    }
+
+    .pagination li a:hover span,.pagination li a:active span {
+        color: #FFF;
+        text-decoration: none !important;
+        background-color: #1A7983;
+        position: relative;
+        z-index: 9;
+        cursor: pointer;
+    }
+
+    .pagination li a:hover {
+        text-decoration: none;
+    }
+
+    .pagination li span.currentpage {
+        color: #AAA;
+        font-weight: bold;
+        background-color: #FAFAFA;
+        border-color: #E6E6E6;
+        position: relative;
+        z-index: 2;
+    }
+
+    /***** END 列表分页样式*******/
+
+</style>
+<!-- footer -->
+<include file="public/footer" />
+<!--/footer-->
+
+<!-- script -->
+<include file="public/js-script" />
+<load href="__JS__/news2.js" />
+<!--/script-->
+</body>
+</html>

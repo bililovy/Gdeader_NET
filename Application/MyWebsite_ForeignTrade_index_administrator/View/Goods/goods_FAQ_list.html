@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>产品FAQ列表页面</title>
+
+
+
+<!-- BEGIN 页面公共css 和js -->
+    <load href="__COMMON__/css/init.css" />
+    <load href="__ADMIN_CSS__/route.css" />
+    <load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共css 和js -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__ADMIN_CSS__/goods/goods_faq.css"   />
+
+<!-- END 当前页面的css 和js -->
+
+
+</head>
+
+
+<body>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/index')}" target="_top">首页</a></li>
+    <li><a href="{:U('Goods/index')}">产品列表</a></li>
+    <li><a href="javascript:void(0)">产品faq列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">          
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U('Goods/add')}'"><i class="fa fa-user-plus"></i>添加产品</li>
+        <li onclick="window.location.href='{:U('Goods/index')}'"><i class="fa fa-list-ol" ></i>产品列表</li>
+        <li onclick="window.location.href='{:U('Goods/category')}'"><i class="fa fa-th"></i>产品分类管理</li>
+        <li onclick="window.location.href='{:U('Goods/attribute')}'"><i class="fa fa-list" ></i>属性管理</li>
+        <li class="search-box"><input type="text" value="请输入标题关键字搜索" class="search def-color" maxlength="30"/><input type="button" value="检索" class="search-btn abled"/></li>
+        </ul>   
+        
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    
+    </div>
+    
+    
+    <table class="imgtable">
+    
+    <thead>
+    <tr>
+    <th width="3%">序号</th>
+    <th width="20%">产品标题</th>
+    <th width="5%">FAQ数量</th>
+    <th width="8%">待处理数</th>
+    <th width="12%">添加时间</th>
+    <th width="47%">最近一条FAQ内容</th>
+    <th width="5%">操作</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <if condition="$faqs">
+    <foreach name="faqs" key="gid" item="faqs">
+    <tr>
+    <td>{++$count}</td>
+    <td><a href="{:U('Home/Goods/detail', array('gid'=>$gid))}" target="_blank" title="{$faqs.goodsname}">{$faqs.goodsname|mb_substr=###,0,20,'UTF-8'}…</a></td>
+    <td>{$faqs.allcount}条</td>
+    <td>{$faqs.allunreleased}条</td>
+    <td>{$faqs.addtime}</td>
+    <td>{$faqs.content|mb_substr=###,0,29,'UTF-8'}…</td>
+    <td>
+    	<a href="{:U('Goods/faqDetail', array('gid'=>$gid))}" title="查看全部" >查看全部</a>
+    </td>
+    </tr>
+    </foreach>
+	 <else />
+	 <tr>
+	 	<td colspan="9" style="height: 60px; font-size: 16px; color: #999;">呃~~~，当前没有任何产品的FAQ耶！o(∩_∩)o </td>
+        </tr>
+	 </if>  
+    </tbody>    
+    <tr>
+    	 <td class="multi-operate" colspan="9">{$page}</td>
+    </tr>
+    </table>
+</body>
+</html>

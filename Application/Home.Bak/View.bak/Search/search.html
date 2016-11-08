@@ -1,0 +1,62 @@
+<include file="Public/header" />
+
+<body>
+<!--BEGIN 本页面所需文件-->
+	<load href="__CSS__/common/h_f3.css" />
+	<load href="__CSS__/common/breadcrum.css" />
+	<load href="__CSS__/common/page.css" />
+	<load href="__CSS__/search/search.css" />
+	<load href="__JS__/common/h_f3.js" />
+<!--END 本页面所需文件-->	
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop3" />
+<!-- END 头部导航 -->
+
+<!-- BEGIN 中部内容区域--->
+<style type="text/css">
+ .middle_content .no_data{
+	text-align: center;
+	padding: 50px 0;
+}
+.middle_content .no_data p b{
+	font-size: 3.0em;
+}
+.middle_content .no_data p{
+	font-size: 2em;
+	color: #898989;
+}
+</style>
+<div class="middle_content">
+	<include file="Tools/breadcrum" />
+	<if condition="$searchs">
+	<div class="searchbox">	
+		<div class="left_preview">		
+			<a href="javascript:void(0)" title="" target="_blank"><img src="" width="100%" /></a>
+		</div>
+		<div class="right_list">
+			<ul class="search_list">
+				<foreach name="searchs" key="index" item="res">
+				<li  class="active" _prosrc="{$res.goodsimg}">
+					<a _href="{:U('Goods/detail', array('gid'=>$res['id'], 'justfrom'=>'searchpage'))}" href="javascript:void(0)">{$res.goodsname}</a>
+					<div class="desc <eq name='index' value='0'>show</eq>">{$res.description}<a href="{:U('Goods/detail', array('gid'=>$res['id'], 'justfrom'=>'searchpage'))}" target="_blank">Detail&nbsp;>></a> </div>
+				</li>
+				</foreach>				
+			</ul>
+			<div class="page">
+				{$page}
+			</div>				
+		</div>
+	</div>
+	<else />
+			<div class="no_data" ><p><b>Sorry!</b></p><p>No results for your search condition,please try another keyword to search!</p></div>		
+	</if>
+</div>
+
+<!-- END 中部内容区域--->
+
+<!-- BEGIN 页底部 -->
+<include file="Public/footer3" />
+<!-- END 页底部 -->
+</body>
+</html>
+<load href="__JS__/search/search.js" />

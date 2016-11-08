@@ -1,0 +1,51 @@
+<include file="Public/header" />
+<body>
+	<!--BEGIN 本页面所需文件-->
+<load href="__CSS__/common/h_f2.css" />
+<load href="__CSS__/common/page.css" />
+<load href="__CSS__/news/detail.css" />
+<load href="__JS__/common/h_f2.js" />
+	<!--END 本页面所需文件-->
+
+<!-- BEGIN 头部导航 -->
+<include file="Public/bodytop2" />
+<!-- END 头部导航 -->
+<!-- BEGIN 中部区域 -->
+	<div class="middle_content">
+	<include file="Tools/breadcrum" />
+		<div class="content_main">
+			<div class="left_news">
+				<div class="news_content">
+					<h1>{$news.title}</h1>
+					<div class="info"><span class="date"><i class="fa fa-clock-o"></i>date: {$news.addtime|date='Y/m/d H:i', ###}</span><span class="author"><i class="fa fa-user"></i>publisher: {$news.author}</span><span class="views"><i class="fa fa-eye"></i>click: {$news.click}</span></div>
+					<div class="arccontent">{$news.content}</div>
+					<div class="related">					
+					<span class="prev"><b>PREV&nbsp;:</b><if condition="$prev"><a href="{:U('News/detail', array('nid'=>$prev['id'], 'justfrom'=>'newscp'))}" title="{$prev.title}">{$prev.title|mb_substr=0,53,'UTF-8'} </a><else />The First News Already!</if></span>
+					<span class="next"><b>NEXT&nbsp;:</b><if condition="$next"><a href="{:U('News/detail', array('nid'=>$next['id'], 'justfrom'=>'newscp'))}" title="{$next.title}">{$next.title|mb_substr=0,53,'UTF-8'}</a><else />The Last News Already!</if></span>
+					</div>
+				</div>
+			</div>
+			<div class="right_items">
+				<h2>related news</h2>
+				<if condition="$relates">
+				<ul class="related_news">
+					<foreach name="relates" item="related">
+					<li><a href="{:U('News/detail', array('nid'=>$related['id'], 'justfrom'=>'newscp'))}"><i class="fa fa-angle-right"></i>1. {$related.title|mb_substr=0,38,'UTF-8'}...</a></li>
+					</foreach>				
+				</ul>
+				<else />
+				<ul class="related_news">
+					<li style="text-align: center;color: #989898;line-height: 50px;">No related News showed Here!</li>
+				</ul>
+				</if>
+			</div>
+		</div>
+	</div>
+<!-- END 中部区域 -->
+
+<!-- BEGIN 页底部 -->
+<include file="Public/footer2" />
+<!-- END 页底部 -->
+	</body>
+	</html>
+<load href="__JS__/news/detail.js" />

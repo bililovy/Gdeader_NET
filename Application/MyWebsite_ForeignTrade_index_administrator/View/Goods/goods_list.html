@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品展示</title>
+<!-- BEGIN 页面公共文件 -->
+<load href="__COMMON__/css/init.css" />
+<load href="__COMMON__/css/font-icons.css" />
+<load href="__COMMON__/js/jquery.min.js" />
+<!-- END 页面公共文件 -->
+
+<!-- BEGIN 当前页面的css 和js -->
+<load href="__COMMON__/css/tools/page.css" />
+<load href="__COMMON__/css/tools/easydialog.css" />
+<load href="__COMMON__/tools/album_lightboxgroup/css/album_zoom.css" />
+<load href="__ADMIN_CSS__/common.css" />
+<load href="__ADMIN_CSS__/goods/goods_list.css" />
+<load href="__COMMON__/js/tools/easydialog.min.js" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.jquery.js" />
+<load href="__COMMON__/tools/album_lightboxgroup/js/album_zoom.js" />
+<!-- END 当前页面的css 和js -->
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="{:U('Index/main')}" title="主页">主页</a></li>
+    <li><a href="javascript:void(0)">产品列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+    	<ul class="toolbar">
+        <li class="news-add" onclick="window.location.href='{:U('Goods/add')}'"><i class="fa fa-plus"></i>添加产品</li>
+        </ul> 
+          <div style="float: left;line-height: 25px; margin-top: 5px;margin-left: 45px;color: #898989;">点击下方图片查看大图，支持键盘 “←&nbsp;&nbsp;&nbsp;→”方向键切换查看</div>
+        <ul class="toolbar1">
+        <li onclick="window.location.reload()"><span><i class="fa fa-refresh"></i>刷新</li>
+        </ul>
+    </div>
+    <style>
+
+  </style>
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>       
+        <th width="5%">序号</th>
+        <th width="8%">产品主图</th>
+        <th width="25%">产品名称</th>
+        <th width="10%">所属分类</th>
+        <th width="8%">显示</th>
+        <th width="6%">新品</th>
+        <th width="6%">热销</th>
+        <th width="6%">浏览次数</th>
+        <th width="5%">排序</th>
+        <th width="9%">添加时间</th>
+        <th width="12%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="$goods">
+        <foreach name="goods" item="good">
+         <tr class="tbcontent">
+        <td class="num"><div class="tdcontent">{++$count}</div><input type="hidden" value="{$good.id}" name="goodsid"/></td>
+        <td><div class="tdcontent"><a href="{$good.goodsimg}" rel="lightbox-group"><img src="{$good.goodsimg}" style="width: 40px; height: 55px; margin: 0 auto" /></a></div></td>
+        <td><div class="tdcontent">{$good.goodsname|default='<b style="color: #898989;">暂无设置</b>'|mb_substr=0,23,'UTF-8'}</div></td>
+        <td><div class="tdcontent">{$good.catename}</div></td>
+        <td class="toggle-show ">
+        <div class="tdcontent isshow">
+        <if condition="$good.isshow eq 0">
+        <span data-nid="{$good.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        <else />
+        <span data-nid="{$good.id}" style="background-image: url(__ADMIN_IMG__/icons/big_right.png); background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        </if>
+        </div>
+        </td>
+        <td class="toggle-show ">
+        <div class="tdcontent isnew">
+        <if condition="$good.isnew eq 0">
+        <span data-nid="{$good.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        <else />
+        <span data-nid="{$good.id}" style="background-image: url(__ADMIN_IMG__/icons/big_right.png); background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        </if>
+        </div>
+        </td>
+        <td class="toggle-show ">
+        <div class="tdcontent isrecommend">
+        <if condition="$good.isrecommend eq 0">
+        <span data-nid="{$good.id}" style="background-image:url(__ADMIN_IMG__/icons/big_error.png);  background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="true" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        <else />
+        <span data-nid="{$good.id}" style="background-image: url(__ADMIN_IMG__/icons/big_right.png); background-repeat: no-repeat;display:block; width:24px;height:24px;margin: 0 auto; cursor:pointer;" title="切换显示" data-show="false" _data-true-icon="__ADMIN_IMG__/icons/big_right.png" _data-false-icon="__ADMIN_IMG__/icons/big_error.png"></span>
+        </if>
+        </div>
+        </td>        
+        <td><div class="tdcontent">{$good.click}次</div></td>
+        <td><div class="tdcontent">{$good.sortorder}</div></td>
+        <td><div class="tdcontent">{$good.addtime|date='Y-m-d H:i', ###}</div></td>
+        <td class="multi-operate ">
+        <div class="tdcontent">
+        <input type="hidden" value="{$good.id}" name="gid" />
+		<a href="{:U('Goods/edit', array('gid'=>$good['id']))}" title="编辑" class="tab-btn edit">编辑</a>
+		<a href="javascript:void(0)" title="" class="tab-btn recycle">删除</a>
+		</div>
+		</td>		
+        </tr> 
+        </foreach>
+        <else />        
+        <tr>
+        	<td colspan="11" style="height: 100px; font-size: 20px; font-family:'Microsoft Yahei'; text-align: center; color: #999;">当前没有产品，您可以点击左上方添加产品！</td>
+        </tr>
+        </if>
+        </tbody>    
+        <tr>
+        <td class="multi-operate multi-operate-btn" colspan="11">{$page}</td>
+        </tr> 
+    </table>    
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var $postToggleUrl="{:U('Goods/goodsToggle')}";
+var $goodsTrashUrl="{:U('Goods/goodsTrash')}";
+
+/**************** BEGIN 效果展示区域*************************/
+ //按钮切换
+ $("td.toggle-show").delegate("span","click",function (){
+	 var $this = $(this);
+	 var id = parseInt($(this).parent().parent().siblings("td.num").find('input[name="goodsid"]').val());
+	 
+	 if (id > 0) {
+		 if ($this.attr("data-show") === "true") {
+				var $isshow = 1;
+			} else {
+				var $isshow = 0;
+			}
+		var $ele=$this.parent();
+		if($ele.hasClass('isshow')){
+			var $data = {
+					isshow : $isshow,
+					id : id
+				};
+		}else if ($ele.hasClass('isnew')){
+			var $data = {
+					isnew : $isshow,
+					id : id
+				};
+		}else if ($ele.hasClass('isrecommend')){
+			var $data = {
+					isrecommend : $isshow,
+					id : id
+				};
+		}else{
+			easyDialog.open({
+				container : {
+					content : "系统无法识别您的请求，请重试！"
+				},
+				autoClose : 2000
+			});
+			return false;
+		}
+		$.post($postToggleUrl, $data, function(back) {
+			if (back.status == 1) {
+				if ($this.attr("data-show") === "true") {
+					$this.attr("data-show", "false");
+					$this.css("background-image", "url("+ $this.attr("_data-true-icon") + ")");
+				} else {
+					$this.attr("data-show", "true");
+					$this.css("background-image", "url("+ $this.attr("_data-false-icon") + ")");
+				}
+			} else {
+				easyDialog.open({
+					container : {
+						header: '消息提醒窗口',
+						content : back.data
+					},
+					autoClose : 4000
+				});
+			}
+		}, "json");
+	 }else {
+			easyDialog.open({
+				container : {
+					content : "当前操作缺失参数，请刷新重试！"
+				},
+				autoClose : 2000
+			});
+		}
+ })
+ 
+ //删除
+ $(".tab-btn.recycle").click(function() {
+			var $this = $(this);
+			var id = parseInt($(this).parent().parent().siblings("td.num").find('input[name="goodsid"]').val());
+			if (id > 0) {
+				var btnFn = function() {
+					var $data = {
+						gid : id
+					};
+					$.post($goodsTrashUrl, $data,function(back) {
+								if (back.status == 1) {
+									if ($("table.tablelist").find("tr.tbcontent").length <= 0) {
+										window.location.href = back.data;
+									} else {
+										window.location.reload();
+									}
+								} else {
+									easyDialog.open({
+										container : {
+											content : back.data
+										},
+										autoClose : 2000
+									});
+								}
+							}, "json");
+					return false;
+				};
+				easyDialog.open({
+					container : {
+						header : "消息提醒窗口",
+						content : "您将删除此商品，删除后，有关此商品的所有信息将被清空并且无法再找回。<br />确定删除吗？",
+						yesFn : btnFn,
+						noFn : true
+					},
+					follow : $this[0],
+					followX : -275,
+					followY : 25
+				});
+			} else {
+				easyDialog.open({
+					container : {
+						content : "当前操作缺失参数，请刷新重试！"
+					},
+					autoClose : 2000
+				});
+			}
+		});
+/**************** END 效果展示区域*************************/
+
+
+
+
+</script>
+<load href="__ADMIN_JS__/goods//goods_list.js" />
